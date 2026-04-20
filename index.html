@@ -1061,7 +1061,107 @@
 
 
         // ────────────────────────────────────────────────────────────
-        // 2. ESTADOS NARRATIVOS
+        // 2. CARGA DE DATOS JSON (2012 – 2026)
+        // ────────────────────────────────────────────────────────────
+
+        let DATA_BY_YEAR = {};
+        let DATA_LOADED  = false;
+
+        // Mapeo de nombres JSON (mayúscula sin tilde) → nombre en LOCALIDADES
+        const NAME_MAP = {
+            'ANTONIO NARINO':     'Antonio Nariño',
+            'BARRIOS UNIDOS':     'Barrios Unidos',
+            'BOSA':               'Bosa',
+            'CHAPINERO':          'Chapinero',
+            'CIUDAD BOLIVAR':     'Ciudad Bolívar',
+            'ENGATIVA':           'Engativá',
+            'FONTIBON':           'Fontibón',
+            'KENNEDY':            'Kennedy',
+            'LA CANDELARIA':      'La Candelaria',
+            'LOS MARTIRES':       'Los Mártires',
+            'PUENTE ARANDA':      'Puente Aranda',
+            'RAFAEL URIBE URIBE': 'Rafael Uribe Uribe',
+            'SAN CRISTOBAL':      'San Cristóbal',
+            'SANTA FE':           'Santa Fe',
+            'SUBA':               'Suba',
+            'SUMAPAZ':            'Sumapaz',
+            'TEUSAQUILLO':        'Teusaquillo',
+            'TUNJUELITO':         'Tunjuelito',
+            'USAQUEN':            'Usaquén',
+            'USME':               'Usme',
+        };
+
+        function clasificarUso(grupo) {
+            const g = (grupo || '').toUpperCase();
+            if (g.includes('RESIDENCIAL'))              return 'residencial';
+            if (g.includes('COMERCIO') || g.includes('COMERCIAL')) return 'comercial';
+            if (g.includes('INDUSTRIA') || g.includes('BODEGA'))   return 'industrial';
+            return 'dotacional';
+        }
+
+        async function loadAllData() {
+            const YEARS = [2012,2013,2014,2015,2016,2017,2018,2019,2020,2021,2022,2023,2024,2025,2026];
+
+            const allRaw = await Promise.all(
+                YEARS.map(y => fetch(`datos_${y}.json`).then(r => r.json()).catch(() => []))
+            );
+
+            YEARS.forEach((year, i) => {
+                const yy  = String(year).slice(2);
+                const rows = allRaw[i];
+                const byLoc = {};
+
+                rows.forEach(row => {
+                    const locName = NAME_MAP[row.NOMBRE_LOCALIDAD];
+                    if (!locName) return;
+                    if (!byLoc[locName]) byLoc[locName] = {
+                        predios: 0, avaluoTotal: 0, areaCons: 0,
+                        residencial: 0, comercial: 0, industrial: 0, dotacional: 0,
+                    };
+                    const agg = byLoc[locName];
+                    const ac  = Number(row[`AREA_CONSTRUIDA_${yy}`]) || 0;
+                    agg.predios     += Number(row[`PREDIOS_${yy}`])      || 0;
+                    agg.avaluoTotal += Number(row[`VALOR_AVALUO_${yy}`]) || 0;
+                    agg.areaCons    += ac;
+                    agg[clasificarUso(row.GRUPO_ECONOMICO)] += ac;
+                });
+
+                DATA_BY_YEAR[year] = byLoc;
+            });
+
+            // Actualizar LOCALIDADES con valores reales del año 2024
+            const d24 = DATA_BY_YEAR[2024] || {};
+            LOCALIDADES.forEach(loc => {
+                const d = d24[loc.name];
+                if (!d || d.areaCons === 0) return;
+                loc.predios  = Math.round(d.predios);
+                loc.avaluo   = Math.round(d.avaluoTotal / d.areaCons);   // COP/m²
+                loc.areaCons = Math.round(d.areaCons / 10000);           // m² → ha
+                const total  = (d.residencial + d.comercial + d.industrial + d.dotacional) || 1;
+                loc.residencial = Math.round(d.residencial / total * 100);
+                loc.comercial   = Math.round(d.comercial   / total * 100);
+                loc.industrial  = Math.round(d.industrial  / total * 100);
+                loc.dotacional  = 100 - loc.residencial - loc.comercial - loc.industrial;
+            });
+
+            // Propagar valores actualizados a pointsData (fuente del mapa)
+            pointsData.features.forEach(f => {
+                const loc = LOCALIDADES.find(l => l.name === f.properties.name);
+                if (loc) Object.assign(f.properties, {
+                    predios: loc.predios, avaluo: loc.avaluo, areaCons: loc.areaCons,
+                    residencial: loc.residencial, comercial: loc.comercial,
+                    industrial: loc.industrial, dotacional: loc.dotacional,
+                });
+            });
+            if (mapLoaded && map && map.getSource('predios')) {
+                map.getSource('predios').setData(pointsData);
+            }
+
+            DATA_LOADED = true;
+        }
+
+        // ────────────────────────────────────────────────────────────
+        // 3. ESTADOS NARRATIVOS
         // ────────────────────────────────────────────────────────────
 
         const STATES = [
@@ -1448,9 +1548,9 @@
             const avgAntiguedad = Math.round(totalAntiguedad / n);
             const domEstrato = Object.entries(estratos).sort((a, b) => b[1] - a[1])[0]?.[0] || '–';
 
-            // Actualizar gráfica con datos del cluster
+            // Actualizar gráfica con datos del cluster / localidad
             activeClusterLeaves = leaves;
-            renderChart(chartMetric === 'historico' ? 'avaluo' : chartMetric, leaves);
+            renderChart(chartMetric, leaves);
 
             clusterCardActive = true;
             const headerTitle = n === 1
@@ -1673,16 +1773,49 @@
 
             // ── Histórico (serie temporal) ────────────────────────────
             if (metric === 'historico') {
-                const labels = ['2012', '2013', '2014', '2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023', '2024'];
-                const prediosT = [2050, 2120, 2190, 2260, 2320, 2390, 2430, 2490, 2520, 2560, 2610, 2660, 2720];
-                const avaluoT = [22, 24, 26, 28, 30, 32, 34, 36, 38, 40, 43, 46, 49];
+                const HIST_YEARS = [2012,2013,2014,2015,2016,2017,2018,2019,2020,2021,2022,2023,2024,2025,2026];
+                const labelsH   = HIST_YEARS.map(String);
+                const locName   = leaves && leaves.length === 1 ? leaves[0].properties.name : null;
+
+                let prediosT, avaluoT, histTitle;
+                if (DATA_LOADED && locName) {
+                    // Serie temporal de una localidad específica
+                    prediosT = HIST_YEARS.map(y => {
+                        const d = (DATA_BY_YEAR[y] || {})[locName];
+                        return d && d.predios > 0 ? Math.round(d.predios / 1000) : null;
+                    });
+                    avaluoT = HIST_YEARS.map(y => {
+                        const d = (DATA_BY_YEAR[y] || {})[locName];
+                        return d && d.areaCons > 0 ? Math.round(d.avaluoTotal / d.areaCons / 1000) : null;
+                    });
+                    histTitle = 'HISTÓRICO · ' + locName.toUpperCase();
+                } else if (DATA_LOADED) {
+                    // Serie temporal total ciudad
+                    prediosT = HIST_YEARS.map(y => {
+                        const byLoc = DATA_BY_YEAR[y] || {};
+                        const tot = Object.values(byLoc).reduce((s, d) => s + d.predios, 0);
+                        return tot > 0 ? Math.round(tot / 1000) : null;
+                    });
+                    avaluoT = HIST_YEARS.map(y => {
+                        const byLoc = DATA_BY_YEAR[y] || {};
+                        let av = 0, ac = 0;
+                        Object.values(byLoc).forEach(d => { av += d.avaluoTotal; ac += d.areaCons; });
+                        return ac > 0 ? Math.round(av / ac / 1000) : null;
+                    });
+                    histTitle = 'HISTÓRICO BOGOTÁ · 2012 – 2026 · 20 localidades';
+                } else {
+                    prediosT  = [2050,2120,2190,2260,2320,2390,2430,2490,2520,2560,2610,2660,2720,null,null];
+                    avaluoT   = [22,24,26,28,30,32,34,36,38,40,43,46,49,null,null];
+                    histTitle = 'CARGANDO DATOS…';
+                }
+
                 timelineChartInstance = new Chart(ctx, {
                     type: 'line',
                     data: {
-                        labels,
+                        labels: labelsH,
                         datasets: [
-                            { label: 'Predios (miles)', data: prediosT, borderColor: 'rgba(0,229,255,.75)', backgroundColor: 'rgba(0,229,255,.04)', borderWidth: 1.5, pointRadius: 0, pointHoverRadius: 3, tension: .35, fill: true, yAxisID: 'y' },
-                            { label: 'Avalúo prom. (mil/m²)', data: avaluoT, borderColor: 'rgba(255,45,120,.75)', backgroundColor: 'rgba(255,45,120,.04)', borderWidth: 1.5, pointRadius: 0, pointHoverRadius: 3, tension: .35, fill: true, yAxisID: 'y1' },
+                            { label: 'Predios (miles)', data: prediosT, borderColor: 'rgba(0,229,255,.75)', backgroundColor: 'rgba(0,229,255,.05)', borderWidth: 1.5, pointRadius: 2, pointHoverRadius: 4, tension: .35, fill: true, yAxisID: 'y', spanGaps: true },
+                            { label: 'Avalúo prom. ($/m² · miles)', data: avaluoT, borderColor: 'rgba(255,45,120,.75)', backgroundColor: 'rgba(255,45,120,.05)', borderWidth: 1.5, pointRadius: 2, pointHoverRadius: 4, tension: .35, fill: true, yAxisID: 'y1', spanGaps: true },
                         ],
                     },
                     options: {
@@ -1690,12 +1823,13 @@
                         interaction: { mode: 'index', intersect: false },
                         plugins: {
                             legend: { display: false },
+                            title: titleCfg(histTitle),
                             tooltip: tooltipCfg,
                         },
                         scales: {
-                            x: { ticks: { color: 'rgba(255,255,255,.28)', font: { ...font, size: 8 }, maxRotation: 0, autoSkip: true, maxTicksLimit: 7 }, grid: { color: 'rgba(255,255,255,.03)', drawBorder: false } },
-                            y: { position: 'right', ticks: { color: 'rgba(0,229,255,.4)', font: { ...font, size: 8 }, maxTicksLimit: 3, callback: v => v + 'k' }, grid: { color: 'rgba(255,255,255,.02)', drawBorder: false } },
-                            y1: { position: 'left', ticks: { color: 'rgba(255,45,120,.4)', font: { ...font, size: 8 }, maxTicksLimit: 3, callback: v => '$' + v + 'k' }, grid: { drawOnChartArea: false, drawBorder: false } },
+                            x: { ticks: { color: 'rgba(255,255,255,.28)', font: { ...font, size: 8 }, maxRotation: 0, autoSkip: true, maxTicksLimit: 8 }, grid: { color: 'rgba(255,255,255,.03)', drawBorder: false } },
+                            y: { position: 'right', ticks: { color: 'rgba(0,229,255,.4)', font: { ...font, size: 8 }, maxTicksLimit: 4, callback: v => v + 'k' }, grid: { color: 'rgba(255,255,255,.02)', drawBorder: false } },
+                            y1: { position: 'left', ticks: { color: 'rgba(255,45,120,.4)', font: { ...font, size: 8 }, maxTicksLimit: 4, callback: v => '$' + v + 'k' }, grid: { drawOnChartArea: false, drawBorder: false } },
                         },
                     },
                 });
@@ -1883,6 +2017,11 @@
             renderChart('historico');
             document.getElementById('btn-prev').disabled = true;
             document.getElementById('narrative-text').style.transition = 'opacity .3s ease';
+
+            // Carga asíncrona de los 15 JSON — re-renderiza la gráfica activa al terminar
+            loadAllData().then(() => {
+                renderChart(chartMetric, activeClusterLeaves);
+            });
         });
     </script>
 </body>
