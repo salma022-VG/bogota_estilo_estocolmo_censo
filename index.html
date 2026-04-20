@@ -51,6 +51,30 @@
             --mag-g: rgba(255, 45, 120, .5);
             --blue: #1d8cf8;
             --purple: #6d5dfc;
+            --panel-bg: rgba(0, 0, 0, .50);
+            --timeline-bg: rgba(0, 0, 0, .82);
+            --popup-bg: rgba(0, 0, 0, .95);
+            --modal-bg: rgba(5, 5, 5, .97);
+            --modal-overlay: rgba(0, 0, 0, .85);
+        }
+
+        /* ── Tema claro ── */
+        body.light-mode {
+            --bg: #f0f2f5;
+            --text: #111;
+            --dim: rgba(0, 0, 0, .55);
+            --border: rgba(0, 0, 0, .18);
+            --cyan: #0077aa;
+            --cyan-g: rgba(0, 119, 170, .4);
+            --mag: #cc1155;
+            --mag-g: rgba(204, 17, 85, .4);
+            --blue: #1560c0;
+            --purple: #5040cc;
+            --panel-bg: rgba(240, 242, 245, .88);
+            --timeline-bg: rgba(240, 242, 245, .95);
+            --popup-bg: rgba(255, 255, 255, .98);
+            --modal-bg: rgba(255, 255, 255, .99);
+            --modal-overlay: rgba(0, 0, 0, .55);
         }
 
         html,
@@ -183,7 +207,7 @@
             padding: 40px 45px 30px 55px;
             border-right: 1px solid var(--border);
             border-bottom: 1px solid var(--border);
-            background: rgba(0, 0, 0, .50);
+            background: var(--panel-bg);
             animation: fadeIn .8s ease-out;
         }
 
@@ -362,7 +386,7 @@
             height: 145px;
             z-index: 600;
             display: flex;
-            background: rgba(0, 0, 0, .82);
+            background: var(--timeline-bg);
             border-top: 1px solid var(--border);
             backdrop-filter: blur(3px);
         }
@@ -459,11 +483,11 @@
 
         /* ── Popup de MapLibre ── */
         .maplibregl-popup-content {
-            background: rgba(0, 0, 0, .95) !important;
+            background: var(--popup-bg) !important;
             border: 1px solid rgba(29, 140, 248, .35) !important;
             border-radius: 0 !important;
             padding: 14px 18px !important;
-            color: #fff !important;
+            color: var(--text) !important;
             font-family: var(--mono) !important;
             box-shadow: 0 0 30px rgba(29, 140, 248, .15), 0 4px 20px rgba(0, 0, 0, .6) !important;
             max-width: 300px !important;
@@ -471,22 +495,21 @@
         }
 
         .maplibregl-popup-close-button {
-            color: rgba(255, 255, 255, .7) !important;
+            color: var(--dim) !important;
             font-size: 18px !important;
             padding: 4px 8px !important;
             right: 2px !important;
             top: 2px !important;
             z-index: 10 !important;
-            text-shadow: 0 1px 4px rgba(0, 0, 0, .8) !important;
         }
 
         .maplibregl-popup-close-button:hover {
-            color: #fff !important;
+            color: var(--text) !important;
             background: transparent !important;
         }
 
         .maplibregl-popup-tip {
-            border-top-color: rgba(0, 0, 0, .95) !important;
+            border-top-color: var(--popup-bg) !important;
         }
 
         /* ── Imagen en popup ── */
@@ -651,7 +674,7 @@
             display: none;
             align-items: center;
             justify-content: center;
-            background: rgba(0, 0, 0, .85);
+            background: var(--modal-overlay);
         }
 
         .info-modal.active {
@@ -662,7 +685,7 @@
             max-width: 420px;
             padding: 36px;
             border: 1px solid var(--border);
-            background: rgba(5, 5, 5, .97);
+            background: var(--modal-bg);
             position: relative;
         }
 
@@ -825,6 +848,58 @@
             white-space: nowrap;
         }
 
+        /* ── Toggle de tema ── */
+        .switch {
+            font-size: 17px;
+            position: relative;
+            display: inline-block;
+            width: 3.5em;
+            height: 2em;
+            margin-left: 12px;
+            vertical-align: middle;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            --background: #28096b;
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: var(--background);
+            transition: .5s;
+            border-radius: 30px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 1.4em;
+            width: 1.4em;
+            border-radius: 50%;
+            left: 10%;
+            bottom: 15%;
+            box-shadow: inset 8px -4px 0px 0px #fff000;
+            background: var(--background);
+            transition: .5s;
+        }
+
+        input:checked + .slider {
+            background-color: #c8d8e8;
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(100%);
+            box-shadow: inset 15px -4px 0px 15px #fff000;
+        }
+
         /* ── Responsivo ── */
         @media (max-width: 768px) {
             .narrative-panel {
@@ -863,29 +938,80 @@
         }
     </style>
     <style>
-        body,
-        p,
-        span,
-        button,
-        h1,
-        h2,
-        h3,
-        h4,
-        h5,
-        h6,
-        .header-title,
-        .header-logo-text,
-        .header-logo-sep,
-        .narrative-text,
-        .legend-title,
-        .legend-label,
-        .stat-pct,
-        .stat-label,
-        .info-modal-content h2,
-        .info-modal-content p,
-        .info-tech {
+        /* tema oscuro: fuerza blanco */
+        body:not(.light-mode),
+        body:not(.light-mode) p,
+        body:not(.light-mode) span,
+        body:not(.light-mode) button,
+        body:not(.light-mode) h1,
+        body:not(.light-mode) h2,
+        body:not(.light-mode) h3,
+        body:not(.light-mode) h4,
+        body:not(.light-mode) h5,
+        body:not(.light-mode) h6,
+        body:not(.light-mode) .header-title,
+        body:not(.light-mode) .header-logo-text,
+        body:not(.light-mode) .header-logo-sep,
+        body:not(.light-mode) .narrative-text,
+        body:not(.light-mode) .legend-title,
+        body:not(.light-mode) .legend-label,
+        body:not(.light-mode) .stat-pct,
+        body:not(.light-mode) .stat-label,
+        body:not(.light-mode) .info-modal-content h2,
+        body:not(.light-mode) .info-modal-content p,
+        body:not(.light-mode) .info-tech {
             color: #ffffff !important;
         }
+
+        /* tema claro: fuerza negro */
+        body.light-mode,
+        body.light-mode p,
+        body.light-mode span,
+        body.light-mode button,
+        body.light-mode h1,
+        body.light-mode h2,
+        body.light-mode h3,
+        body.light-mode h4,
+        body.light-mode h5,
+        body.light-mode h6,
+        body.light-mode .header-title,
+        body.light-mode .header-logo-text,
+        body.light-mode .header-logo-sep,
+        body.light-mode .narrative-text,
+        body.light-mode .legend-title,
+        body.light-mode .legend-label,
+        body.light-mode .stat-pct,
+        body.light-mode .stat-label,
+        body.light-mode .info-modal-content h2,
+        body.light-mode .info-modal-content p,
+        body.light-mode .info-tech {
+            color: #111111 !important;
+        }
+
+        /* popup valores en tema claro */
+        body.light-mode .popup-value { color: #111 !important; }
+        body.light-mode .popup-value.cyan { color: var(--cyan) !important; }
+        body.light-mode .popup-value.magenta { color: var(--mag) !important; }
+        body.light-mode .popup-label { color: rgba(0,0,0,.55) !important; }
+        body.light-mode .popup-category { color: rgba(0,0,0,.45) !important; }
+        body.light-mode .popup-uso-label { color: rgba(0,0,0,.4) !important; }
+        body.light-mode .popup-name { color: var(--blue) !important; }
+        body.light-mode .maplibregl-popup-close-button { color: rgba(0,0,0,.5) !important; }
+        body.light-mode .maplibregl-popup-close-button:hover { color: #111 !important; }
+        body.light-mode .popup-divider { border-color: rgba(0,0,0,.1) !important; }
+        body.light-mode .chart-pill { color: rgba(0,0,0,.4) !important; border-color: rgba(0,0,0,.15) !important; }
+        body.light-mode .chart-pill:hover { color: rgba(0,0,0,.75) !important; border-color: rgba(0,0,0,.4) !important; }
+        body.light-mode .chart-pill.active { color: var(--cyan) !important; border-color: var(--cyan) !important; background: rgba(0,119,170,.07) !important; }
+        body.light-mode .ghost-btn { color: #111 !important; border-color: rgba(0,0,0,.2) !important; }
+        body.light-mode .ghost-btn:hover { background: rgba(0,0,0,.06) !important; }
+        body.light-mode .narrative-text strong { color: var(--cyan) !important; text-shadow: none; }
+        body.light-mode .narrative-text .magenta { color: var(--mag) !important; text-shadow: none; }
+        body.light-mode .narrative-text .blue { color: var(--blue) !important; text-shadow: none; }
+        body.light-mode .narrative-text .purple { color: var(--purple) !important; text-shadow: none; }
+        body.light-mode #app::after { background: radial-gradient(ellipse at 50% 50%, transparent 55%, rgba(200,210,220,.25) 100%); }
+        body.light-mode .header-logo-sep { color: rgba(0,0,0,.2) !important; }
+        body.light-mode .info-btn { color: rgba(0,0,0,.5) !important; border-color: rgba(0,0,0,.2) !important; }
+        body.light-mode .info-btn:hover { color: #111 !important; border-color: rgba(0,0,0,.6) !important; }
     </style>
 </head>
 
@@ -913,6 +1039,10 @@
             <span class="header-logo-sep">|</span>
             <span class="header-logo-text">Catastro Bogota</span>
             <button class="info-btn" id="info-btn" aria-label="Información">i</button>
+            <label class="switch" title="Cambiar tema">
+                <input type="checkbox" id="theme-toggle">
+                <span class="slider"></span>
+            </label>
         </div>
     </header>
 
@@ -1282,7 +1412,7 @@
         const MAP_STYLE = {
             version: 8,
             sources: {
-                carto: {
+                'carto-dark': {
                     type: 'raster',
                     tiles: [
                         'https://a.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}@2x.png',
@@ -1292,12 +1422,25 @@
                     tileSize: 256,
                     attribution: '© OpenStreetMap © CARTO',
                 },
+                'carto-light': {
+                    type: 'raster',
+                    tiles: [
+                        'https://a.basemaps.cartocdn.com/light_all/{z}/{x}/{y}@2x.png',
+                        'https://b.basemaps.cartocdn.com/light_all/{z}/{x}/{y}@2x.png',
+                        'https://c.basemaps.cartocdn.com/light_all/{z}/{x}/{y}@2x.png',
+                    ],
+                    tileSize: 256,
+                    attribution: '© OpenStreetMap © CARTO',
+                },
             },
-            layers: [{ id: 'carto', type: 'raster', source: 'carto' }],
+            layers: [
+                { id: 'basemap-dark',  type: 'raster', source: 'carto-dark',  layout: { visibility: 'visible' } },
+                { id: 'basemap-light', type: 'raster', source: 'carto-light', layout: { visibility: 'none'    } },
+            ],
         };
 
         // Carga una imagen y la recorta en círculo — devuelve ImageData para map.addImage()
-        function loadRoundImage(src, size) {
+        function loadRoundImage(src, size, borderColor = 'rgba(255,255,255,0.55)') {
             return new Promise(resolve => {
                 const img = new Image();
                 img.onload = () => {
@@ -1312,8 +1455,8 @@
                     ctx.restore();
                     ctx.beginPath();
                     ctx.arc(size / 2, size / 2, size / 2 - 2, 0, Math.PI * 2);
-                    ctx.strokeStyle = 'rgba(255,255,255,0.55)';
-                    ctx.lineWidth = 2.5;
+                    ctx.strokeStyle = borderColor;
+                    ctx.lineWidth = 3;
                     ctx.stroke();
                     resolve(ctx.getImageData(0, 0, size, size));
                 };
@@ -1473,30 +1616,36 @@
         function setupClusterLayers() {
 
             // Fuente interactiva — 20 puntos exactos (para clic)
-            map.addSource('predios', {
-                type: 'geojson',
-                data: pointsData,
-            });
+            if (!map.getSource('predios')) {
+                map.addSource('predios', { type: 'geojson', data: pointsData });
+            }
 
 
             // ── Íconos WebGL — renderizados en el mismo pase que las tiles, nunca se mueven ──
             const IMG_PX = 56;
+            const isLight = document.body.classList.contains('light-mode');
+            const borderCol = isLight ? 'rgba(30,30,30,0.75)' : 'rgba(255,255,255,0.55)';
             Promise.all(LOCALIDADES.map(async loc => {
                 const src = LOC_IMG[loc.name] ?? 'Localidades/Usaquen.png';
-                const imgData = await loadRoundImage(src, IMG_PX);
-                if (imgData) map.addImage('loc-' + loc.name, imgData);
+                const imgData = await loadRoundImage(src, IMG_PX, borderCol);
+                if (imgData) {
+                    if (map.hasImage('loc-' + loc.name)) map.removeImage('loc-' + loc.name);
+                    map.addImage('loc-' + loc.name, imgData);
+                }
             })).then(() => {
-                map.addLayer({
-                    id: 'localidades-icons',
-                    type: 'symbol',
-                    source: 'predios',
-                    layout: {
-                        'icon-image': ['concat', 'loc-', ['get', 'name']],
-                        'icon-size': 1,
-                        'icon-allow-overlap': true,
-                        'icon-ignore-placement': true,
-                    },
-                });
+                if (!map.getLayer('localidades-icons')) {
+                    map.addLayer({
+                        id: 'localidades-icons',
+                        type: 'symbol',
+                        source: 'predios',
+                        layout: {
+                            'icon-image': ['concat', 'loc-', ['get', 'name']],
+                            'icon-size': 1,
+                            'icon-allow-overlap': true,
+                            'icon-ignore-placement': true,
+                        },
+                    });
+                }
 
                 map.on('click', 'localidades-icons', (e) => {
                     if (!e.features?.length) return;
@@ -1752,20 +1901,34 @@
 
             if (timelineChartInstance) { timelineChartInstance.destroy(); timelineChartInstance = null; }
 
+            const isLight = document.body.classList.contains('light-mode');
+            const tickClr  = isLight ? 'rgba(0,0,0,.45)'   : 'rgba(255,255,255,.32)';
+            const gridClr  = isLight ? 'rgba(0,0,0,.07)'   : 'rgba(255,255,255,.03)';
+            const tipBg    = isLight ? 'rgba(255,255,255,.97)' : 'rgba(0,0,0,.92)';
+            const tipBdr   = isLight ? 'rgba(0,0,0,.12)'   : 'rgba(255,255,255,.1)';
+            const tipTitle = isLight ? '#333'               : undefined;
+            const tipBody  = isLight ? '#111'               : undefined;
+            const titleClr = isLight ? 'rgba(0,80,150,.55)': 'rgba(0,229,255,.3)';
+            const cyanTick = isLight ? 'rgba(0,100,160,.6)': 'rgba(0,229,255,.4)';
+            const magTick  = isLight ? 'rgba(160,0,60,.6)' : 'rgba(255,45,120,.4)';
+            const wTick    = isLight ? 'rgba(0,0,0,.3)'    : 'rgba(255,255,255,.2)';
+            const wLine    = isLight ? 'rgba(0,0,0,.25)'   : 'rgba(255,255,255,.22)';
+
             const font = { family: 'Roboto Mono', weight: '300' };
             const ctx = document.getElementById('timelineChart');
             const tooltipCfg = {
-                backgroundColor: 'rgba(0,0,0,.92)', borderColor: 'rgba(255,255,255,.1)', borderWidth: 1,
+                backgroundColor: tipBg, borderColor: tipBdr, borderWidth: 1,
                 titleFont: { ...font, size: 9 }, bodyFont: { ...font, size: 10 },
+                titleColor: tipTitle, bodyColor: tipBody,
                 padding: 8, cornerRadius: 0, displayColors: true, boxWidth: 6, boxHeight: 6,
             };
             const titleCfg = (text) => ({
                 display: true, text,
-                color: 'rgba(0,229,255,.3)',
+                color: titleClr,
                 font: { family: 'Roboto Mono', size: 7, weight: '400' },
                 padding: { bottom: 1, top: 0 }, align: 'start',
             });
-            const xScale = { ticks: { color: 'rgba(255,255,255,.32)', font: { ...font, size: 7 }, maxRotation: 35, autoSkip: false }, grid: { color: 'rgba(255,255,255,.03)' } };
+            const xScale = { ticks: { color: tickClr, font: { ...font, size: 7 }, maxRotation: 35, autoSkip: false }, grid: { color: gridClr } };
             const hoverCursor = (evt, elements) => {
                 if (evt.native) evt.native.target.style.cursor = elements.length ? 'pointer' : 'default';
             };
@@ -1827,9 +1990,9 @@
                             tooltip: tooltipCfg,
                         },
                         scales: {
-                            x: { ticks: { color: 'rgba(255,255,255,.28)', font: { ...font, size: 8 }, maxRotation: 0, autoSkip: true, maxTicksLimit: 8 }, grid: { color: 'rgba(255,255,255,.03)', drawBorder: false } },
-                            y: { position: 'right', ticks: { color: 'rgba(0,229,255,.4)', font: { ...font, size: 8 }, maxTicksLimit: 4, callback: v => v + 'k' }, grid: { color: 'rgba(255,255,255,.02)', drawBorder: false } },
-                            y1: { position: 'left', ticks: { color: 'rgba(255,45,120,.4)', font: { ...font, size: 8 }, maxTicksLimit: 4, callback: v => '$' + v + 'k' }, grid: { drawOnChartArea: false, drawBorder: false } },
+                            x: { ticks: { color: tickClr, font: { ...font, size: 8 }, maxRotation: 0, autoSkip: true, maxTicksLimit: 8 }, grid: { color: gridClr, drawBorder: false } },
+                            y: { position: 'right', ticks: { color: cyanTick, font: { ...font, size: 8 }, maxTicksLimit: 4, callback: v => v + 'k' }, grid: { color: gridClr, drawBorder: false } },
+                            y1: { position: 'left', ticks: { color: magTick, font: { ...font, size: 8 }, maxTicksLimit: 4, callback: v => '$' + v + 'k' }, grid: { drawOnChartArea: false, drawBorder: false } },
                         },
                     },
                 });
@@ -1860,7 +2023,7 @@
                         labels,
                         datasets: [
                             { label: 'Avalúo (mil/m²)', data: avaluos, backgroundColor: colors, borderColor: borders, borderWidth: 1, yAxisID: 'y' },
-                            { label: 'Predios (miles)', data: predios, borderColor: 'rgba(255,255,255,.22)', backgroundColor: 'transparent', borderWidth: 1, type: 'line', pointRadius: 2, pointHoverRadius: 4, tension: 0, yAxisID: 'y1' },
+                            { label: 'Predios (miles)', data: predios, borderColor: wLine, backgroundColor: 'transparent', borderWidth: 1, type: 'line', pointRadius: 2, pointHoverRadius: 4, tension: 0, yAxisID: 'y1' },
                         ],
                     },
                     options: {
@@ -1874,8 +2037,8 @@
                         },
                         scales: {
                             x: xScale,
-                            y: { position: 'right', ticks: { color: 'rgba(0,229,255,.4)', font: { ...font, size: 8 }, maxTicksLimit: 3, callback: v => '$' + v + 'k' }, grid: { color: 'rgba(255,255,255,.02)' } },
-                            y1: { position: 'left', ticks: { color: 'rgba(255,255,255,.2)', font: { ...font, size: 8 }, maxTicksLimit: 3, callback: v => v + 'k' }, grid: { drawOnChartArea: false } },
+                            y: { position: 'right', ticks: { color: cyanTick, font: { ...font, size: 8 }, maxTicksLimit: 3, callback: v => '$' + v + 'k' }, grid: { color: gridClr } },
+                            y1: { position: 'left', ticks: { color: wTick, font: { ...font, size: 8 }, maxTicksLimit: 3, callback: v => v + 'k' }, grid: { drawOnChartArea: false } },
                         },
                     },
                 });
@@ -1908,8 +2071,8 @@
                         },
                         scales: {
                             x: xScale,
-                            y: { position: 'right', ticks: { color: 'rgba(109,93,252,.7)', font: { ...font, size: 8 }, maxTicksLimit: 3, callback: v => v + ' ha' }, grid: { color: 'rgba(255,255,255,.02)' } },
-                            y1: { position: 'left', ticks: { color: 'rgba(255,45,120,.5)', font: { ...font, size: 8 }, maxTicksLimit: 4, callback: v => v + ' p.' }, grid: { drawOnChartArea: false } },
+                            y: { position: 'right', ticks: { color: isLight ? 'rgba(80,50,200,.7)' : 'rgba(109,93,252,.7)', font: { ...font, size: 8 }, maxTicksLimit: 3, callback: v => v + ' ha' }, grid: { color: gridClr } },
+                            y1: { position: 'left', ticks: { color: magTick, font: { ...font, size: 8 }, maxTicksLimit: 4, callback: v => v + ' p.' }, grid: { drawOnChartArea: false } },
                         },
                     },
                 });
@@ -1938,14 +2101,14 @@
                         plugins: {
                             legend: {
                                 display: true, position: 'top', align: 'end',
-                                labels: { color: 'rgba(255,255,255,.45)', font: { ...font, size: 7 }, boxWidth: 8, boxHeight: 8, padding: 6 },
+                                labels: { color: isLight ? 'rgba(0,0,0,.55)' : 'rgba(255,255,255,.45)', font: { ...font, size: 7 }, boxWidth: 8, boxHeight: 8, padding: 6 },
                             },
                             title: titleCfg(clusterLabel || 'USO DEL SUELO · 20 localidades — clic para ver en mapa'),
                             tooltip: { ...tooltipCfg, callbacks: { label: c => ` ${c.dataset.label}: ${c.raw}%` } },
                         },
                         scales: {
                             x: { ...xScale, stacked: true },
-                            y: { stacked: true, max: 100, position: 'right', ticks: { color: 'rgba(255,255,255,.25)', font: { ...font, size: 8 }, maxTicksLimit: 3, callback: v => v + '%' }, grid: { color: 'rgba(255,255,255,.02)' } },
+                            y: { stacked: true, max: 100, position: 'right', ticks: { color: wTick, font: { ...font, size: 8 }, maxTicksLimit: 3, callback: v => v + '%' }, grid: { color: gridClr } },
                         },
                     },
                 });
@@ -2017,6 +2180,16 @@
             renderChart('historico');
             document.getElementById('btn-prev').disabled = true;
             document.getElementById('narrative-text').style.transition = 'opacity .3s ease';
+
+            // Toggle de tema oscuro / claro
+            const themeToggle = document.getElementById('theme-toggle');
+            themeToggle.addEventListener('change', () => {
+                const isLight = themeToggle.checked;
+                document.body.classList.toggle('light-mode', isLight);
+                map.setLayoutProperty('basemap-dark',  'visibility', isLight ? 'none'    : 'visible');
+                map.setLayoutProperty('basemap-light', 'visibility', isLight ? 'visible' : 'none');
+                renderChart(chartMetric, activeClusterLeaves);
+            });
 
             // Carga asíncrona de los 15 JSON — re-renderiza la gráfica activa al terminar
             loadAllData().then(() => {
