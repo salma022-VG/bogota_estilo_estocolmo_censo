@@ -848,6 +848,58 @@
             white-space: nowrap;
         }
 
+        /* ── Selector de año ── */
+        .year-selector {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            margin-left: 10px;
+            border-left: 1px solid rgba(255,255,255,.1);
+            padding-left: 10px;
+        }
+
+        .year-label {
+            font-family: var(--mono);
+            font-size: .62rem;
+            font-weight: 600;
+            color: var(--cyan);
+            letter-spacing: .06em;
+            min-width: 28px;
+        }
+
+        .year-range {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 100px;
+            height: 3px;
+            background: rgba(255,255,255,.15);
+            border-radius: 2px;
+            outline: none;
+            cursor: pointer;
+        }
+
+        .year-range::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 11px;
+            height: 11px;
+            border-radius: 50%;
+            background: var(--cyan);
+            cursor: pointer;
+            box-shadow: 0 0 6px var(--cyan-g);
+        }
+
+        .year-range::-moz-range-thumb {
+            width: 11px;
+            height: 11px;
+            border-radius: 50%;
+            background: var(--cyan);
+            border: none;
+            cursor: pointer;
+        }
+
+        body.light-mode .year-selector { border-left-color: rgba(0,0,0,.12); }
+        body.light-mode .year-range { background: rgba(0,0,0,.15); }
+
         /* ── Toggle de tema ── */
         .switch {
             font-size: 17px;
@@ -1104,6 +1156,10 @@
                     <button class="chart-pill" data-metric="avaluo">Avalúo</button>
                     <button class="chart-pill" data-metric="area">Área</button>
                     <button class="chart-pill" data-metric="uso">Uso suelo</button>
+                    <div class="year-selector" id="year-selector" style="display:none;">
+                        <input type="range" id="year-range" min="2012" max="2026" value="2024" step="1" class="year-range">
+                        <span class="year-label" id="year-label">2024</span>
+                    </div>
                 </div>
                 <canvas id="timelineChart"></canvas>
             </div>
@@ -1288,6 +1344,34 @@
             }
 
             DATA_LOADED = true;
+        }
+
+        let selectedYear = 2024;
+
+        function updateLocDataForYear(year) {
+            if (!DATA_LOADED) return;
+            const byLoc = DATA_BY_YEAR[year] || {};
+            LOCALIDADES.forEach(loc => {
+                const d = byLoc[loc.name];
+                if (!d || d.areaCons === 0) return;
+                loc.predios  = Math.round(d.predios);
+                loc.avaluo   = Math.round(d.avaluoTotal / d.areaCons);
+                loc.areaCons = Math.round(d.areaCons / 10000);
+                const total  = (d.residencial + d.comercial + d.industrial + d.dotacional) || 1;
+                loc.residencial = Math.round(d.residencial / total * 100);
+                loc.comercial   = Math.round(d.comercial   / total * 100);
+                loc.industrial  = Math.round(d.industrial  / total * 100);
+                loc.dotacional  = 100 - loc.residencial - loc.comercial - loc.industrial;
+            });
+            pointsData.features.forEach(f => {
+                const loc = LOCALIDADES.find(l => l.name === f.properties.name);
+                if (loc) Object.assign(f.properties, {
+                    predios: loc.predios, avaluo: loc.avaluo, areaCons: loc.areaCons,
+                    residencial: loc.residencial, comercial: loc.comercial,
+                    industrial: loc.industrial, dotacional: loc.dotacional,
+                });
+            });
+            if (map && map.getSource('predios')) map.getSource('predios').setData(pointsData);
         }
 
         // ────────────────────────────────────────────────────────────
@@ -1834,6 +1918,7 @@
             const pill = e.target.closest('.chart-pill');
             if (!pill) return;
             const metric = pill.dataset.metric;
+            document.getElementById('year-selector').style.display = metric === 'historico' ? 'none' : 'flex';
             renderChart(metric, activeClusterLeaves);
         });
 
@@ -1972,13 +2057,17 @@
                     histTitle = 'CARGANDO DATOS…';
                 }
 
+                const selIdx = HIST_YEARS.indexOf(selectedYear);
+                const pRadP  = HIST_YEARS.map((_, i) => i === selIdx ? 5 : 2);
+                const pRadA  = HIST_YEARS.map((_, i) => i === selIdx ? 5 : 2);
+
                 timelineChartInstance = new Chart(ctx, {
                     type: 'line',
                     data: {
                         labels: labelsH,
                         datasets: [
-                            { label: 'Predios (miles)', data: prediosT, borderColor: 'rgba(0,229,255,.75)', backgroundColor: 'rgba(0,229,255,.05)', borderWidth: 1.5, pointRadius: 2, pointHoverRadius: 4, tension: .35, fill: true, yAxisID: 'y', spanGaps: true },
-                            { label: 'Avalúo prom. ($/m² · miles)', data: avaluoT, borderColor: 'rgba(255,45,120,.75)', backgroundColor: 'rgba(255,45,120,.05)', borderWidth: 1.5, pointRadius: 2, pointHoverRadius: 4, tension: .35, fill: true, yAxisID: 'y1', spanGaps: true },
+                            { label: 'Predios (miles)', data: prediosT, borderColor: 'rgba(0,229,255,.75)', backgroundColor: 'rgba(0,229,255,.05)', borderWidth: 1.5, pointRadius: pRadP, pointHoverRadius: 6, tension: .35, fill: true, yAxisID: 'y', spanGaps: true },
+                            { label: 'Avalúo prom. ($/m² · miles)', data: avaluoT, borderColor: 'rgba(255,45,120,.75)', backgroundColor: 'rgba(255,45,120,.05)', borderWidth: 1.5, pointRadius: pRadA, pointHoverRadius: 6, tension: .35, fill: true, yAxisID: 'y1', spanGaps: true },
                         ],
                     },
                     options: {
@@ -2001,7 +2090,8 @@
 
             // ── Base de datos para métricas por localidad ─────────────
             const locs = leaves ? getLocsByLeaves(leaves) : [...LOCALIDADES];
-            const clusterLabel = leaves ? `CLUSTER · ${locs.length} LOCALIDAD${locs.length !== 1 ? 'ES' : ''}` : null;
+            const yrTag = DATA_LOADED ? ` · ${selectedYear}` : '';
+            const clusterLabel = leaves ? `CLUSTER · ${locs.length} LOCALIDAD${locs.length !== 1 ? 'ES' : ''}${yrTag}` : null;
 
             const clickBar = (sorted) => (evt, elements) => {
                 if (!elements.length) return;
@@ -2032,7 +2122,7 @@
                         onClick: clickBar(sorted), onHover: hoverCursor,
                         plugins: {
                             legend: { display: false },
-                            title: titleCfg(clusterLabel || 'AVALÚO CATASTRAL · 20 localidades — clic para ver en mapa'),
+                            title: titleCfg(clusterLabel || `AVALÚO CATASTRAL · 20 localidades${yrTag} — clic para ver en mapa`),
                             tooltip: tooltipCfg,
                         },
                         scales: {
@@ -2066,7 +2156,7 @@
                         onClick: clickBar(sorted), onHover: hoverCursor,
                         plugins: {
                             legend: { display: false },
-                            title: titleCfg(clusterLabel || 'ÁREA CONSTRUIDA · 20 localidades — clic para ver en mapa'),
+                            title: titleCfg(clusterLabel || `ÁREA CONSTRUIDA · 20 localidades${yrTag} — clic para ver en mapa`),
                             tooltip: tooltipCfg,
                         },
                         scales: {
@@ -2103,7 +2193,7 @@
                                 display: true, position: 'top', align: 'end',
                                 labels: { color: isLight ? 'rgba(0,0,0,.55)' : 'rgba(255,255,255,.45)', font: { ...font, size: 7 }, boxWidth: 8, boxHeight: 8, padding: 6 },
                             },
-                            title: titleCfg(clusterLabel || 'USO DEL SUELO · 20 localidades — clic para ver en mapa'),
+                            title: titleCfg(clusterLabel || `USO DEL SUELO · 20 localidades${yrTag} — clic para ver en mapa`),
                             tooltip: { ...tooltipCfg, callbacks: { label: c => ` ${c.dataset.label}: ${c.raw}%` } },
                         },
                         scales: {
@@ -2181,6 +2271,16 @@
             document.getElementById('btn-prev').disabled = true;
             document.getElementById('narrative-text').style.transition = 'opacity .3s ease';
 
+            // Selector de año
+            const yearRange = document.getElementById('year-range');
+            const yearLabel = document.getElementById('year-label');
+            yearRange.addEventListener('input', () => {
+                selectedYear = Number(yearRange.value);
+                yearLabel.textContent = selectedYear;
+                updateLocDataForYear(selectedYear);
+                renderChart(chartMetric, activeClusterLeaves);
+            });
+
             // Toggle de tema oscuro / claro
             const themeToggle = document.getElementById('theme-toggle');
             themeToggle.addEventListener('change', () => {
@@ -2193,6 +2293,7 @@
 
             // Carga asíncrona de los 15 JSON — re-renderiza la gráfica activa al terminar
             loadAllData().then(() => {
+                updateLocDataForYear(selectedYear);
                 renderChart(chartMetric, activeClusterLeaves);
             });
         });
