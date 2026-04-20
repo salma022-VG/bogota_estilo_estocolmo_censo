@@ -557,26 +557,40 @@
             position: relative;
             cursor: pointer;
             display: inline-block;
-            width: 13px;
-            height: 13px;
+            width: 42px;
+            height: 42px;
         }
 
         .loc-marker-dot {
-            width: 13px;
-            height: 13px;
+            width: 42px;
+            height: 42px;
             border-radius: 50%;
             border: 2px solid rgba(255, 255, 255, .4);
+            overflow: hidden;
             transition: transform .18s, box-shadow .18s;
         }
 
+        .loc-marker-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            filter: brightness(.85) saturate(.9);
+            transition: filter .18s;
+        }
+
         .loc-marker:hover .loc-marker-dot {
-            transform: scale(1.5);
-            border-color: rgba(255, 255, 255, .9);
+            transform: scale(1.15);
+            border-color: rgba(255, 255, 255, .95);
+        }
+
+        .loc-marker:hover .loc-marker-img {
+            filter: brightness(1) saturate(1.1);
         }
 
         .loc-marker-label {
             position: absolute;
-            top: 17px;
+            top: 46px;
             left: 50%;
             transform: translateX(-50%);
             font-family: var(--mono);
@@ -1019,56 +1033,32 @@
             { name: 'Sumapaz', lat: 4.1950, lng: -74.3700, predios: 3500, avaluo: 5200, areaCons: 180, estrato: 1, residencial: 95, comercial: 2, industrial: 0, dotacional: 2, unidades: 4000, npiso: 1.2, antiguedad: 20 },
         ];
 
-        /** PRNG con semilla para dispersión reproducible. */
-        function seededRandom() {
-            let s = 42;
-            return () => { s = (s * 16807) % 2147483647; return s / 2147483647; };
-        }
+        // Puntos exactos por localidad — usados para clic e interacción
+        const pointsData = {
+            type: 'FeatureCollection',
+            features: LOCALIDADES.map(loc => ({
+                type: 'Feature',
+                geometry: {
+                    type: 'Point',
+                    coordinates: [loc.lng, loc.lat],
+                },
+                properties: {
+                    name: loc.name,
+                    predios: loc.predios,
+                    avaluo: loc.avaluo,
+                    areaCons: loc.areaCons,
+                    estrato: loc.estrato,
+                    residencial: loc.residencial,
+                    comercial: loc.comercial,
+                    industrial: loc.industrial,
+                    dotacional: loc.dotacional,
+                    unidades: loc.unidades,
+                    npiso: loc.npiso,
+                    antiguedad: loc.antiguedad,
+                },
+            })),
+        };
 
-        /** Genera un FeatureCollection GeoJSON con puntos agrupados alrededor de cada localidad. */
-        function generateGeoJSON() {
-            const rng = seededRandom();
-            const features = [];
-
-            LOCALIDADES.forEach(loc => {
-                const n = Math.max(8, Math.round(loc.predios / 5000));
-                for (let i = 0; i < n; i++) {
-                    const angle = rng() * Math.PI * 2;
-                    const dist = rng() * 0.013 + 0.001;
-                    const spreadFactor = 1 - (loc.avaluo / 120000) * 0.4;
-
-                    features.push({
-                        type: 'Feature',
-                        geometry: {
-                            type: 'Point',
-                            coordinates: [
-                                loc.lng + Math.cos(angle) * dist * spreadFactor,
-                                loc.lat + Math.sin(angle) * dist * spreadFactor,
-                            ],
-                        },
-                        properties: {
-                            name: loc.name,
-                            predios: loc.predios,
-                            avaluo: Math.round(loc.avaluo * (0.82 + rng() * 0.36)),
-                            areaCons: Math.round(loc.areaCons * (0.85 + rng() * 0.30)),
-                            estrato: loc.estrato,
-                            residencial: loc.residencial,
-                            comercial: loc.comercial,
-                            industrial: loc.industrial,
-                            dotacional: loc.dotacional,
-                            unidades: loc.unidades,
-                            npiso: loc.npiso,
-                            antiguedad: loc.antiguedad,
-                            isCenter: i === 0 ? 1 : 0,
-                        },
-                    });
-                }
-            });
-
-            return { type: 'FeatureCollection', features };
-        }
-
-        const geojsonData = generateGeoJSON();
 
         // ────────────────────────────────────────────────────────────
         // 2. ESTADOS NARRATIVOS
@@ -1191,7 +1181,6 @@
 
         const MAP_STYLE = {
             version: 8,
-            glyphs: 'https://fonts.openmaptiles.org/{fontstack}/{range}.pbf',
             sources: {
                 carto: {
                     type: 'raster',
@@ -1207,7 +1196,32 @@
             layers: [{ id: 'carto', type: 'raster', source: 'carto' }],
         };
 
-        // Marcadores HTML por localidad
+        // Carga una imagen y la recorta en círculo — devuelve ImageData para map.addImage()
+        function loadRoundImage(src, size) {
+            return new Promise(resolve => {
+                const img = new Image();
+                img.onload = () => {
+                    const c = document.createElement('canvas');
+                    c.width = c.height = size;
+                    const ctx = c.getContext('2d');
+                    ctx.save();
+                    ctx.beginPath();
+                    ctx.arc(size / 2, size / 2, size / 2 - 2, 0, Math.PI * 2);
+                    ctx.clip();
+                    ctx.drawImage(img, 0, 0, size, size);
+                    ctx.restore();
+                    ctx.beginPath();
+                    ctx.arc(size / 2, size / 2, size / 2 - 2, 0, Math.PI * 2);
+                    ctx.strokeStyle = 'rgba(255,255,255,0.55)';
+                    ctx.lineWidth = 2.5;
+                    ctx.stroke();
+                    resolve(ctx.getImageData(0, 0, size, size));
+                };
+                img.onerror = () => resolve(null);
+                img.src = src;
+            });
+        }
+
         const localidadMarkers = [];
 
         function initMap() {
@@ -1239,9 +1253,10 @@
             5: '#00e5ff', 6: '#00e5ff',
         };
 
-        /** Crea el elemento DOM para el marcador de una localidad */
+        /** Crea el elemento DOM para el marcador de una localidad con imagen */
         function createLocalidadMarkerEl(loc) {
             const color = ESTRATO_COLORS_MAP[loc.estrato] || '#1d8cf8';
+            const imgSrc = LOC_IMG[loc.name] ?? 'Localidades/Usaquen.png';
             const shortLabel = loc.name.split(' ')[0];
 
             const el = document.createElement('div');
@@ -1249,8 +1264,15 @@
 
             const dot = document.createElement('div');
             dot.className = 'loc-marker-dot';
-            dot.style.background = color;
-            dot.style.boxShadow = `0 0 8px ${color}88`;
+            dot.style.borderColor = color;
+            dot.style.boxShadow = `0 0 10px ${color}99, 0 0 20px ${color}44`;
+
+            const img = document.createElement('img');
+            img.className = 'loc-marker-img';
+            img.src = imgSrc;
+            img.alt = loc.name;
+            img.loading = 'lazy';
+            dot.appendChild(img);
 
             const label = document.createElement('div');
             label.className = 'loc-marker-label';
@@ -1269,15 +1291,28 @@
             return el;
         }
 
-        /** Frame de la animación asignado a cada localidad (fotos reales de Bogotá) */
-        const LOC_FRAME = {
-            'Usaquén': 0, 'Chapinero': 8, 'Santa Fe': 16,
-            'San Cristóbal': 24, 'Usme': 32, 'Tunjuelito': 40,
-            'Bosa': 48, 'Kennedy': 56, 'Fontibón': 64,
-            'Engativá': 72, 'Suba': 80, 'Barrios Unidos': 88,
-            'Teusaquillo': 96, 'Los Mártires': 104, 'Antonio Nariño': 112,
-            'Puente Aranda': 120, 'La Candelaria': 128, 'Rafael Uribe Uribe': 136,
-            'Ciudad Bolívar': 143, 'Sumapaz': 6,
+        /** Imágenes reales de cada localidad */
+        const LOC_IMG = {
+            'Usaquén':            'Localidades/Usaquen.png',
+            'Chapinero':          'Localidades/Chapinero.png',
+            'Santa Fe':           'Localidades/Santa fe.jpg',
+            'San Cristóbal':      'Localidades/San Cristobal.jpg',
+            'Usme':               'Localidades/Usme.png',
+            'Tunjuelito':         'Localidades/Tunjuelito.jpg',
+            'Bosa':               'Localidades/Bosa.jpg',
+            'Kennedy':            'Localidades/Kennedy.jpg',
+            'Fontibón':           'Localidades/Fontibon.jpg',
+            'Engativá':           'Localidades/Engativa.png',
+            'Suba':               'Localidades/Suba.jpg',
+            'Barrios Unidos':     'Localidades/Barrios unidos.jpg',
+            'Teusaquillo':        'Localidades/Teusaquillo.jpg',
+            'Los Mártires':       'Localidades/Los martires.jpeg',
+            'Antonio Nariño':     'Localidades/Antonio nariño.jpg',
+            'Puente Aranda':      'Localidades/Puente areanda.jpg',
+            'La Candelaria':      'Localidades/La candelaria.png',
+            'Rafael Uribe Uribe': 'Localidades/Rafael uribe uribe.jpg',
+            'Ciudad Bolívar':     'Localidades/Ciudad bolivar.png',
+            'Sumapaz':            'Localidades/Sumapaz.jpg',
         };
 
         /** Muestra popup enriquecido con imagen y datos del censo */
@@ -1285,8 +1320,7 @@
             if (activePopup) activePopup.remove();
 
             const color = ESTRATO_COLORS_MAP[loc.estrato] || '#1d8cf8';
-            const frame = LOC_FRAME[loc.name] ?? 0;
-            const imgSrc = `animacion-campin_${String(frame).padStart(3, '0')}.jpeg`;
+            const imgSrc = LOC_IMG[loc.name] ?? 'Localidades/Usaquen.png';
             const catLabel = loc.residencial >= 80 ? 'Predominio Residencial'
                 : loc.comercial >= 30 ? 'Mixto / Comercial'
                     : loc.industrial >= 10 ? 'Industrial / Mixto'
@@ -1338,102 +1372,42 @@
 
         function setupClusterLayers() {
 
-            // Fuente GeoJSON sin clustering — puntos de fondo sutiles
+            // Fuente interactiva — 20 puntos exactos (para clic)
             map.addSource('predios', {
                 type: 'geojson',
-                data: geojsonData,
+                data: pointsData,
             });
 
-            // ── Brillo de fondo (muy sutil) ──
-            map.addLayer({
-                id: 'unclustered-glow',
-                type: 'circle',
-                source: 'predios',
-                paint: {
-                    'circle-color': '#1d8cf8',
-                    'circle-radius': 10,
-                    'circle-opacity': 0.06,
-                    'circle-blur': 1.2,
-                },
-            });
 
-            // ── Puntos de fondo (densidad visual) ──
-            map.addLayer({
-                id: 'unclustered-point',
-                type: 'circle',
-                source: 'predios',
-                paint: {
-                    'circle-color': '#1d8cf8',
-                    'circle-radius': 3,
-                    'circle-opacity': 0.22,
-                    'circle-stroke-width': 0,
-                },
-            });
+            // ── Íconos WebGL — renderizados en el mismo pase que las tiles, nunca se mueven ──
+            const IMG_PX = 56;
+            Promise.all(LOCALIDADES.map(async loc => {
+                const src = LOC_IMG[loc.name] ?? 'Localidades/Usaquen.png';
+                const imgData = await loadRoundImage(src, IMG_PX);
+                if (imgData) map.addImage('loc-' + loc.name, imgData);
+            })).then(() => {
+                map.addLayer({
+                    id: 'localidades-icons',
+                    type: 'symbol',
+                    source: 'predios',
+                    layout: {
+                        'icon-image': ['concat', 'loc-', ['get', 'name']],
+                        'icon-size': 1,
+                        'icon-allow-overlap': true,
+                        'icon-ignore-placement': true,
+                    },
+                });
 
-            // ── Puntos fijos por localidad (capa MapLibre — sin DOM markers) ──
-            map.addSource('localidades-points', {
-                type: 'geojson',
-                data: {
-                    type: 'FeatureCollection',
-                    features: LOCALIDADES.map(loc => ({
-                        type: 'Feature',
-                        geometry: { type: 'Point', coordinates: [loc.lng, loc.lat] },
-                        properties: { ...loc, shortName: loc.name.split(' ')[0] },
-                    })),
-                },
-            });
-
-            map.addLayer({
-                id: 'localidades-circles',
-                type: 'circle',
-                source: 'localidades-points',
-                paint: {
-                    'circle-radius': 6,
-                    'circle-color': ['match', ['get', 'estrato'],
-                        1, '#e23670', 2, '#e23670',
-                        3, '#6d5dfc',
-                        4, '#1d8cf8',
-                        5, '#00e5ff', 6, '#00e5ff',
-                        '#1d8cf8',
-                    ],
-                    'circle-stroke-width': 2,
-                    'circle-stroke-color': 'rgba(255,255,255,0.4)',
-                },
-            });
-
-            map.addLayer({
-                id: 'localidades-labels',
-                type: 'symbol',
-                source: 'localidades-points',
-                layout: {
-                    'text-field': ['get', 'shortName'],
-                    'text-font': ['Open Sans Regular'],
-                    'text-size': 9,
-                    'text-offset': [0, 1.4],
-                    'text-anchor': 'top',
-                },
-                paint: {
-                    'text-color': 'rgba(255,255,255,0.5)',
-                    'text-halo-color': 'rgba(0,0,0,0.9)',
-                    'text-halo-width': 1,
-                },
-            });
-
-            map.on('click', 'localidades-circles', (e) => {
-                if (!e.features?.length) return;
-                const props = e.features[0].properties;
-                const loc = LOCALIDADES.find(l => l.name === props.name);
-                if (!loc) return;
-                showLocalidadPopup(loc);
-                showLocalidadCard(loc);
-                map.flyTo({ center: [loc.lng, loc.lat], zoom: 14, duration: 800, essential: true });
-            });
-
-            map.on('mouseenter', 'localidades-circles', () => {
-                map.getCanvas().style.cursor = 'pointer';
-            });
-            map.on('mouseleave', 'localidades-circles', () => {
-                map.getCanvas().style.cursor = '';
+                map.on('click', 'localidades-icons', (e) => {
+                    if (!e.features?.length) return;
+                    const loc = LOCALIDADES.find(l => l.name === e.features[0].properties.name);
+                    if (!loc) return;
+                    showLocalidadPopup(loc);
+                    showLocalidadCard(loc);
+                    map.flyTo({ center: [loc.lng, loc.lat], zoom: 14, duration: 800, essential: true });
+                });
+                map.on('mouseenter', 'localidades-icons', () => { map.getCanvas().style.cursor = 'pointer'; });
+                map.on('mouseleave', 'localidades-icons', () => { map.getCanvas().style.cursor = ''; });
             });
         }
 
@@ -1514,39 +1488,10 @@
         }
 
         // ────────────────────────────────────────────────────────────
-        // 7. MODOS DE COLOR DE PUNTOS
+        // 7. MODOS DE COLOR DE PUNTOS (sin capa de puntos — no-op)
         // ────────────────────────────────────────────────────────────
 
-        function updatePointColors(mode) {
-            if (!mapLoaded) return;
-
-            switch (mode) {
-                case 'avaluo':
-                    map.setPaintProperty('unclustered-point', 'circle-color', [
-                        'interpolate', ['linear'], ['get', 'avaluo'],
-                        5000, 'rgba(0, 229, 255, 0.15)',
-                        55000, 'rgba(0, 229, 255, 0.4)',
-                        115000, 'rgba(0, 229, 255, 0.7)',
-                    ]);
-                    map.setPaintProperty('unclustered-glow', 'circle-color', '#00e5ff');
-                    break;
-
-                case 'area':
-                    map.setPaintProperty('unclustered-point', 'circle-color', [
-                        'interpolate', ['linear'], ['get', 'areaCons'],
-                        180, 'rgba(255, 45, 120, 0.15)',
-                        10000, 'rgba(255, 45, 120, 0.4)',
-                        28000, 'rgba(255, 45, 120, 0.7)',
-                    ]);
-                    map.setPaintProperty('unclustered-glow', 'circle-color', '#ff2d78');
-                    break;
-
-                default:
-                    map.setPaintProperty('unclustered-point', 'circle-color', '#1d8cf8');
-                    map.setPaintProperty('unclustered-glow', 'circle-color', '#1d8cf8');
-                    break;
-            }
-        }
+        function updatePointColors(mode) { /* puntos de fondo eliminados */ }
 
         // ────────────────────────────────────────────────────────────
         // 7. VUELO DEL MAPA
