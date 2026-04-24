@@ -175,6 +175,7 @@
             z-index: 1;
         }
 
+
         /* Viñeta sutil */
         #app::after {
             content: '';
@@ -854,7 +855,7 @@
             align-items: center;
             gap: 7px;
             margin-left: 10px;
-            border-left: 1px solid rgba(255,255,255,.1);
+            border-left: 1px solid rgba(255, 255, 255, .1);
             padding-left: 10px;
         }
 
@@ -872,7 +873,7 @@
             appearance: none;
             width: 100px;
             height: 3px;
-            background: rgba(255,255,255,.15);
+            background: rgba(255, 255, 255, .15);
             border-radius: 2px;
             outline: none;
             cursor: pointer;
@@ -897,8 +898,13 @@
             cursor: pointer;
         }
 
-        body.light-mode .year-selector { border-left-color: rgba(0,0,0,.12); }
-        body.light-mode .year-range { background: rgba(0,0,0,.15); }
+        body.light-mode .year-selector {
+            border-left-color: rgba(0, 0, 0, .12);
+        }
+
+        body.light-mode .year-range {
+            background: rgba(0, 0, 0, .15);
+        }
 
         /* ── Toggle de tema ── */
         .switch {
@@ -943,11 +949,11 @@
             transition: .5s;
         }
 
-        input:checked + .slider {
+        input:checked+.slider {
             background-color: #c8d8e8;
         }
 
-        input:checked + .slider:before {
+        input:checked+.slider:before {
             transform: translateX(100%);
             box-shadow: inset 15px -4px 0px 15px #fff000;
         }
@@ -1041,29 +1047,108 @@
         }
 
         /* popup valores en tema claro */
-        body.light-mode .popup-value { color: #111 !important; }
-        body.light-mode .popup-value.cyan { color: var(--cyan) !important; }
-        body.light-mode .popup-value.magenta { color: var(--mag) !important; }
-        body.light-mode .popup-label { color: rgba(0,0,0,.55) !important; }
-        body.light-mode .popup-category { color: rgba(0,0,0,.45) !important; }
-        body.light-mode .popup-uso-label { color: rgba(0,0,0,.4) !important; }
-        body.light-mode .popup-name { color: var(--blue) !important; }
-        body.light-mode .maplibregl-popup-close-button { color: rgba(0,0,0,.5) !important; }
-        body.light-mode .maplibregl-popup-close-button:hover { color: #111 !important; }
-        body.light-mode .popup-divider { border-color: rgba(0,0,0,.1) !important; }
-        body.light-mode .chart-pill { color: rgba(0,0,0,.4) !important; border-color: rgba(0,0,0,.15) !important; }
-        body.light-mode .chart-pill:hover { color: rgba(0,0,0,.75) !important; border-color: rgba(0,0,0,.4) !important; }
-        body.light-mode .chart-pill.active { color: var(--cyan) !important; border-color: var(--cyan) !important; background: rgba(0,119,170,.07) !important; }
-        body.light-mode .ghost-btn { color: #111 !important; border-color: rgba(0,0,0,.2) !important; }
-        body.light-mode .ghost-btn:hover { background: rgba(0,0,0,.06) !important; }
-        body.light-mode .narrative-text strong { color: var(--cyan) !important; text-shadow: none; }
-        body.light-mode .narrative-text .magenta { color: var(--mag) !important; text-shadow: none; }
-        body.light-mode .narrative-text .blue { color: var(--blue) !important; text-shadow: none; }
-        body.light-mode .narrative-text .purple { color: var(--purple) !important; text-shadow: none; }
-        body.light-mode #app::after { background: radial-gradient(ellipse at 50% 50%, transparent 55%, rgba(200,210,220,.25) 100%); }
-        body.light-mode .header-logo-sep { color: rgba(0,0,0,.2) !important; }
-        body.light-mode .info-btn { color: rgba(0,0,0,.5) !important; border-color: rgba(0,0,0,.2) !important; }
-        body.light-mode .info-btn:hover { color: #111 !important; border-color: rgba(0,0,0,.6) !important; }
+        body.light-mode .popup-value {
+            color: #111 !important;
+        }
+
+        body.light-mode .popup-value.cyan {
+            color: var(--cyan) !important;
+        }
+
+        body.light-mode .popup-value.magenta {
+            color: var(--mag) !important;
+        }
+
+        body.light-mode .popup-label {
+            color: rgba(0, 0, 0, .55) !important;
+        }
+
+        body.light-mode .popup-category {
+            color: rgba(0, 0, 0, .45) !important;
+        }
+
+        body.light-mode .popup-uso-label {
+            color: rgba(0, 0, 0, .4) !important;
+        }
+
+        body.light-mode .popup-name {
+            color: var(--blue) !important;
+        }
+
+        body.light-mode .maplibregl-popup-close-button {
+            color: rgba(0, 0, 0, .5) !important;
+        }
+
+        body.light-mode .maplibregl-popup-close-button:hover {
+            color: #111 !important;
+        }
+
+        body.light-mode .popup-divider {
+            border-color: rgba(0, 0, 0, .1) !important;
+        }
+
+        body.light-mode .chart-pill {
+            color: rgba(0, 0, 0, .4) !important;
+            border-color: rgba(0, 0, 0, .15) !important;
+        }
+
+        body.light-mode .chart-pill:hover {
+            color: rgba(0, 0, 0, .75) !important;
+            border-color: rgba(0, 0, 0, .4) !important;
+        }
+
+        body.light-mode .chart-pill.active {
+            color: var(--cyan) !important;
+            border-color: var(--cyan) !important;
+            background: rgba(0, 119, 170, .07) !important;
+        }
+
+        body.light-mode .ghost-btn {
+            color: #111 !important;
+            border-color: rgba(0, 0, 0, .2) !important;
+        }
+
+        body.light-mode .ghost-btn:hover {
+            background: rgba(0, 0, 0, .06) !important;
+        }
+
+        body.light-mode .narrative-text strong {
+            color: var(--cyan) !important;
+            text-shadow: none;
+        }
+
+        body.light-mode .narrative-text .magenta {
+            color: var(--mag) !important;
+            text-shadow: none;
+        }
+
+        body.light-mode .narrative-text .blue {
+            color: var(--blue) !important;
+            text-shadow: none;
+        }
+
+        body.light-mode .narrative-text .purple {
+            color: var(--purple) !important;
+            text-shadow: none;
+        }
+
+        body.light-mode #app::after {
+            background: radial-gradient(ellipse at 50% 50%, transparent 55%, rgba(200, 210, 220, .25) 100%);
+        }
+
+        body.light-mode .header-logo-sep {
+            color: rgba(0, 0, 0, .2) !important;
+        }
+
+        body.light-mode .info-btn {
+            color: rgba(0, 0, 0, .5) !important;
+            border-color: rgba(0, 0, 0, .2) !important;
+        }
+
+        body.light-mode .info-btn:hover {
+            color: #111 !important;
+            border-color: rgba(0, 0, 0, .6) !important;
+        }
     </style>
 </head>
 
@@ -1157,7 +1242,8 @@
                     <button class="chart-pill" data-metric="area">Área</button>
                     <button class="chart-pill" data-metric="uso">Uso suelo</button>
                     <div class="year-selector" id="year-selector" style="display:none;">
-                        <input type="range" id="year-range" min="2012" max="2026" value="2024" step="1" class="year-range">
+                        <input type="range" id="year-range" min="2012" max="2026" value="2024" step="1"
+                            class="year-range">
                         <span class="year-label" id="year-label">2024</span>
                     </div>
                 </div>
@@ -1184,10 +1270,6 @@
     </div>
 
     <script>
-        /* ══════════════════════════════════════════════════════════════
-           Bogotá — Censo Inmobiliario
-           Cinematic Stockholm-19 Style · MapLibre GL Clusters
-           ══════════════════════════════════════════════════════════════ */
 
         // ────────────────────────────────────────────────────────────
         // 1. DATOS — 20 Localidades de Bogotá
@@ -1216,7 +1298,7 @@
             { name: 'La Candelaria', lat: 4.5975, lng: -74.0769, predios: 12000, avaluo: 48000, areaCons: 1100, estrato: 3, residencial: 45, comercial: 38, industrial: 5, dotacional: 15, unidades: 15000, npiso: 2.8, antiguedad: 75 },
             { name: 'Rafael Uribe Uribe', lat: 4.5544, lng: -74.1158, predios: 105000, avaluo: 16500, areaCons: 7800, estrato: 2, residencial: 88, comercial: 8, industrial: 3, dotacional: 1, unidades: 112000, npiso: 2.2, antiguedad: 35 },
             { name: 'Ciudad Bolívar', lat: 4.5114, lng: -74.1701, predios: 180000, avaluo: 9800, areaCons: 10200, estrato: 1, residencial: 92, comercial: 5, industrial: 2, dotacional: 1, unidades: 192000, npiso: 1.7, antiguedad: 14 },
-            { name: 'Sumapaz', lat: 4.1950, lng: -74.3700, predios: 3500, avaluo: 5200, areaCons: 180, estrato: 1, residencial: 95, comercial: 2, industrial: 0, dotacional: 2, unidades: 4000, npiso: 1.2, antiguedad: 20 },
+            { name: 'Sumapaz', lat: 4.0293, lng: -74.2476, predios: 3500, avaluo: 5200, areaCons: 180, estrato: 1, residencial: 95, comercial: 2, industrial: 0, dotacional: 2, unidades: 4000, npiso: 1.2, antiguedad: 20 },
         ];
 
         // Puntos exactos por localidad — usados para clic e interacción
@@ -1251,49 +1333,49 @@
         // ────────────────────────────────────────────────────────────
 
         let DATA_BY_YEAR = {};
-        let DATA_LOADED  = false;
+        let DATA_LOADED = false;
 
         // Mapeo de nombres JSON (mayúscula sin tilde) → nombre en LOCALIDADES
         const NAME_MAP = {
-            'ANTONIO NARINO':     'Antonio Nariño',
-            'BARRIOS UNIDOS':     'Barrios Unidos',
-            'BOSA':               'Bosa',
-            'CHAPINERO':          'Chapinero',
-            'CIUDAD BOLIVAR':     'Ciudad Bolívar',
-            'ENGATIVA':           'Engativá',
-            'FONTIBON':           'Fontibón',
-            'KENNEDY':            'Kennedy',
-            'LA CANDELARIA':      'La Candelaria',
-            'LOS MARTIRES':       'Los Mártires',
-            'PUENTE ARANDA':      'Puente Aranda',
+            'ANTONIO NARINO': 'Antonio Nariño',
+            'BARRIOS UNIDOS': 'Barrios Unidos',
+            'BOSA': 'Bosa',
+            'CHAPINERO': 'Chapinero',
+            'CIUDAD BOLIVAR': 'Ciudad Bolívar',
+            'ENGATIVA': 'Engativá',
+            'FONTIBON': 'Fontibón',
+            'KENNEDY': 'Kennedy',
+            'LA CANDELARIA': 'La Candelaria',
+            'LOS MARTIRES': 'Los Mártires',
+            'PUENTE ARANDA': 'Puente Aranda',
             'RAFAEL URIBE URIBE': 'Rafael Uribe Uribe',
-            'SAN CRISTOBAL':      'San Cristóbal',
-            'SANTA FE':           'Santa Fe',
-            'SUBA':               'Suba',
-            'SUMAPAZ':            'Sumapaz',
-            'TEUSAQUILLO':        'Teusaquillo',
-            'TUNJUELITO':         'Tunjuelito',
-            'USAQUEN':            'Usaquén',
-            'USME':               'Usme',
+            'SAN CRISTOBAL': 'San Cristóbal',
+            'SANTA FE': 'Santa Fe',
+            'SUBA': 'Suba',
+            'SUMAPAZ': 'Sumapaz',
+            'TEUSAQUILLO': 'Teusaquillo',
+            'TUNJUELITO': 'Tunjuelito',
+            'USAQUEN': 'Usaquén',
+            'USME': 'Usme',
         };
 
         function clasificarUso(grupo) {
             const g = (grupo || '').toUpperCase();
-            if (g.includes('RESIDENCIAL'))              return 'residencial';
+            if (g.includes('RESIDENCIAL')) return 'residencial';
             if (g.includes('COMERCIO') || g.includes('COMERCIAL')) return 'comercial';
-            if (g.includes('INDUSTRIA') || g.includes('BODEGA'))   return 'industrial';
+            if (g.includes('INDUSTRIA') || g.includes('BODEGA')) return 'industrial';
             return 'dotacional';
         }
 
         async function loadAllData() {
-            const YEARS = [2012,2013,2014,2015,2016,2017,2018,2019,2020,2021,2022,2023,2024,2025,2026];
+            const YEARS = [2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025, 2026];
 
             const allRaw = await Promise.all(
                 YEARS.map(y => fetch(`datos_${y}.json`).then(r => r.json()).catch(() => []))
             );
 
             YEARS.forEach((year, i) => {
-                const yy  = String(year).slice(2);
+                const yy = String(year).slice(2);
                 const rows = allRaw[i];
                 const byLoc = {};
 
@@ -1305,10 +1387,10 @@
                         residencial: 0, comercial: 0, industrial: 0, dotacional: 0,
                     };
                     const agg = byLoc[locName];
-                    const ac  = Number(row[`AREA_CONSTRUIDA_${yy}`]) || 0;
-                    agg.predios     += Number(row[`PREDIOS_${yy}`])      || 0;
+                    const ac = Number(row[`AREA_CONSTRUIDA_${yy}`]) || 0;
+                    agg.predios += Number(row[`PREDIOS_${yy}`]) || 0;
                     agg.avaluoTotal += Number(row[`VALOR_AVALUO_${yy}`]) || 0;
-                    agg.areaCons    += ac;
+                    agg.areaCons += ac;
                     agg[clasificarUso(row.GRUPO_ECONOMICO)] += ac;
                 });
 
@@ -1320,14 +1402,14 @@
             LOCALIDADES.forEach(loc => {
                 const d = d24[loc.name];
                 if (!d || d.areaCons === 0) return;
-                loc.predios  = Math.round(d.predios);
-                loc.avaluo   = Math.round(d.avaluoTotal / d.areaCons);   // COP/m²
+                loc.predios = Math.round(d.predios);
+                loc.avaluo = Math.round(d.avaluoTotal / d.areaCons);   // COP/m²
                 loc.areaCons = Math.round(d.areaCons / 10000);           // m² → ha
-                const total  = (d.residencial + d.comercial + d.industrial + d.dotacional) || 1;
+                const total = (d.residencial + d.comercial + d.industrial + d.dotacional) || 1;
                 loc.residencial = Math.round(d.residencial / total * 100);
-                loc.comercial   = Math.round(d.comercial   / total * 100);
-                loc.industrial  = Math.round(d.industrial  / total * 100);
-                loc.dotacional  = 100 - loc.residencial - loc.comercial - loc.industrial;
+                loc.comercial = Math.round(d.comercial / total * 100);
+                loc.industrial = Math.round(d.industrial / total * 100);
+                loc.dotacional = 100 - loc.residencial - loc.comercial - loc.industrial;
             });
 
             // Propagar valores actualizados a pointsData (fuente del mapa)
@@ -1354,14 +1436,14 @@
             LOCALIDADES.forEach(loc => {
                 const d = byLoc[loc.name];
                 if (!d || d.areaCons === 0) return;
-                loc.predios  = Math.round(d.predios);
-                loc.avaluo   = Math.round(d.avaluoTotal / d.areaCons);
+                loc.predios = Math.round(d.predios);
+                loc.avaluo = Math.round(d.avaluoTotal / d.areaCons);
                 loc.areaCons = Math.round(d.areaCons / 10000);
-                const total  = (d.residencial + d.comercial + d.industrial + d.dotacional) || 1;
+                const total = (d.residencial + d.comercial + d.industrial + d.dotacional) || 1;
                 loc.residencial = Math.round(d.residencial / total * 100);
-                loc.comercial   = Math.round(d.comercial   / total * 100);
-                loc.industrial  = Math.round(d.industrial  / total * 100);
-                loc.dotacional  = 100 - loc.residencial - loc.comercial - loc.industrial;
+                loc.comercial = Math.round(d.comercial / total * 100);
+                loc.industrial = Math.round(d.industrial / total * 100);
+                loc.dotacional = 100 - loc.residencial - loc.comercial - loc.industrial;
             });
             pointsData.features.forEach(f => {
                 const loc = LOCALIDADES.find(l => l.name === f.properties.name);
@@ -1499,27 +1581,23 @@
                 'carto-dark': {
                     type: 'raster',
                     tiles: [
-                        'https://a.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}@2x.png',
-                        'https://b.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}@2x.png',
-                        'https://c.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}@2x.png',
+                        'https://serviciosgis.catastrobogota.gov.co/arcgis/rest/services/Mapa_Referencia/mapa_base_oscuro_3857/MapServer/tile/{z}/{y}/{x}',
                     ],
                     tileSize: 256,
-                    attribution: '© OpenStreetMap © CARTO',
+                    attribution: '© Catastro Bogotá',
                 },
                 'carto-light': {
                     type: 'raster',
                     tiles: [
-                        'https://a.basemaps.cartocdn.com/light_all/{z}/{x}/{y}@2x.png',
-                        'https://b.basemaps.cartocdn.com/light_all/{z}/{x}/{y}@2x.png',
-                        'https://c.basemaps.cartocdn.com/light_all/{z}/{x}/{y}@2x.png',
+                        'https://serviciosgis.catastrobogota.gov.co/arcgis/rest/services/Mapa_Referencia/mapa_base_3857/MapServer/tile/{z}/{y}/{x}',
                     ],
                     tileSize: 256,
-                    attribution: '© OpenStreetMap © CARTO',
+                    attribution: '© Catastro Bogotá',
                 },
             },
             layers: [
-                { id: 'basemap-dark',  type: 'raster', source: 'carto-dark',  layout: { visibility: 'visible' } },
-                { id: 'basemap-light', type: 'raster', source: 'carto-light', layout: { visibility: 'none'    } },
+                { id: 'basemap-dark', type: 'raster', source: 'carto-dark', layout: { visibility: 'visible' } },
+                { id: 'basemap-light', type: 'raster', source: 'carto-light', layout: { visibility: 'none' } },
             ],
         };
 
@@ -1620,26 +1698,26 @@
 
         /** Imágenes reales de cada localidad */
         const LOC_IMG = {
-            'Usaquén':            'Localidades/Usaquen.png',
-            'Chapinero':          'Localidades/Chapinero.png',
-            'Santa Fe':           'Localidades/Santa fe.jpg',
-            'San Cristóbal':      'Localidades/San Cristobal.jpg',
-            'Usme':               'Localidades/Usme.png',
-            'Tunjuelito':         'Localidades/Tunjuelito.jpg',
-            'Bosa':               'Localidades/Bosa.jpg',
-            'Kennedy':            'Localidades/Kennedy.jpg',
-            'Fontibón':           'Localidades/Fontibon.jpg',
-            'Engativá':           'Localidades/Engativa.png',
-            'Suba':               'Localidades/Suba.jpg',
-            'Barrios Unidos':     'Localidades/Barrios unidos.jpg',
-            'Teusaquillo':        'Localidades/Teusaquillo.jpg',
-            'Los Mártires':       'Localidades/Los martires.jpeg',
-            'Antonio Nariño':     'Localidades/Antonio nariño.jpg',
-            'Puente Aranda':      'Localidades/Puente areanda.jpg',
-            'La Candelaria':      'Localidades/La candelaria.png',
+            'Usaquén': 'Localidades/Usaquen.png',
+            'Chapinero': 'Localidades/Chapinero.png',
+            'Santa Fe': 'Localidades/Santa fe.jpg',
+            'San Cristóbal': 'Localidades/San Cristobal.jpg',
+            'Usme': 'Localidades/Usme.png',
+            'Tunjuelito': 'Localidades/Tunjuelito.jpg',
+            'Bosa': 'Localidades/Bosa.jpg',
+            'Kennedy': 'Localidades/Kennedy.jpg',
+            'Fontibón': 'Localidades/Fontibon.jpg',
+            'Engativá': 'Localidades/Engativa.png',
+            'Suba': 'Localidades/Suba.jpg',
+            'Barrios Unidos': 'Localidades/Barrios unidos.jpg',
+            'Teusaquillo': 'Localidades/Teusaquillo.jpg',
+            'Los Mártires': 'Localidades/Los martires.jpeg',
+            'Antonio Nariño': 'Localidades/Antonio nariño.jpg',
+            'Puente Aranda': 'Localidades/Puente areanda.jpg',
+            'La Candelaria': 'Localidades/La candelaria.png',
             'Rafael Uribe Uribe': 'Localidades/Rafael uribe uribe.jpg',
-            'Ciudad Bolívar':     'Localidades/Ciudad bolivar.png',
-            'Sumapaz':            'Localidades/Sumapaz.jpg',
+            'Ciudad Bolívar': 'Localidades/Ciudad bolivar.png',
+            'Sumapaz': 'Localidades/Sumapaz.jpg',
         };
 
         /** Muestra popup enriquecido con imagen y datos del censo */
@@ -1987,17 +2065,17 @@
             if (timelineChartInstance) { timelineChartInstance.destroy(); timelineChartInstance = null; }
 
             const isLight = document.body.classList.contains('light-mode');
-            const tickClr  = isLight ? 'rgba(0,0,0,.45)'   : 'rgba(255,255,255,.32)';
-            const gridClr  = isLight ? 'rgba(0,0,0,.07)'   : 'rgba(255,255,255,.03)';
-            const tipBg    = isLight ? 'rgba(255,255,255,.97)' : 'rgba(0,0,0,.92)';
-            const tipBdr   = isLight ? 'rgba(0,0,0,.12)'   : 'rgba(255,255,255,.1)';
-            const tipTitle = isLight ? '#333'               : undefined;
-            const tipBody  = isLight ? '#111'               : undefined;
-            const titleClr = isLight ? 'rgba(0,80,150,.55)': 'rgba(0,229,255,.3)';
-            const cyanTick = isLight ? 'rgba(0,100,160,.6)': 'rgba(0,229,255,.4)';
-            const magTick  = isLight ? 'rgba(160,0,60,.6)' : 'rgba(255,45,120,.4)';
-            const wTick    = isLight ? 'rgba(0,0,0,.3)'    : 'rgba(255,255,255,.2)';
-            const wLine    = isLight ? 'rgba(0,0,0,.25)'   : 'rgba(255,255,255,.22)';
+            const tickClr = isLight ? 'rgba(0,0,0,.45)' : 'rgba(255,255,255,.32)';
+            const gridClr = isLight ? 'rgba(0,0,0,.07)' : 'rgba(255,255,255,.03)';
+            const tipBg = isLight ? 'rgba(255,255,255,.97)' : 'rgba(0,0,0,.92)';
+            const tipBdr = isLight ? 'rgba(0,0,0,.12)' : 'rgba(255,255,255,.1)';
+            const tipTitle = isLight ? '#333' : undefined;
+            const tipBody = isLight ? '#111' : undefined;
+            const titleClr = isLight ? 'rgba(0,80,150,.55)' : 'rgba(0,229,255,.3)';
+            const cyanTick = isLight ? 'rgba(0,100,160,.6)' : 'rgba(0,229,255,.4)';
+            const magTick = isLight ? 'rgba(160,0,60,.6)' : 'rgba(255,45,120,.4)';
+            const wTick = isLight ? 'rgba(0,0,0,.3)' : 'rgba(255,255,255,.2)';
+            const wLine = isLight ? 'rgba(0,0,0,.25)' : 'rgba(255,255,255,.22)';
 
             const font = { family: 'Roboto Mono', weight: '300' };
             const ctx = document.getElementById('timelineChart');
@@ -2021,9 +2099,9 @@
 
             // ── Histórico (serie temporal) ────────────────────────────
             if (metric === 'historico') {
-                const HIST_YEARS = [2012,2013,2014,2015,2016,2017,2018,2019,2020,2021,2022,2023,2024,2025,2026];
-                const labelsH   = HIST_YEARS.map(String);
-                const locName   = leaves && leaves.length === 1 ? leaves[0].properties.name : null;
+                const HIST_YEARS = [2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025, 2026];
+                const labelsH = HIST_YEARS.map(String);
+                const locName = leaves && leaves.length === 1 ? leaves[0].properties.name : null;
 
                 let prediosT, avaluoT, histTitle;
                 if (DATA_LOADED && locName) {
@@ -2052,14 +2130,14 @@
                     });
                     histTitle = 'HISTÓRICO BOGOTÁ · 2012 – 2026 · 20 localidades';
                 } else {
-                    prediosT  = [2050,2120,2190,2260,2320,2390,2430,2490,2520,2560,2610,2660,2720,null,null];
-                    avaluoT   = [22,24,26,28,30,32,34,36,38,40,43,46,49,null,null];
+                    prediosT = [2050, 2120, 2190, 2260, 2320, 2390, 2430, 2490, 2520, 2560, 2610, 2660, 2720, null, null];
+                    avaluoT = [22, 24, 26, 28, 30, 32, 34, 36, 38, 40, 43, 46, 49, null, null];
                     histTitle = 'CARGANDO DATOS…';
                 }
 
                 const selIdx = HIST_YEARS.indexOf(selectedYear);
-                const pRadP  = HIST_YEARS.map((_, i) => i === selIdx ? 5 : 2);
-                const pRadA  = HIST_YEARS.map((_, i) => i === selIdx ? 5 : 2);
+                const pRadP = HIST_YEARS.map((_, i) => i === selIdx ? 5 : 2);
+                const pRadA = HIST_YEARS.map((_, i) => i === selIdx ? 5 : 2);
 
                 timelineChartInstance = new Chart(ctx, {
                     type: 'line',
@@ -2286,7 +2364,7 @@
             themeToggle.addEventListener('change', () => {
                 const isLight = themeToggle.checked;
                 document.body.classList.toggle('light-mode', isLight);
-                map.setLayoutProperty('basemap-dark',  'visibility', isLight ? 'none'    : 'visible');
+                map.setLayoutProperty('basemap-dark', 'visibility', isLight ? 'none' : 'visible');
                 map.setLayoutProperty('basemap-light', 'visibility', isLight ? 'visible' : 'none');
                 renderChart(chartMetric, activeClusterLeaves);
             });
