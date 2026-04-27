@@ -13,7 +13,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-        href="https://fonts.googleapis.com/css2?family=Ramaraja&family=Roboto+Mono:wght@200;300;400;600;700&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Ramaraja&family=Roboto:wght@300;400;500;700&family=Roboto+Mono:wght@200;300;400;600;700&display=swap"
         rel="stylesheet" />
 
     <!-- MapLibre GL -->
@@ -39,8 +39,9 @@
         }
 
         :root {
-            --serif: 'Ramaraja', 'Georgia', serif;
-            --mono: 'Roboto Mono', 'Courier New', monospace;
+            --serif: 'Roboto', 'Arial', sans-serif;
+            --sans: 'Roboto', 'Arial', sans-serif;
+            --mono: 'Roboto', 'Arial', sans-serif;
             --bg: #000;
             --text: #fff;
             --dim: rgba(255, 255, 255, .45);
@@ -482,6 +483,44 @@
             flex: 1;
         }
 
+        /* ── Filas interactivas del ranking ── */
+        .stat-row.clickable {
+            cursor: pointer;
+            border-radius: 3px;
+            padding: 3px 5px;
+            margin: 0 -5px;
+            transition: background .15s;
+        }
+
+        .stat-row.clickable:hover {
+            background: rgba(255, 255, 255, .07);
+        }
+
+        .stat-row.clickable:hover .stat-loc-name {
+            color: var(--cyan);
+        }
+
+        .stat-loc-name {
+            font-size: .58rem;
+            font-weight: 400;
+            color: var(--text);
+            transition: color .15s;
+        }
+
+        .stat-mini-bar {
+            width: 100%;
+            height: 2px;
+            background: rgba(255, 255, 255, .08);
+            border-radius: 1px;
+            margin-top: 2px;
+        }
+
+        .stat-mini-bar-fill {
+            height: 100%;
+            border-radius: 1px;
+            transition: width .4s ease;
+        }
+
         /* ── Popup de MapLibre ── */
         .maplibregl-popup-content {
             background: var(--popup-bg) !important;
@@ -691,14 +730,14 @@
         }
 
         .info-modal-content h2 {
-            font-family: var(--serif);
+            font-family: var(--sans);
             font-size: 1.5rem;
             margin-bottom: 14px;
             font-weight: 400;
         }
 
         .info-modal-content p {
-            font-family: var(--mono);
+            font-family: var(--sans);
             font-size: .75rem;
             font-weight: 300;
             line-height: 1.7;
@@ -819,7 +858,7 @@
             border: 1px solid rgba(255, 255, 255, 0.15);
             background: rgba(255, 255, 255, 0.03);
             color: rgba(255, 255, 255, 0.5);
-            font-family: 'Roboto Mono', monospace;
+            font-family: 'Roboto', 'Arial', sans-serif;
             font-size: 0.6rem;
             font-weight: 400;
             letter-spacing: 0.18em;
@@ -840,7 +879,7 @@
             top: 30px;
             left: 50%;
             transform: translateX(-50%);
-            font-family: 'Roboto Mono', monospace;
+            font-family: 'Roboto', 'Arial', sans-serif;
             font-size: 0.7rem;
             font-weight: 300;
             color: rgba(255, 255, 255, 0.3);
@@ -2042,6 +2081,7 @@
             map.on('load', () => {
                 mapLoaded = true;
                 setupClusterLayers();
+                if (STATES[step].mode === 'overview') renderOverviewStats();
             });
         }
 
@@ -2281,14 +2321,53 @@
             `;
         }
 
+        function renderOverviewStats() {
+            const sorted = [...LOCALIDADES].sort((a, b) => b.predios - a.predios);
+            const maxPredios = sorted[0].predios;
+            const statsEl = document.getElementById('timeline-stats');
+            statsEl.innerHTML = `
+                <div class="stat-row" style="width:100%;border-bottom:1px solid var(--border);padding-bottom:3px;margin-bottom:4px;">
+                    <span style="font-size:.55rem;font-weight:600;color:var(--cyan);letter-spacing:.1em;text-transform:uppercase;">20 localidades — clic para explorar</span>
+                </div>
+                ${sorted.map(loc => {
+                    const pct = Math.round((loc.predios / maxPredios) * 100);
+                    const color = loc.avaluo > 60000 ? 'var(--cyan)'
+                        : loc.avaluo > 30000 ? 'var(--blue)'
+                        : loc.avaluo > 15000 ? 'var(--purple)'
+                        : 'var(--mag)';
+                    return `
+                        <div class="stat-row clickable" data-loc="${loc.name}" style="flex-direction:column;align-items:flex-start;gap:0;">
+                            <div style="display:flex;justify-content:space-between;width:100%;align-items:baseline;">
+                                <span class="stat-loc-name">${loc.name}</span>
+                                <span style="font-size:.53rem;font-weight:600;color:${color};font-family:var(--mono);">${Number(loc.predios).toLocaleString('es-CO')}</span>
+                            </div>
+                            <div class="stat-mini-bar"><div class="stat-mini-bar-fill" style="width:${pct}%;background:${color};"></div></div>
+                        </div>`;
+                }).join('')}`;
+
+            statsEl.querySelectorAll('.stat-row.clickable').forEach(row => {
+                row.addEventListener('click', () => {
+                    const loc = LOCALIDADES.find(l => l.name === row.dataset.loc);
+                    if (!loc) return;
+                    showLocalidadPopup(loc);
+                    showLocalidadCard(loc);
+                    map.flyTo({ center: [loc.lng, loc.lat], zoom: 14, duration: 800, essential: true });
+                });
+            });
+        }
+
         function closeClusterCard() {
             clusterCardActive = false;
             activeClusterLeaves = null;
             const s = STATES[step];
-            const statsEl = document.getElementById('timeline-stats');
-            statsEl.innerHTML = s.stats
-                ? s.stats.map(r => `<div class="stat-row"><span class="stat-pct ${r.up ? 'up' : 'down'}">${r.pct}</span><span class="stat-label">${r.label}</span></div>`).join('')
-                : '';
+            if (s.mode === 'overview') {
+                renderOverviewStats();
+            } else {
+                const statsEl = document.getElementById('timeline-stats');
+                statsEl.innerHTML = s.stats
+                    ? s.stats.map(r => `<div class="stat-row"><span class="stat-pct ${r.up ? 'up' : 'down'}">${r.pct}</span><span class="stat-label">${r.label}</span></div>`).join('')
+                    : '';
+            }
             renderChart('historico');
         }
 
@@ -2366,9 +2445,13 @@
             clusterCardActive = false;
             activeClusterLeaves = null;
             const statsEl = document.getElementById('timeline-stats');
-            statsEl.innerHTML = s.stats
-                ? s.stats.map(r => `<div class="stat-row"><span class="stat-pct ${r.up ? 'up' : 'down'}">${r.pct}</span><span class="stat-label">${r.label}</span></div>`).join('')
-                : '';
+            if (s.mode === 'overview') {
+                renderOverviewStats();
+            } else {
+                statsEl.innerHTML = s.stats
+                    ? s.stats.map(r => `<div class="stat-row"><span class="stat-pct ${r.up ? 'up' : 'down'}">${r.pct}</span><span class="stat-label">${r.label}</span></div>`).join('')
+                    : '';
+            }
 
             // Cerrar popup activo si existe
             if (activePopup) { activePopup.remove(); activePopup = null; }
