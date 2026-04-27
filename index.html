@@ -958,40 +958,300 @@
             box-shadow: inset 15px -4px 0px 15px #fff000;
         }
 
-        /* ── Responsivo ── */
+        /* ══════════════════════════════════════
+           MÓVIL — diseño centrado y organizado
+           ══════════════════════════════════════ */
         @media (max-width: 768px) {
+
+            /* ── Header ── */
+            #header {
+                padding: 8px 14px;
+                justify-content: space-between;
+                align-items: center;
+                background: var(--panel-bg);
+                backdrop-filter: blur(6px);
+                border-bottom: 1px solid var(--border);
+            }
+
+            .header-title {
+                font-size: 0.78rem;
+                letter-spacing: .04em;
+            }
+
+            .header-logos {
+                display: flex;
+                align-items: center;
+                gap: 6px;
+            }
+
+            .header-logo-text,
+            .header-logo-sep {
+                display: none;
+            }
+
+            .info-btn {
+                width: 30px;
+                height: 30px;
+                font-size: 0.9rem;
+                margin-left: 0;
+            }
+
+            .switch {
+                font-size: 13px;
+                width: 2.8em;
+                height: 1.7em;
+                margin-left: 4px;
+            }
+
+            /* ── Panel narrativo ──
+               Banda horizontal en la parte inferior,
+               encima del timeline; mapa visible arriba  */
             .narrative-panel {
+                position: absolute;
+                left: 0;
+                right: 0;
+                top: auto;
+                bottom: 110px;
                 width: 100%;
                 max-width: none;
-                bottom: 150px;
-                top: 50px;
-                padding: 20px 24px 16px;
-                background: rgba(0, 0, 0, .7);
+                max-height: 36vh;
+                padding: 16px 20px 14px;
+                background: var(--panel-bg);
+                border-right: none;
+                border-top: 1px solid var(--border);
+                border-bottom: none;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                overflow-y: auto;
+                animation: none;
+            }
+
+            .narrative-content {
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
             }
 
             .narrative-text {
-                font-size: 1.05rem;
+                font-size: 0.9rem;
+                line-height: 1.55;
+                max-width: none;
+                width: 100%;
+                text-align: center;
+            }
+
+            .narrative-buttons {
+                width: 100%;
+                display: flex;
+                justify-content: center;
+                gap: 12px;
+                margin-top: 12px;
+            }
+
+            .ghost-btn {
+                flex: 1;
+                max-width: 140px;
+                padding: 11px 0;
+                font-size: 0.6rem;
+                text-align: center;
+                letter-spacing: .12em;
+            }
+
+            /* ── Leyenda ── esquina superior derecha en móvil */
+            .map-legend {
+                top: 52px;
+                bottom: auto;
+                right: 12px;
+                left: auto;
+                transform: none;
+                text-align: right;
+                background: rgba(0, 0, 0, .72);
+                backdrop-filter: blur(6px);
+                padding: 8px 10px;
+                border: 1px solid var(--border);
+            }
+
+            .legend-scale {
+                justify-content: flex-end;
+            }
+
+            .legend-clusters {
+                align-items: flex-end;
+            }
+
+            /* ── Timeline ── */
+            .timeline-strip {
+                height: 110px;
             }
 
             .timeline-stats {
                 display: none;
             }
 
-            .header-logos {
-                display: none;
+            .timeline-chart-container {
+                padding: 6px 16px 6px 16px;
             }
 
-            .map-legend {
-                right: 10px;
+            .chart-controls {
+                left: 16px;
+                top: 4px;
+                gap: 4px;
             }
 
-            .intro-controls {
-                bottom: 24px;
-                width: 90%;
+            .chart-pill {
+                padding: 3px 8px;
+                font-size: 0.5rem;
+            }
+
+            /* ── Modal centrado y a pantalla completa ── */
+            .info-modal {
+                padding: 16px;
+                align-items: flex-end;
+            }
+
+            .info-modal-content {
+                width: 100%;
+                max-width: none;
+                padding: 24px 20px 28px;
+                border-radius: 0;
+            }
+
+            .info-modal-content h2 {
+                font-size: 1.2rem;
+                text-align: center;
+                margin-bottom: 12px;
+            }
+
+            .info-modal-content p {
+                text-align: center;
+            }
+
+            /* ── Popup ── */
+            .maplibregl-popup-content {
+                max-width: calc(100vw - 24px) !important;
+            }
+
+            /* ── Pantalla de intro ── */
+            #intro-overlay {
+                justify-content: flex-end;
+            }
+
+            #intro-image {
+                position: absolute;
+                inset: 0;
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                object-position: center center;
             }
 
             .intro-title {
-                font-size: 0.55rem;
+                font-size: 0.5rem;
+                letter-spacing: 0.14em;
+                top: env(safe-area-inset-top, 20px);
+                top: max(20px, env(safe-area-inset-top));
+                white-space: normal;
+                text-align: center;
+                width: 90%;
+                left: 5%;
+                transform: none;
+            }
+
+            .intro-controls {
+                position: relative;
+                bottom: auto;
+                left: auto;
+                transform: none;
+                width: 100%;
+                padding: 20px 24px 32px;
+                padding-bottom: max(32px, env(safe-area-inset-bottom));
+                background: linear-gradient(to top, rgba(0,0,0,.75) 0%, transparent 100%);
+                align-items: center;
+                gap: 14px;
+            }
+
+            .intro-progress-bar {
+                height: 4px;
+            }
+
+            .intro-skip-btn {
+                padding: 13px 36px;
+                font-size: 0.62rem;
+                letter-spacing: 0.16em;
+                min-height: 44px;
+            }
+        }
+
+        /* ── Teléfonos muy pequeños (≤ 390px) ── */
+        @media (max-width: 390px) {
+            .narrative-panel {
+                max-height: 40vh;
+                bottom: 110px;
+                padding: 12px 16px 12px;
+            }
+
+            .narrative-text {
+                font-size: 0.82rem;
+            }
+
+            .ghost-btn {
+                font-size: 0.56rem;
+                max-width: 120px;
+            }
+
+            .legend-gradient {
+                width: 80px;
+            }
+
+            .info-modal-content {
+                padding: 20px 16px 24px;
+            }
+
+            .intro-skip-btn {
+                padding: 12px 28px;
+                font-size: 0.58rem;
+            }
+
+            .intro-controls {
+                padding: 16px 18px 28px;
+            }
+        }
+
+        /* ── Orientación horizontal en móvil ── */
+        @media (max-width: 768px) and (orientation: landscape) {
+            .narrative-panel {
+                max-height: 50vh;
+                bottom: 90px;
+            }
+
+            .timeline-strip {
+                height: 90px;
+            }
+
+
+            #intro-overlay {
+                justify-content: flex-end;
+            }
+
+            .intro-controls {
+                padding: 12px 32px 20px;
+                flex-direction: row;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 10px;
+            }
+
+            .intro-progress-bar {
+                flex: 1 1 100%;
+            }
+
+            .intro-title {
+                top: 12px;
+                font-size: 0.44rem;
             }
         }
     </style>
@@ -1149,6 +1409,30 @@
             color: #111 !important;
             border-color: rgba(0, 0, 0, .6) !important;
         }
+
+        /* ── Timeline y stats en modo claro ── */
+        body.light-mode .timeline-strip {
+            background: var(--timeline-bg) !important;
+            border-top-color: rgba(0, 0, 0, .1) !important;
+        }
+
+        body.light-mode .timeline-stats {
+            border-left-color: rgba(0, 0, 0, .1) !important;
+        }
+
+        body.light-mode .legend-dot-label {
+            color: rgba(0, 0, 0, .55) !important;
+        }
+
+        body.light-mode .map-legend {
+            background: rgba(255, 255, 255, .88) !important;
+            border-color: rgba(0, 0, 0, .12) !important;
+        }
+
+        body.light-mode .narrative-panel {
+            background: var(--panel-bg) !important;
+            border-top-color: rgba(0, 0, 0, .1) !important;
+        }
     </style>
 </head>
 
@@ -1215,19 +1499,19 @@
             </div>
             <div class="legend-clusters" id="legend-clusters">
                 <div class="legend-cluster-row">
-                    <span class="legend-dot-label">Estrato 5 – 6</span>
+                    <span class="legend-dot-label">Avalúo alto</span>
                     <div class="legend-dot" style="background:#00e5ff;box-shadow:0 0 6px #00e5ff;"></div>
                 </div>
                 <div class="legend-cluster-row">
-                    <span class="legend-dot-label">Estrato 4</span>
+                    <span class="legend-dot-label">Avalúo medio-alto</span>
                     <div class="legend-dot" style="background:#1d8cf8;box-shadow:0 0 6px #1d8cf8;"></div>
                 </div>
                 <div class="legend-cluster-row">
-                    <span class="legend-dot-label">Estrato 3</span>
+                    <span class="legend-dot-label">Avalúo medio</span>
                     <div class="legend-dot" style="background:#6d5dfc;box-shadow:0 0 6px #6d5dfc;"></div>
                 </div>
                 <div class="legend-cluster-row">
-                    <span class="legend-dot-label">Estrato 1 – 2</span>
+                    <span class="legend-dot-label">Avalúo bajo</span>
                     <div class="legend-dot" style="background:#e23670;box-shadow:0 0 6px #e23670;"></div>
                 </div>
             </div>
@@ -1289,13 +1573,13 @@
             { name: 'Kennedy', lat: 4.6220, lng: -74.1497, predios: 250000, avaluo: 22500, areaCons: 19800, estrato: 3, residencial: 78, comercial: 16, industrial: 5, dotacional: 1, unidades: 268000, npiso: 2.8, antiguedad: 28 },
             { name: 'Fontibón', lat: 4.6754, lng: -74.1498, predios: 95000, avaluo: 45000, areaCons: 12100, estrato: 3, residencial: 62, comercial: 25, industrial: 12, dotacional: 1, unidades: 105000, npiso: 3.2, antiguedad: 22 },
             { name: 'Engativá', lat: 4.7089, lng: -74.1316, predios: 210000, avaluo: 28000, areaCons: 17500, estrato: 3, residencial: 80, comercial: 14, industrial: 5, dotacional: 1, unidades: 225000, npiso: 2.6, antiguedad: 30 },
-            { name: 'Suba', lat: 4.7578, lng: -74.1023, predios: 310000, avaluo: 38500, areaCons: 28000, estrato: 3, residencial: 79, comercial: 15, industrial: 4, dotacional: 2, unidades: 335000, npiso: 3.1, antiguedad: 18 },
+            { name: 'Suba', lat: 4.741, lng: -74.084, predios: 310000, avaluo: 38500, areaCons: 28000, estrato: 3, residencial: 79, comercial: 15, industrial: 4, dotacional: 2, unidades: 335000, npiso: 3.1, antiguedad: 18 },
             { name: 'Barrios Unidos', lat: 4.6650, lng: -74.0860, predios: 65000, avaluo: 56000, areaCons: 6200, estrato: 4, residencial: 68, comercial: 24, industrial: 7, dotacional: 1, unidades: 72000, npiso: 3.8, antiguedad: 38 },
             { name: 'Teusaquillo', lat: 4.6336, lng: -74.0968, predios: 55000, avaluo: 65000, areaCons: 5800, estrato: 4, residencial: 70, comercial: 22, industrial: 3, dotacional: 5, unidades: 62000, npiso: 4.5, antiguedad: 42 },
             { name: 'Los Mártires', lat: 4.6044, lng: -74.0916, predios: 28000, avaluo: 32000, areaCons: 2600, estrato: 3, residencial: 50, comercial: 40, industrial: 8, dotacional: 2, unidades: 33000, npiso: 3.2, antiguedad: 50 },
             { name: 'Antonio Nariño', lat: 4.5842, lng: -74.1048, predios: 30000, avaluo: 25000, areaCons: 2800, estrato: 3, residencial: 72, comercial: 20, industrial: 6, dotacional: 2, unidades: 35000, npiso: 2.9, antiguedad: 40 },
             { name: 'Puente Aranda', lat: 4.6126, lng: -74.1150, predios: 70000, avaluo: 35000, areaCons: 8500, estrato: 3, residencial: 55, comercial: 30, industrial: 14, dotacional: 1, unidades: 78000, npiso: 2.4, antiguedad: 38 },
-            { name: 'La Candelaria', lat: 4.5975, lng: -74.0769, predios: 12000, avaluo: 48000, areaCons: 1100, estrato: 3, residencial: 45, comercial: 38, industrial: 5, dotacional: 15, unidades: 15000, npiso: 2.8, antiguedad: 75 },
+            { name: 'La Candelaria', lat: 4.5968, lng: -74.0716, predios: 12000, avaluo: 48000, areaCons: 1100, estrato: 3, residencial: 45, comercial: 38, industrial: 5, dotacional: 15, unidades: 15000, npiso: 2.8, antiguedad: 75 },
             { name: 'Rafael Uribe Uribe', lat: 4.5544, lng: -74.1158, predios: 105000, avaluo: 16500, areaCons: 7800, estrato: 2, residencial: 88, comercial: 8, industrial: 3, dotacional: 1, unidades: 112000, npiso: 2.2, antiguedad: 35 },
             { name: 'Ciudad Bolívar', lat: 4.5114, lng: -74.1701, predios: 180000, avaluo: 9800, areaCons: 10200, estrato: 1, residencial: 92, comercial: 5, industrial: 2, dotacional: 1, unidades: 192000, npiso: 1.7, antiguedad: 14 },
             { name: 'Sumapaz', lat: 4.0293, lng: -74.2476, predios: 3500, avaluo: 5200, areaCons: 180, estrato: 1, residencial: 95, comercial: 2, industrial: 0, dotacional: 2, unidades: 4000, npiso: 1.2, antiguedad: 20 },
@@ -1528,16 +1812,16 @@
                 pointColor: 'default',
             },
             {
-                text: 'La <strong>estratificación</strong> revela la segregación espacial: el <strong>68%</strong> de los predios son estrato 1, 2 y 3, ubicados al sur y occidente. Los estratos 4, 5 y 6 se concentran en el corredor norte, con avalúos hasta <strong>20 veces mayores</strong>.',
+                text: 'La segregación espacial es evidente: el <strong>68%</strong> de los predios se ubican al sur y occidente, con avalúos bajos. El corredor norte concentra el mayor valor catastral, con avalúos hasta <strong>20 veces mayores</strong> que la periferia sur.',
                 mode: 'estratos',
                 legend: { title: 'Avalúo vs Área', type: 'dual' },
                 view: { lng: -74.08, lat: 4.64, zoom: 11.8, pitch: 0, bearing: 0 },
                 stats: [
-                    { label: 'Estrato 5-6 (norte)', pct: '105 mil/m²', up: true },
-                    { label: 'Estrato 4 (centro)', pct: '60 mil/m²', up: true },
-                    { label: 'Estrato 3 (mixto)', pct: '32 mil/m²', up: true },
-                    { label: 'Estrato 2 (sur)', pct: '16 mil/m²', up: false },
-                    { label: 'Estrato 1 (periferia)', pct: '9 mil/m²', up: false },
+                    { label: 'Norte (avalúo alto)', pct: '105 mil/m²', up: true },
+                    { label: 'Centro-norte', pct: '60 mil/m²', up: true },
+                    { label: 'Centro (mixto)', pct: '32 mil/m²', up: true },
+                    { label: 'Sur', pct: '16 mil/m²', up: false },
+                    { label: 'Periferia sur', pct: '9 mil/m²', up: false },
                 ],
                 pointColor: 'default',
             },
@@ -1751,7 +2035,7 @@
                     <div class="popup-img-wrap">
                         <img src="${imgSrc}" alt="${loc.name}" loading="lazy">
                         <div class="popup-img-overlay"></div>
-                        <div class="popup-img-estrato" style="color:${color};">Estrato ${loc.estrato} &mdash; ${catLabel}</div>
+                        <div class="popup-img-estrato" style="color:${color};">${catLabel}</div>
                     </div>
                     <div class="popup-name" style="border-left:2px solid ${color};padding-left:8px;margin-bottom:8px;">${loc.name}</div>
                     <div class="popup-row"><span class="popup-label">Predios censados</span><span class="popup-value cyan">${Number(loc.predios).toLocaleString('es-CO')}</span></div>
@@ -1869,15 +2153,15 @@
                 : `${n} localidades`;
             const statsEl = document.getElementById('timeline-stats');
             statsEl.innerHTML = `
-                <div class="stat-row" style="width:100%;border-bottom:1px solid rgba(255,255,255,.1);padding-bottom:3px;margin-bottom:2px;">
+                <div class="stat-row" style="width:100%;border-bottom:1px solid var(--border);padding-bottom:3px;margin-bottom:2px;">
                     <span style="font-family:var(--mono);font-size:.58rem;font-weight:600;color:var(--cyan);letter-spacing:.1em;text-transform:uppercase;">${headerTitle}</span>
-                    <button onclick="closeClusterCard()" style="background:none;border:none;color:rgba(255,255,255,.4);cursor:pointer;font-size:15px;line-height:1;padding:0;" title="Cerrar">×</button>
+                    <button onclick="closeClusterCard()" style="background:none;border:none;color:var(--dim);cursor:pointer;font-size:15px;line-height:1;padding:0;" title="Cerrar">×</button>
                 </div>
                 <div class="stat-row"><span class="stat-pct up">${Number(totalPredios).toLocaleString('es-CO')}</span><span class="stat-label">predios censados</span></div>
                 <div class="stat-row"><span class="stat-pct up">${Number(totalUnidades).toLocaleString('es-CO')}</span><span class="stat-label">unidades privadas</span></div>
                 <div class="stat-row"><span class="stat-pct up">$${Number(avgAvaluo).toLocaleString('es-CO')}</span><span class="stat-label">avalúo/m² prom.</span></div>
                 <div class="stat-row"><span class="stat-pct up">${Number(Math.round(totalArea)).toLocaleString('es-CO')} ha</span><span class="stat-label">área construida</span></div>
-                <div class="stat-row"><span class="stat-pct">${domEstrato}</span><span class="stat-label">estrato dom.</span></div>
+
                 <div class="stat-row"><span class="stat-pct">${avgNpiso} p.</span><span class="stat-label">pisos promedio</span></div>
                 <div class="stat-row"><span class="stat-pct">${avgAntiguedad} a.</span><span class="stat-label">antigüedad prom.</span></div>
                 <div class="stat-row"><span class="stat-pct">${avgResid}%</span><span class="stat-label">residencial</span></div>
