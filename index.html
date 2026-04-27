@@ -958,6 +958,10 @@
             box-shadow: inset 15px -4px 0px 15px #fff000;
         }
 
+        /* ── Elementos exclusivos de móvil (ocultos en desktop) ── */
+        .step-dots { display: none; }
+        .timeline-handle { display: none; }
+
         /* ══════════════════════════════════════
            MÓVIL — diseño centrado y organizado
            ══════════════════════════════════════ */
@@ -1196,7 +1200,7 @@
                 width: 100%;
                 padding: 20px 24px 32px;
                 padding-bottom: max(32px, env(safe-area-inset-bottom));
-                background: linear-gradient(to top, rgba(0,0,0,.75) 0%, transparent 100%);
+                background: linear-gradient(to top, rgba(0, 0, 0, .75) 0%, transparent 100%);
                 align-items: center;
                 gap: 14px;
             }
@@ -1245,6 +1249,87 @@
 
             .intro-controls {
                 padding: 16px 18px 28px;
+            }
+
+            /* ── Puntos indicadores de paso ── */
+            .step-dots {
+                display: flex;
+                gap: 7px;
+                justify-content: center;
+                margin-top: 10px;
+            }
+            .step-dot {
+                width: 7px;
+                height: 7px;
+                border-radius: 50%;
+                background: var(--dim);
+                transition: background 0.3s, transform 0.25s;
+                cursor: pointer;
+                touch-action: manipulation;
+            }
+            .step-dot.active {
+                background: var(--cyan);
+                transform: scale(1.45);
+            }
+
+            /* ── Handle del timeline plegable ── */
+            .timeline-handle {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 22px;
+                cursor: pointer;
+                touch-action: manipulation;
+                flex-shrink: 0;
+            }
+            .handle-bar {
+                width: 38px;
+                height: 4px;
+                border-radius: 2px;
+                background: var(--dim);
+                transition: background 0.2s;
+            }
+            .timeline-handle:active .handle-bar {
+                background: var(--cyan);
+            }
+
+            /* Timeline colapsado */
+            .timeline-strip.collapsed {
+                height: 22px !important;
+                overflow: hidden;
+            }
+            .narrative-panel.tl-collapsed {
+                bottom: 22px !important;
+            }
+
+            /* Feedback táctil en botones */
+            .ghost-btn {
+                touch-action: manipulation;
+                transition: transform 0.1s, opacity 0.1s;
+            }
+            .ghost-btn:active {
+                transform: scale(0.93);
+                opacity: 0.65;
+            }
+            .chart-pill {
+                touch-action: manipulation;
+            }
+            .chart-pill:active {
+                transform: scale(0.9);
+                opacity: 0.7;
+            }
+
+            /* Swipe hint arrows */
+            .swipe-arrows {
+                display: flex;
+                justify-content: space-between;
+                width: 100%;
+                pointer-events: none;
+                opacity: 0.35;
+                font-size: 0.7rem;
+                letter-spacing: .04em;
+                color: var(--dim);
+                margin-top: 4px;
             }
         }
 
@@ -1514,6 +1599,8 @@
                 <button class="ghost-btn" id="btn-prev">PREVIOUS</button>
                 <button class="ghost-btn" id="btn-next">NEXT</button>
             </div>
+            <div class="step-dots" id="step-dots"></div>
+            <div class="swipe-arrows" id="swipe-arrows"><span>‹ anterior</span><span>siguiente ›</span></div>
         </div>
 
         <!-- Leyenda (inferior derecha) -->
@@ -1546,6 +1633,7 @@
 
         <!-- Barra de línea de tiempo inferior -->
         <div class="timeline-strip" id="timeline-strip">
+            <div class="timeline-handle" id="timeline-handle"><div class="handle-bar"></div></div>
             <div class="timeline-chart-container">
                 <div class="chart-controls" id="chart-controls">
                     <button class="chart-pill active" data-metric="historico">Histórico</button>
@@ -2171,6 +2259,7 @@
                 <div class="stat-row"><span class="stat-pct up">${Number(Math.round(totalArea)).toLocaleString('es-CO')} ha</span><span class="stat-label">área construida</span></div>
 
                 <div class="stat-row"><span class="stat-pct">${avgNpiso} p.</span><span class="stat-label">pisos promedio</span></div>
+                <div class="stat-row"><span class="stat-pct">${avgAntiguedad} a.</span><span class="stat-label">antigüedad prom.</span></div>
                 <div class="stat-row"><span class="stat-pct">${avgResid}%</span><span class="stat-label">residencial</span></div>
                 <div class="stat-row"><span class="stat-pct down">${avgCom}%</span><span class="stat-label">comercial</span></div>
                 <div class="stat-row"><span class="stat-pct" style="color:var(--blue)">${avgInd}%</span><span class="stat-label">industrial</span></div>
@@ -2230,6 +2319,16 @@
             document.getElementById('btn-prev').disabled = step === 0;
             document.getElementById('btn-next').disabled = step === STATES.length - 1;
 
+            // Puntos indicadores (móvil)
+            const dotsEl = document.getElementById('step-dots');
+            if (dotsEl) {
+                Array.from(dotsEl.children).forEach((d, i) => d.classList.toggle('active', i === step));
+            }
+
+            // Ocultar swipe-arrows si ya estamos en el último paso
+            const arrowsEl = document.getElementById('swipe-arrows');
+            if (arrowsEl) arrowsEl.style.visibility = STATES.length <= 1 ? 'hidden' : 'visible';
+
             // Leyenda
             const legendEl = document.getElementById('map-legend');
             const clustersEl = document.getElementById('legend-clusters');
@@ -2267,12 +2366,49 @@
         // 9. ESCUCHADORES DE EVENTOS
         // ────────────────────────────────────────────────────────────
 
+        // ── Haptic feedback ──
+        function haptic(ms = 8) { if (navigator.vibrate) navigator.vibrate(ms); }
+
         document.getElementById('btn-next').addEventListener('click', () => {
-            if (step < STATES.length - 1) { step++; updateUI(); }
+            if (step < STATES.length - 1) { step++; updateUI(); haptic(); }
         });
         document.getElementById('btn-prev').addEventListener('click', () => {
-            if (step > 0) { step--; updateUI(); }
+            if (step > 0) { step--; updateUI(); haptic(); }
         });
+
+        // ── Swipe horizontal en el panel narrativo (móvil) ──
+        ;(() => {
+            const panel = document.getElementById('narrative-panel');
+            let sx = 0, sy = 0;
+            panel.addEventListener('touchstart', e => {
+                sx = e.touches[0].clientX;
+                sy = e.touches[0].clientY;
+            }, { passive: true });
+            panel.addEventListener('touchend', e => {
+                const dx = e.changedTouches[0].clientX - sx;
+                const dy = e.changedTouches[0].clientY - sy;
+                if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 44) {
+                    if (dx < 0 && step < STATES.length - 1) { step++; updateUI(); haptic(); }
+                    else if (dx > 0 && step > 0)            { step--; updateUI(); haptic(); }
+                }
+            }, { passive: true });
+        })();
+
+        // ── Timeline plegable (móvil) ──
+        ;(() => {
+            const handle = document.getElementById('timeline-handle');
+            const strip  = document.getElementById('timeline-strip');
+            const narr   = document.getElementById('narrative-panel');
+            let expanded = true;
+            if (handle) {
+                handle.addEventListener('click', () => {
+                    expanded = !expanded;
+                    strip.classList.toggle('collapsed', !expanded);
+                    narr.classList.toggle('tl-collapsed', !expanded);
+                    haptic(6);
+                });
+            }
+        })();
 
         document.addEventListener('keydown', e => {
             if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
@@ -2639,6 +2775,17 @@
             renderChart('historico');
             document.getElementById('btn-prev').disabled = true;
             document.getElementById('narrative-text').style.transition = 'opacity .3s ease';
+
+            // Inicializar dots indicadores (móvil)
+            const dotsEl = document.getElementById('step-dots');
+            if (dotsEl) {
+                STATES.forEach((_, i) => {
+                    const d = document.createElement('div');
+                    d.className = 'step-dot' + (i === 0 ? ' active' : '');
+                    d.addEventListener('click', () => { step = i; updateUI(); haptic(); });
+                    dotsEl.appendChild(d);
+                });
+            }
 
             // Selector de año
             const yearRange = document.getElementById('year-range');
