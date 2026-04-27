@@ -959,9 +959,17 @@
         }
 
         /* ── Elementos exclusivos de móvil (ocultos en desktop) ── */
-        .step-dots { display: none; }
-        .timeline-handle { display: none; }
-        .swipe-arrows { display: none; }
+        .step-dots {
+            display: none;
+        }
+
+        .timeline-handle {
+            display: none;
+        }
+
+        .swipe-arrows {
+            display: none;
+        }
 
         /* ══════════════════════════════════════
            MÓVIL — diseño centrado y organizado
@@ -1224,6 +1232,7 @@
                 justify-content: center;
                 margin-top: 10px;
             }
+
             .step-dot {
                 width: 7px;
                 height: 7px;
@@ -1233,6 +1242,7 @@
                 cursor: pointer;
                 touch-action: manipulation;
             }
+
             .step-dot.active {
                 background: var(--cyan);
                 transform: scale(1.45);
@@ -1248,6 +1258,7 @@
                 touch-action: manipulation;
                 flex-shrink: 0;
             }
+
             .handle-bar {
                 width: 38px;
                 height: 4px;
@@ -1255,6 +1266,7 @@
                 background: var(--dim);
                 transition: background 0.2s;
             }
+
             .timeline-handle:active .handle-bar {
                 background: var(--cyan);
             }
@@ -1264,6 +1276,7 @@
                 height: 22px !important;
                 overflow: hidden;
             }
+
             .narrative-panel.tl-collapsed {
                 bottom: 22px !important;
             }
@@ -1274,9 +1287,11 @@
                 opacity: 0.65;
                 transition: transform 0.1s, opacity 0.1s;
             }
+
             .chart-pill {
                 touch-action: manipulation;
             }
+
             .chart-pill:active {
                 transform: scale(0.9);
                 opacity: 0.7;
@@ -1632,7 +1647,9 @@
 
         <!-- Barra de línea de tiempo inferior -->
         <div class="timeline-strip" id="timeline-strip">
-            <div class="timeline-handle" id="timeline-handle"><div class="handle-bar"></div></div>
+            <div class="timeline-handle" id="timeline-handle">
+                <div class="handle-bar"></div>
+            </div>
             <div class="timeline-chart-container">
                 <div class="chart-controls" id="chart-controls">
                     <button class="chart-pill active" data-metric="historico">Histórico</button>
@@ -1694,7 +1711,7 @@
             { name: 'Puente Aranda', lat: 4.6126, lng: -74.1150, predios: 70000, avaluo: 35000, areaCons: 8500, estrato: 3, residencial: 55, comercial: 30, industrial: 14, dotacional: 1, unidades: 78000, npiso: 2.4 },
             { name: 'La Candelaria', lat: 4.5968, lng: -74.0716, predios: 12000, avaluo: 48000, areaCons: 1100, estrato: 3, residencial: 45, comercial: 38, industrial: 5, dotacional: 15, unidades: 15000, npiso: 2.8 },
             { name: 'Rafael Uribe Uribe', lat: 4.5544, lng: -74.1158, predios: 105000, avaluo: 16500, areaCons: 7800, estrato: 2, residencial: 88, comercial: 8, industrial: 3, dotacional: 1, unidades: 112000, npiso: 2.2 },
-            { name: 'Ciudad Bolívar', lat: 4.5114, lng: -74.1701, predios: 180000, avaluo: 9800, areaCons: 10200, estrato: 1, residencial: 92, comercial: 5, industrial: 2, dotacional: 1, unidades: 192000, npiso: 1.7 },
+            { name: 'Ciudad Bolívar', lat: 4.5658, lng: -74.1618, predios: 180000, avaluo: 9800, areaCons: 10200, estrato: 1, residencial: 92, comercial: 5, industrial: 2, dotacional: 1, unidades: 192000, npiso: 1.7 },
             { name: 'Sumapaz', lat: 4.0293, lng: -74.2476, predios: 3500, avaluo: 5200, areaCons: 180, estrato: 1, residencial: 95, comercial: 2, industrial: 0, dotacional: 2, unidades: 4000, npiso: 1.2 },
         ];
 
@@ -2375,7 +2392,7 @@
         });
 
         // ── Swipe horizontal en el panel narrativo (móvil) ──
-        ;(() => {
+        ; (() => {
             const panel = document.getElementById('narrative-panel');
             let sx = 0, sy = 0;
             panel.addEventListener('touchstart', e => {
@@ -2387,16 +2404,16 @@
                 const dy = e.changedTouches[0].clientY - sy;
                 if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 44) {
                     if (dx < 0 && step < STATES.length - 1) { step++; updateUI(); haptic(); }
-                    else if (dx > 0 && step > 0)            { step--; updateUI(); haptic(); }
+                    else if (dx > 0 && step > 0) { step--; updateUI(); haptic(); }
                 }
             }, { passive: true });
         })();
 
         // ── Timeline plegable (móvil) ──
-        ;(() => {
+        ; (() => {
             const handle = document.getElementById('timeline-handle');
-            const strip  = document.getElementById('timeline-strip');
-            const narr   = document.getElementById('narrative-panel');
+            const strip = document.getElementById('timeline-strip');
+            const narr = document.getElementById('narrative-panel');
             let expanded = true;
             if (handle) {
                 handle.addEventListener('click', () => {
