@@ -1093,18 +1093,45 @@
             }
 
             .timeline-chart-container {
-                padding: 6px 16px 6px 16px;
+                padding: 4px 10px 4px 10px;
+                display: flex;
+                flex-direction: column;
             }
 
             .chart-controls {
-                left: 16px;
-                top: 4px;
+                position: relative;
+                top: auto;
+                left: auto;
+                display: flex;
+                flex-direction: row;
+                flex-wrap: nowrap;
+                justify-content: center;
                 gap: 4px;
+                width: 100%;
+                margin-bottom: 2px;
             }
 
             .chart-pill {
-                padding: 3px 8px;
-                font-size: 0.5rem;
+                padding: 3px 0;
+                font-size: 0.48rem;
+                flex: 1;
+                text-align: center;
+                letter-spacing: .08em;
+            }
+
+            .year-selector {
+                margin-left: 6px;
+                padding-left: 6px;
+                gap: 4px;
+            }
+
+            .year-range {
+                width: 60px;
+            }
+
+            #timelineChart {
+                flex: 1;
+                min-height: 0;
             }
 
             /* ── Modal centrado y a pantalla completa ── */
@@ -1560,29 +1587,28 @@
         // ────────────────────────────────────────────────────────────
 
         // Campos: predios, avaluo (COP/m²), areaCons (ha), estrato, residencial%, comercial%,
-        //         industrial%, dotacional%, unidades (unidades privadas), npiso (pisos prom.),
-        //         antiguedad (años prom. del parque edificado)
+        //         industrial%, dotacional%, unidades (unidades privadas), npiso (pisos prom.)
         const LOCALIDADES = [
-            { name: 'Usaquén', lat: 4.7048, lng: -74.0312, predios: 185000, avaluo: 98500, areaCons: 18200, estrato: 5, residencial: 82, comercial: 14, industrial: 2, dotacional: 2, unidades: 195000, npiso: 4.2, antiguedad: 18 },
-            { name: 'Chapinero', lat: 4.6460, lng: -74.0574, predios: 78000, avaluo: 112000, areaCons: 8900, estrato: 5, residencial: 65, comercial: 28, industrial: 4, dotacional: 3, unidades: 95000, npiso: 6.8, antiguedad: 22 },
-            { name: 'Santa Fe', lat: 4.6026, lng: -74.0773, predios: 32000, avaluo: 42000, areaCons: 3400, estrato: 3, residencial: 55, comercial: 35, industrial: 5, dotacional: 12, unidades: 38000, npiso: 3.5, antiguedad: 45 },
-            { name: 'San Cristóbal', lat: 4.5484, lng: -74.0817, predios: 110000, avaluo: 15800, areaCons: 8200, estrato: 2, residencial: 91, comercial: 6, industrial: 2, dotacional: 1, unidades: 118000, npiso: 2.1, antiguedad: 32 },
-            { name: 'Usme', lat: 4.4613, lng: -74.1277, predios: 95000, avaluo: 11200, areaCons: 6100, estrato: 1, residencial: 93, comercial: 4, industrial: 1, dotacional: 1, unidades: 102000, npiso: 1.8, antiguedad: 12 },
-            { name: 'Tunjuelito', lat: 4.5719, lng: -74.1307, predios: 48000, avaluo: 18500, areaCons: 3900, estrato: 2, residencial: 85, comercial: 10, industrial: 4, dotacional: 1, unidades: 52000, npiso: 2.3, antiguedad: 35 },
-            { name: 'Bosa', lat: 4.6043, lng: -74.1961, predios: 165000, avaluo: 13200, areaCons: 11500, estrato: 2, residencial: 90, comercial: 7, industrial: 2, dotacional: 1, unidades: 175000, npiso: 2.0, antiguedad: 15 },
-            { name: 'Kennedy', lat: 4.6220, lng: -74.1497, predios: 250000, avaluo: 22500, areaCons: 19800, estrato: 3, residencial: 78, comercial: 16, industrial: 5, dotacional: 1, unidades: 268000, npiso: 2.8, antiguedad: 28 },
-            { name: 'Fontibón', lat: 4.6754, lng: -74.1498, predios: 95000, avaluo: 45000, areaCons: 12100, estrato: 3, residencial: 62, comercial: 25, industrial: 12, dotacional: 1, unidades: 105000, npiso: 3.2, antiguedad: 22 },
-            { name: 'Engativá', lat: 4.7089, lng: -74.1316, predios: 210000, avaluo: 28000, areaCons: 17500, estrato: 3, residencial: 80, comercial: 14, industrial: 5, dotacional: 1, unidades: 225000, npiso: 2.6, antiguedad: 30 },
-            { name: 'Suba', lat: 4.741, lng: -74.084, predios: 310000, avaluo: 38500, areaCons: 28000, estrato: 3, residencial: 79, comercial: 15, industrial: 4, dotacional: 2, unidades: 335000, npiso: 3.1, antiguedad: 18 },
-            { name: 'Barrios Unidos', lat: 4.6650, lng: -74.0860, predios: 65000, avaluo: 56000, areaCons: 6200, estrato: 4, residencial: 68, comercial: 24, industrial: 7, dotacional: 1, unidades: 72000, npiso: 3.8, antiguedad: 38 },
-            { name: 'Teusaquillo', lat: 4.6336, lng: -74.0968, predios: 55000, avaluo: 65000, areaCons: 5800, estrato: 4, residencial: 70, comercial: 22, industrial: 3, dotacional: 5, unidades: 62000, npiso: 4.5, antiguedad: 42 },
-            { name: 'Los Mártires', lat: 4.6044, lng: -74.0916, predios: 28000, avaluo: 32000, areaCons: 2600, estrato: 3, residencial: 50, comercial: 40, industrial: 8, dotacional: 2, unidades: 33000, npiso: 3.2, antiguedad: 50 },
-            { name: 'Antonio Nariño', lat: 4.5842, lng: -74.1048, predios: 30000, avaluo: 25000, areaCons: 2800, estrato: 3, residencial: 72, comercial: 20, industrial: 6, dotacional: 2, unidades: 35000, npiso: 2.9, antiguedad: 40 },
-            { name: 'Puente Aranda', lat: 4.6126, lng: -74.1150, predios: 70000, avaluo: 35000, areaCons: 8500, estrato: 3, residencial: 55, comercial: 30, industrial: 14, dotacional: 1, unidades: 78000, npiso: 2.4, antiguedad: 38 },
-            { name: 'La Candelaria', lat: 4.5968, lng: -74.0716, predios: 12000, avaluo: 48000, areaCons: 1100, estrato: 3, residencial: 45, comercial: 38, industrial: 5, dotacional: 15, unidades: 15000, npiso: 2.8, antiguedad: 75 },
-            { name: 'Rafael Uribe Uribe', lat: 4.5544, lng: -74.1158, predios: 105000, avaluo: 16500, areaCons: 7800, estrato: 2, residencial: 88, comercial: 8, industrial: 3, dotacional: 1, unidades: 112000, npiso: 2.2, antiguedad: 35 },
-            { name: 'Ciudad Bolívar', lat: 4.5114, lng: -74.1701, predios: 180000, avaluo: 9800, areaCons: 10200, estrato: 1, residencial: 92, comercial: 5, industrial: 2, dotacional: 1, unidades: 192000, npiso: 1.7, antiguedad: 14 },
-            { name: 'Sumapaz', lat: 4.0293, lng: -74.2476, predios: 3500, avaluo: 5200, areaCons: 180, estrato: 1, residencial: 95, comercial: 2, industrial: 0, dotacional: 2, unidades: 4000, npiso: 1.2, antiguedad: 20 },
+            { name: 'Usaquén', lat: 4.7048, lng: -74.0312, predios: 185000, avaluo: 98500, areaCons: 18200, estrato: 5, residencial: 82, comercial: 14, industrial: 2, dotacional: 2, unidades: 195000, npiso: 4.2 },
+            { name: 'Chapinero', lat: 4.6460, lng: -74.0574, predios: 78000, avaluo: 112000, areaCons: 8900, estrato: 5, residencial: 65, comercial: 28, industrial: 4, dotacional: 3, unidades: 95000, npiso: 6.8 },
+            { name: 'Santa Fe', lat: 4.6026, lng: -74.0773, predios: 32000, avaluo: 42000, areaCons: 3400, estrato: 3, residencial: 55, comercial: 35, industrial: 5, dotacional: 12, unidades: 38000, npiso: 3.5 },
+            { name: 'San Cristóbal', lat: 4.5484, lng: -74.0817, predios: 110000, avaluo: 15800, areaCons: 8200, estrato: 2, residencial: 91, comercial: 6, industrial: 2, dotacional: 1, unidades: 118000, npiso: 2.1 },
+            { name: 'Usme', lat: 4.4613, lng: -74.1277, predios: 95000, avaluo: 11200, areaCons: 6100, estrato: 1, residencial: 93, comercial: 4, industrial: 1, dotacional: 1, unidades: 102000, npiso: 1.8 },
+            { name: 'Tunjuelito', lat: 4.5719, lng: -74.1307, predios: 48000, avaluo: 18500, areaCons: 3900, estrato: 2, residencial: 85, comercial: 10, industrial: 4, dotacional: 1, unidades: 52000, npiso: 2.3 },
+            { name: 'Bosa', lat: 4.6043, lng: -74.1961, predios: 165000, avaluo: 13200, areaCons: 11500, estrato: 2, residencial: 90, comercial: 7, industrial: 2, dotacional: 1, unidades: 175000, npiso: 2.0 },
+            { name: 'Kennedy', lat: 4.6220, lng: -74.1497, predios: 250000, avaluo: 22500, areaCons: 19800, estrato: 3, residencial: 78, comercial: 16, industrial: 5, dotacional: 1, unidades: 268000, npiso: 2.8 },
+            { name: 'Fontibón', lat: 4.6754, lng: -74.1498, predios: 95000, avaluo: 45000, areaCons: 12100, estrato: 3, residencial: 62, comercial: 25, industrial: 12, dotacional: 1, unidades: 105000, npiso: 3.2 },
+            { name: 'Engativá', lat: 4.7089, lng: -74.1316, predios: 210000, avaluo: 28000, areaCons: 17500, estrato: 3, residencial: 80, comercial: 14, industrial: 5, dotacional: 1, unidades: 225000, npiso: 2.6 },
+            { name: 'Suba', lat: 4.741, lng: -74.084, predios: 310000, avaluo: 38500, areaCons: 28000, estrato: 3, residencial: 79, comercial: 15, industrial: 4, dotacional: 2, unidades: 335000, npiso: 3.1 },
+            { name: 'Barrios Unidos', lat: 4.6650, lng: -74.0860, predios: 65000, avaluo: 56000, areaCons: 6200, estrato: 4, residencial: 68, comercial: 24, industrial: 7, dotacional: 1, unidades: 72000, npiso: 3.8 },
+            { name: 'Teusaquillo', lat: 4.6336, lng: -74.0968, predios: 55000, avaluo: 65000, areaCons: 5800, estrato: 4, residencial: 70, comercial: 22, industrial: 3, dotacional: 5, unidades: 62000, npiso: 4.5 },
+            { name: 'Los Mártires', lat: 4.6044, lng: -74.0916, predios: 28000, avaluo: 32000, areaCons: 2600, estrato: 3, residencial: 50, comercial: 40, industrial: 8, dotacional: 2, unidades: 33000, npiso: 3.2 },
+            { name: 'Antonio Nariño', lat: 4.5842, lng: -74.1048, predios: 30000, avaluo: 25000, areaCons: 2800, estrato: 3, residencial: 72, comercial: 20, industrial: 6, dotacional: 2, unidades: 35000, npiso: 2.9 },
+            { name: 'Puente Aranda', lat: 4.6126, lng: -74.1150, predios: 70000, avaluo: 35000, areaCons: 8500, estrato: 3, residencial: 55, comercial: 30, industrial: 14, dotacional: 1, unidades: 78000, npiso: 2.4 },
+            { name: 'La Candelaria', lat: 4.5968, lng: -74.0716, predios: 12000, avaluo: 48000, areaCons: 1100, estrato: 3, residencial: 45, comercial: 38, industrial: 5, dotacional: 15, unidades: 15000, npiso: 2.8 },
+            { name: 'Rafael Uribe Uribe', lat: 4.5544, lng: -74.1158, predios: 105000, avaluo: 16500, areaCons: 7800, estrato: 2, residencial: 88, comercial: 8, industrial: 3, dotacional: 1, unidades: 112000, npiso: 2.2 },
+            { name: 'Ciudad Bolívar', lat: 4.5114, lng: -74.1701, predios: 180000, avaluo: 9800, areaCons: 10200, estrato: 1, residencial: 92, comercial: 5, industrial: 2, dotacional: 1, unidades: 192000, npiso: 1.7 },
+            { name: 'Sumapaz', lat: 4.0293, lng: -74.2476, predios: 3500, avaluo: 5200, areaCons: 180, estrato: 1, residencial: 95, comercial: 2, industrial: 0, dotacional: 2, unidades: 4000, npiso: 1.2 },
         ];
 
         // Puntos exactos por localidad — usados para clic e interacción
@@ -1606,7 +1632,6 @@
                     dotacional: loc.dotacional,
                     unidades: loc.unidades,
                     npiso: loc.npiso,
-                    antiguedad: loc.antiguedad,
                 },
             })),
         };
@@ -1794,20 +1819,6 @@
                     { label: 'La Candelaria — dotacional', pct: '15%', up: true },
                     { label: 'Santa Fe — dotacional', pct: '12%', up: true },
                     { label: 'Barrios Unidos — industrial', pct: '7%', up: false },
-                ],
-                pointColor: 'default',
-            },
-            {
-                text: 'La <strong class="magenta">antigüedad</strong> del parque edificado narra la historia urbana: <strong>La Candelaria</strong> supera los <strong class="magenta">75 años</strong> de antigüedad promedio. Las localidades de expansión reciente —Usme, Bosa y Ciudad Bolívar— tienen edificaciones de menos de <strong class="blue">15 años</strong>. El promedio de pisos refleja la densificación: Chapinero lidera con <strong>6.8 pisos</strong>.',
-                mode: 'antiguedad',
-                legend: { title: 'Antigüedad y pisos', type: 'magenta' },
-                view: { lng: -74.07, lat: 4.62, zoom: 12.0, pitch: 0, bearing: 0 },
-                stats: [
-                    { label: 'La Candelaria — antigüedad', pct: '75 años', up: false },
-                    { label: 'Los Mártires — antigüedad', pct: '50 años', up: false },
-                    { label: 'Chapinero — pisos prom.', pct: '6.8 p.', up: true },
-                    { label: 'Usme — antigüedad', pct: '12 años', up: true },
-                    { label: 'Ciudad Bolívar — antigüedad', pct: '14 años', up: true },
                 ],
                 pointColor: 'default',
             },
@@ -2044,7 +2055,6 @@
                     <div class="popup-row"><span class="popup-label">Área construida</span><span class="popup-value magenta">${Number(loc.areaCons).toLocaleString('es-CO')} ha</span></div>
                     <hr class="popup-divider">
                     <div class="popup-row"><span class="popup-label">Pisos promedio</span><span class="popup-value">${loc.npiso} p.</span></div>
-                    <div class="popup-row"><span class="popup-label">Antigüedad prom.</span><span class="popup-value">${loc.antiguedad} años</span></div>
                     <hr class="popup-divider">
                     <div class="popup-row"><span class="popup-label">Industrial</span><span class="popup-value" style="color:#1d8cf8;">${loc.industrial}%</span></div>
                     <div class="popup-row"><span class="popup-label">Dotacional</span><span class="popup-value" style="color:#6d5dfc;">${loc.dotacional}%</span></div>
@@ -2113,7 +2123,7 @@
         function showClusterCard(leaves) {
             let totalPredios = 0, totalArea = 0, weightedAvaluo = 0;
             let totalResid = 0, totalCom = 0, totalInd = 0, totalDot = 0;
-            let totalUnidades = 0, totalNpiso = 0, totalAntiguedad = 0;
+            let totalUnidades = 0, totalNpiso = 0;
             const estratos = {};
 
             for (const leaf of leaves) {
@@ -2128,7 +2138,6 @@
                 totalDot += Number(p.dotacional) || 0;
                 totalUnidades += Number(p.unidades) || 0;
                 totalNpiso += Number(p.npiso) || 0;
-                totalAntiguedad += Number(p.antiguedad) || 0;
                 const e = String(p.estrato);
                 estratos[e] = (estratos[e] || 0) + 1;
             }
@@ -2140,7 +2149,6 @@
             const avgInd = Math.round(totalInd / n);
             const avgDot = Math.round(totalDot / n);
             const avgNpiso = (totalNpiso / n).toFixed(1);
-            const avgAntiguedad = Math.round(totalAntiguedad / n);
             const domEstrato = Object.entries(estratos).sort((a, b) => b[1] - a[1])[0]?.[0] || '–';
 
             // Actualizar gráfica con datos del cluster / localidad
@@ -2163,7 +2171,6 @@
                 <div class="stat-row"><span class="stat-pct up">${Number(Math.round(totalArea)).toLocaleString('es-CO')} ha</span><span class="stat-label">área construida</span></div>
 
                 <div class="stat-row"><span class="stat-pct">${avgNpiso} p.</span><span class="stat-label">pisos promedio</span></div>
-                <div class="stat-row"><span class="stat-pct">${avgAntiguedad} a.</span><span class="stat-label">antigüedad prom.</span></div>
                 <div class="stat-row"><span class="stat-pct">${avgResid}%</span><span class="stat-label">residencial</span></div>
                 <div class="stat-row"><span class="stat-pct down">${avgCom}%</span><span class="stat-label">comercial</span></div>
                 <div class="stat-row"><span class="stat-pct" style="color:var(--blue)">${avgInd}%</span><span class="stat-label">industrial</span></div>
