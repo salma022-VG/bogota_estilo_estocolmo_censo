@@ -961,6 +961,7 @@
         /* ── Elementos exclusivos de móvil (ocultos en desktop) ── */
         .step-dots { display: none; }
         .timeline-handle { display: none; }
+        .swipe-arrows { display: none; }
 
         /* ══════════════════════════════════════
            MÓVIL — diseño centrado y organizado
@@ -1215,41 +1216,6 @@
                 letter-spacing: 0.16em;
                 min-height: 44px;
             }
-        }
-
-        /* ── Teléfonos muy pequeños (≤ 390px) ── */
-        @media (max-width: 390px) {
-            .narrative-panel {
-                max-height: 40vh;
-                bottom: 110px;
-                padding: 12px 16px 12px;
-            }
-
-            .narrative-text {
-                font-size: 0.82rem;
-            }
-
-            .ghost-btn {
-                font-size: 0.56rem;
-                max-width: 120px;
-            }
-
-            .legend-gradient {
-                width: 80px;
-            }
-
-            .info-modal-content {
-                padding: 20px 16px 24px;
-            }
-
-            .intro-skip-btn {
-                padding: 12px 28px;
-                font-size: 0.58rem;
-            }
-
-            .intro-controls {
-                padding: 16px 18px 28px;
-            }
 
             /* ── Puntos indicadores de paso ── */
             .step-dots {
@@ -1303,13 +1269,10 @@
             }
 
             /* Feedback táctil en botones */
-            .ghost-btn {
-                touch-action: manipulation;
-                transition: transform 0.1s, opacity 0.1s;
-            }
             .ghost-btn:active {
                 transform: scale(0.93);
                 opacity: 0.65;
+                transition: transform 0.1s, opacity 0.1s;
             }
             .chart-pill {
                 touch-action: manipulation;
@@ -1331,6 +1294,42 @@
                 color: var(--dim);
                 margin-top: 4px;
             }
+        }
+
+        /* ── Teléfonos muy pequeños (≤ 390px) ── */
+        @media (max-width: 390px) {
+            .narrative-panel {
+                max-height: 40vh;
+                bottom: 110px;
+                padding: 12px 16px 12px;
+            }
+
+            .narrative-text {
+                font-size: 0.82rem;
+            }
+
+            .ghost-btn {
+                font-size: 0.56rem;
+                max-width: 120px;
+            }
+
+            .legend-gradient {
+                width: 80px;
+            }
+
+            .info-modal-content {
+                padding: 20px 16px 24px;
+            }
+
+            .intro-skip-btn {
+                padding: 12px 28px;
+                font-size: 0.58rem;
+            }
+
+            .intro-controls {
+                padding: 16px 18px 28px;
+            }
+
         }
 
         /* ── Orientación horizontal en móvil ── */
@@ -1366,8 +1365,8 @@
                 font-size: 0.44rem;
             }
         }
-    </style>
-    <style>
+
+        /* ── Color forzado por tema ── */
         /* tema oscuro: fuerza blanco */
         body:not(.light-mode),
         body:not(.light-mode) p,
@@ -1942,7 +1941,7 @@
         ];
 
         // ────────────────────────────────────────────────────────────
-        // 3. ESTADO DE LA APLICACIÓN
+        // 4. ESTADO DE LA APLICACIÓN
         // ────────────────────────────────────────────────────────────
 
         let step = 0;
@@ -1955,7 +1954,7 @@
         let activeClusterLeaves = null; // hojas del cluster activo
 
         // ────────────────────────────────────────────────────────────
-        // 4. MAPA — MapLibre GL con Clusters
+        // 5. MAPA — MapLibre GL con Clusters
         // ────────────────────────────────────────────────────────────
 
         const MAP_STYLE = {
@@ -2031,7 +2030,7 @@
         }
 
         // ────────────────────────────────────────────────────────────
-        // 5. MARCADORES DE LOCALIDAD + POPUP ENRIQUECIDO
+        // 6. MARCADORES DE LOCALIDAD + POPUP ENRIQUECIDO
         // ────────────────────────────────────────────────────────────
 
         const ESTRATO_COLORS_MAP = {
@@ -2205,7 +2204,7 @@
         }
 
         // ────────────────────────────────────────────────────────────
-        // 6. TARJETA DE CENSO DEL CLUSTER
+        // 7. TARJETA DE CENSO DEL CLUSTER
         // ────────────────────────────────────────────────────────────
 
         function showClusterCard(leaves) {
@@ -2259,7 +2258,6 @@
                 <div class="stat-row"><span class="stat-pct up">${Number(Math.round(totalArea)).toLocaleString('es-CO')} ha</span><span class="stat-label">área construida</span></div>
 
                 <div class="stat-row"><span class="stat-pct">${avgNpiso} p.</span><span class="stat-label">pisos promedio</span></div>
-                <div class="stat-row"><span class="stat-pct">${avgAntiguedad} a.</span><span class="stat-label">antigüedad prom.</span></div>
                 <div class="stat-row"><span class="stat-pct">${avgResid}%</span><span class="stat-label">residencial</span></div>
                 <div class="stat-row"><span class="stat-pct down">${avgCom}%</span><span class="stat-label">comercial</span></div>
                 <div class="stat-row"><span class="stat-pct" style="color:var(--blue)">${avgInd}%</span><span class="stat-label">industrial</span></div>
@@ -2279,13 +2277,13 @@
         }
 
         // ────────────────────────────────────────────────────────────
-        // 7. MODOS DE COLOR DE PUNTOS (sin capa de puntos — no-op)
+        // 8. MODOS DE COLOR DE PUNTOS (sin capa de puntos — no-op)
         // ────────────────────────────────────────────────────────────
 
         function updatePointColors(mode) { /* puntos de fondo eliminados */ }
 
         // ────────────────────────────────────────────────────────────
-        // 7. VUELO DEL MAPA
+        // 9. VUELO DEL MAPA
         // ────────────────────────────────────────────────────────────
 
         function flyTo() {
@@ -2304,7 +2302,7 @@
         }
 
         // ────────────────────────────────────────────────────────────
-        // 8. INTERFAZ NARRATIVA
+        // 10. INTERFAZ NARRATIVA
         // ────────────────────────────────────────────────────────────
 
         function updateUI() {
@@ -2363,7 +2361,7 @@
         }
 
         // ────────────────────────────────────────────────────────────
-        // 9. ESCUCHADORES DE EVENTOS
+        // 11. ESCUCHADORES DE EVENTOS
         // ────────────────────────────────────────────────────────────
 
         // ── Haptic feedback ──
@@ -2439,7 +2437,7 @@
         });
 
         // ────────────────────────────────────────────────────────────
-        // 10. GRÁFICA INTERACTIVA
+        // 12. GRÁFICA INTERACTIVA
         // ────────────────────────────────────────────────────────────
 
         /** Nombres cortos para el eje X */
@@ -2711,7 +2709,7 @@
         }
 
         // ────────────────────────────────────────────────────────────
-        // 11. ANIMACIÓN DE INTRODUCCIÓN
+        // 13. ANIMACIÓN DE INTRODUCCIÓN
         // ────────────────────────────────────────────────────────────
 
         function initIntroAnimation() {
@@ -2766,7 +2764,7 @@
         }
 
         // ────────────────────────────────────────────────────────────
-        // 12. ARRANQUE
+        // 14. ARRANQUE
         // ────────────────────────────────────────────────────────────
 
         document.addEventListener('DOMContentLoaded', () => {
