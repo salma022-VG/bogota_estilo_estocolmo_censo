@@ -2330,12 +2330,12 @@
                     <span style="font-size:.55rem;font-weight:600;color:var(--cyan);letter-spacing:.1em;text-transform:uppercase;">20 localidades — clic para explorar</span>
                 </div>
                 ${sorted.map(loc => {
-                    const pct = Math.round((loc.predios / maxPredios) * 100);
-                    const color = loc.avaluo > 60000 ? 'var(--cyan)'
-                        : loc.avaluo > 30000 ? 'var(--blue)'
+                const pct = Math.round((loc.predios / maxPredios) * 100);
+                const color = loc.avaluo > 60000 ? 'var(--cyan)'
+                    : loc.avaluo > 30000 ? 'var(--blue)'
                         : loc.avaluo > 15000 ? 'var(--purple)'
-                        : 'var(--mag)';
-                    return `
+                            : 'var(--mag)';
+                return `
                         <div class="stat-row clickable" data-loc="${loc.name}" style="flex-direction:column;align-items:flex-start;gap:0;">
                             <div style="display:flex;justify-content:space-between;width:100%;align-items:baseline;">
                                 <span class="stat-loc-name">${loc.name}</span>
@@ -2343,7 +2343,7 @@
                             </div>
                             <div class="stat-mini-bar"><div class="stat-mini-bar-fill" style="width:${pct}%;background:${color};"></div></div>
                         </div>`;
-                }).join('')}`;
+            }).join('')}`;
 
             statsEl.querySelectorAll('.stat-row.clickable').forEach(row => {
                 row.addEventListener('click', () => {
