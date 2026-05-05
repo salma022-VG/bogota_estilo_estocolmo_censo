@@ -264,14 +264,15 @@
             border: none;
             padding: 0px 15px;
             border-radius: 5px;
-            background-color: rgba(254,180,0,.15);
-            border: 1px solid rgba(254,180,0,.4);
+            background-color: rgba(254, 180, 0, .15);
+            border: 1px solid rgba(254, 180, 0, .4);
             gap: 10px;
             cursor: pointer;
             transition: all 0.3s;
             margin-top: 18px;
             display: none;
         }
+
         .folderContainer {
             width: 40px;
             height: fit-content;
@@ -281,19 +282,31 @@
             justify-content: flex-end;
             position: relative;
         }
-        .fileBack { z-index: 1; width: 80%; height: auto; }
+
+        .fileBack {
+            z-index: 1;
+            width: 80%;
+            height: auto;
+        }
+
         .filePage {
-            width: 50%; height: auto;
-            position: absolute; z-index: 2;
+            width: 50%;
+            height: auto;
+            position: absolute;
+            z-index: 2;
             transition: all 0.3s ease-out;
         }
+
         .fileFront {
-            width: 85%; height: auto;
-            position: absolute; z-index: 3;
+            width: 85%;
+            height: auto;
+            position: absolute;
+            z-index: 3;
             opacity: 0.95;
             transform-origin: bottom;
             transition: all 0.3s ease-out;
         }
+
         .Documents-btn .text {
             color: #FEB400;
             font-size: 12px;
@@ -302,10 +315,23 @@
             font-family: var(--mono);
             text-transform: uppercase;
         }
-        .Documents-btn:hover .filePage { transform: translateY(-5px); }
-        .Documents-btn:hover { background-color: rgba(254,180,0,.25); border-color: #FEB400; }
-        .Documents-btn:active { transform: scale(0.95); }
-        .Documents-btn:hover .fileFront { transform: rotateX(30deg); }
+
+        .Documents-btn:hover .filePage {
+            transform: translateY(-5px);
+        }
+
+        .Documents-btn:hover {
+            background-color: rgba(254, 180, 0, .25);
+            border-color: #FEB400;
+        }
+
+        .Documents-btn:active {
+            transform: scale(0.95);
+        }
+
+        .Documents-btn:hover .fileFront {
+            transform: rotateX(30deg);
+        }
 
         /* ── Botones Fantasma ── */
         .narrative-buttons {
@@ -1649,7 +1675,7 @@
 
         body.light-mode .narrative-panel {
             background: var(--panel-bg) !important;
-            border-top-color: rgba(0, 0, 0, .1) !important;
+            border-top-color: rgb(250, 250, 250) !important;
         }
     </style>
 </head>
@@ -1705,19 +1731,45 @@
                 <button class="ghost-btn" id="btn-prev">Anterior</button>
                 <button class="ghost-btn" id="btn-next">Siguiente</button>
             </div>
-            <button class="Documents-btn" id="btn-mas-info" onclick="window.open('https://salma022-vg.github.io/mockup_Boletin_Censo/','_blank')">
+            <button class="Documents-btn" id="btn-mas-info"
+                onclick="window.open('https://salma022-vg.github.io/mockup_Boletin_Censo/','_blank')">
                 <span class="folderContainer">
-                    <svg class="fileBack" width="146" height="113" viewBox="0 0 146 113" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M0 4C0 1.79086 1.79086 0 4 0H50.3802C51.8285 0 53.2056 0.627965 54.1553 1.72142L64.3303 13.4371C65.2799 14.5306 66.657 15.1585 68.1053 15.1585H141.509C143.718 15.1585 145.509 16.9494 145.509 19.1585V109C145.509 111.209 143.718 113 141.509 113H3.99999C1.79085 113 0 111.209 0 109V4Z" fill="url(#paint0_linear_117_4)"></path>
-                        <defs><linearGradient id="paint0_linear_117_4" x1="0" y1="0" x2="72.93" y2="95.4804" gradientUnits="userSpaceOnUse"><stop stop-color="#FEB400"></stop><stop offset="1" stop-color="#C88000"></stop></linearGradient></defs>
+                    <svg class="fileBack" width="146" height="113" viewBox="0 0 146 113" fill="none"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M0 4C0 1.79086 1.79086 0 4 0H50.3802C51.8285 0 53.2056 0.627965 54.1553 1.72142L64.3303 13.4371C65.2799 14.5306 66.657 15.1585 68.1053 15.1585H141.509C143.718 15.1585 145.509 16.9494 145.509 19.1585V109C145.509 111.209 143.718 113 141.509 113H3.99999C1.79085 113 0 111.209 0 109V4Z"
+                            fill="url(#paint0_linear_117_4)"></path>
+                        <defs>
+                            <linearGradient id="paint0_linear_117_4" x1="0" y1="0" x2="72.93" y2="95.4804"
+                                gradientUnits="userSpaceOnUse">
+                                <stop stop-color="#FEB400"></stop>
+                                <stop offset="1" stop-color="#C88000"></stop>
+                            </linearGradient>
+                        </defs>
                     </svg>
-                    <svg class="filePage" width="88" height="99" viewBox="0 0 88 99" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <svg class="filePage" width="88" height="99" viewBox="0 0 88 99" fill="none"
+                        xmlns="http://www.w3.org/2000/svg">
                         <rect width="88" height="99" fill="url(#paint0_linear_117_6)"></rect>
-                        <defs><linearGradient id="paint0_linear_117_6" x1="0" y1="0" x2="81" y2="160.5" gradientUnits="userSpaceOnUse"><stop stop-color="white"></stop><stop offset="1" stop-color="#C88000"></stop></linearGradient></defs>
+                        <defs>
+                            <linearGradient id="paint0_linear_117_6" x1="0" y1="0" x2="81" y2="160.5"
+                                gradientUnits="userSpaceOnUse">
+                                <stop stop-color="white"></stop>
+                                <stop offset="1" stop-color="#C88000"></stop>
+                            </linearGradient>
+                        </defs>
                     </svg>
-                    <svg class="fileFront" width="160" height="79" viewBox="0 0 160 79" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M0.29306 12.2478C0.133905 9.38186 2.41499 6.97059 5.28537 6.97059H30.419H58.1902C59.5751 6.97059 60.9288 6.55982 62.0802 5.79025L68.977 1.18034C70.1283 0.410771 71.482 0 72.8669 0H77H155.462C157.87 0 159.733 2.1129 159.43 4.50232L150.443 75.5023C150.19 77.5013 148.489 79 146.474 79H7.78403C5.66106 79 3.9079 77.3415 3.79019 75.2218L0.29306 12.2478Z" fill="url(#paint0_linear_117_5)"></path>
-                        <defs><linearGradient id="paint0_linear_117_5" x1="38.7619" y1="8.71323" x2="66.9106" y2="82.8317" gradientUnits="userSpaceOnUse"><stop stop-color="#FFD966"></stop><stop offset="1" stop-color="#E3192F"></stop></linearGradient></defs>
+                    <svg class="fileFront" width="160" height="79" viewBox="0 0 160 79" fill="none"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M0.29306 12.2478C0.133905 9.38186 2.41499 6.97059 5.28537 6.97059H30.419H58.1902C59.5751 6.97059 60.9288 6.55982 62.0802 5.79025L68.977 1.18034C70.1283 0.410771 71.482 0 72.8669 0H77H155.462C157.87 0 159.733 2.1129 159.43 4.50232L150.443 75.5023C150.19 77.5013 148.489 79 146.474 79H7.78403C5.66106 79 3.9079 77.3415 3.79019 75.2218L0.29306 12.2478Z"
+                            fill="url(#paint0_linear_117_5)"></path>
+                        <defs>
+                            <linearGradient id="paint0_linear_117_5" x1="38.7619" y1="8.71323" x2="66.9106" y2="82.8317"
+                                gradientUnits="userSpaceOnUse">
+                                <stop stop-color="#FFD966"></stop>
+                                <stop offset="1" stop-color="#E3192F"></stop>
+                            </linearGradient>
+                        </defs>
                     </svg>
                 </span>
                 <p class="text">Más información · click aquí</p>
@@ -2514,64 +2566,64 @@
         // ────────────────────────────────────────────────────────────
 
         function updateUI() {
-                    const s = STATES[step];
+            const s = STATES[step];
 
-                    // Fundido del texto
-                    const txt = document.getElementById('narrative-text');
-                    txt.style.opacity = 0;
-                    setTimeout(() => { txt.innerHTML = s.text; txt.style.opacity = 1; }, 250);
+            // Fundido del texto
+            const txt = document.getElementById('narrative-text');
+            txt.style.opacity = 0;
+            setTimeout(() => { txt.innerHTML = s.text; txt.style.opacity = 1; }, 250);
 
-                    // Botones
-                    document.getElementById('btn-prev').disabled = step === 0;
-                    document.getElementById('btn-next').disabled = step === STATES.length - 1;
-                    document.getElementById('btn-mas-info').style.display = step === STATES.length - 1 ? 'flex' : 'none';
+            // Botones
+            document.getElementById('btn-prev').disabled = step === 0;
+            document.getElementById('btn-next').disabled = step === STATES.length - 1;
+            document.getElementById('btn-mas-info').style.display = step === STATES.length - 1 ? 'flex' : 'none';
 
-                    // Puntos indicadores (móvil)
-                    const dotsEl = document.getElementById('step-dots');
-                    if (dotsEl) {
-                        Array.from(dotsEl.children).forEach((d, i) => d.classList.toggle('active', i === step));
-                    }
+            // Puntos indicadores (móvil)
+            const dotsEl = document.getElementById('step-dots');
+            if (dotsEl) {
+                Array.from(dotsEl.children).forEach((d, i) => d.classList.toggle('active', i === step));
+            }
 
-                    // Ocultar swipe-arrows si ya estamos en el último paso
-                    const arrowsEl = document.getElementById('swipe-arrows');
-                    if (arrowsEl) arrowsEl.style.visibility = STATES.length <= 1 ? 'hidden' : 'visible';
+            // Ocultar swipe-arrows si ya estamos en el último paso
+            const arrowsEl = document.getElementById('swipe-arrows');
+            if (arrowsEl) arrowsEl.style.visibility = STATES.length <= 1 ? 'hidden' : 'visible';
 
-                    // Leyenda
-                    const legendEl = document.getElementById('map-legend');
-                    const clustersEl = document.getElementById('legend-clusters');
-                    if (s.legend) {
-                        legendEl.style.opacity = '1';
-                        document.getElementById('legend-title').textContent = s.legend.title;
-                        document.getElementById('legend-gradient').className = 'legend-gradient ' + s.legend.type;
+            // Leyenda
+            const legendEl = document.getElementById('map-legend');
+            const clustersEl = document.getElementById('legend-clusters');
+            if (s.legend) {
+                legendEl.style.opacity = '1';
+                document.getElementById('legend-title').textContent = s.legend.title;
+                document.getElementById('legend-gradient').className = 'legend-gradient ' + s.legend.type;
 
-                        // Mostrar/ocultar puntos de cluster
-                        if (s.legend.type === 'cluster') {
-                            clustersEl.style.display = 'flex';
-                        } else {
-                            clustersEl.style.display = 'none';
-                        }
-                    } else {
-                        legendEl.style.opacity = '0';
-                    }
-
-                    // Estadísticas (resetear tarjeta de cluster si está activa)
-                    if (clusterCardActive) renderChart('historico');
-                    clusterCardActive = false;
-                    activeClusterLeaves = null;
-                    const statsEl = document.getElementById('timeline-stats');
-                    if (s.mode === 'overview') {
-                        renderOverviewStats();
-                    } else {
-                        statsEl.innerHTML = s.stats
-                            ? s.stats.map(r => `<div class="stat-row"><span class="stat-pct ${r.up ? 'up' : 'down'}">${r.pct}</span><span class="stat-label">${r.label}</span></div>`).join('')
-                            : '';
-                    }
-
-                    // Cerrar popup activo si existe
-                    if (activePopup) { activePopup.remove(); activePopup = null; }
-
-                    flyTo();
+                // Mostrar/ocultar puntos de cluster
+                if (s.legend.type === 'cluster') {
+                    clustersEl.style.display = 'flex';
+                } else {
+                    clustersEl.style.display = 'none';
                 }
+            } else {
+                legendEl.style.opacity = '0';
+            }
+
+            // Estadísticas (resetear tarjeta de cluster si está activa)
+            if (clusterCardActive) renderChart('historico');
+            clusterCardActive = false;
+            activeClusterLeaves = null;
+            const statsEl = document.getElementById('timeline-stats');
+            if (s.mode === 'overview') {
+                renderOverviewStats();
+            } else {
+                statsEl.innerHTML = s.stats
+                    ? s.stats.map(r => `<div class="stat-row"><span class="stat-pct ${r.up ? 'up' : 'down'}">${r.pct}</span><span class="stat-label">${r.label}</span></div>`).join('')
+                    : '';
+            }
+
+            // Cerrar popup activo si existe
+            if (activePopup) { activePopup.remove(); activePopup = null; }
+
+            flyTo();
+        }
 
         // ────────────────────────────────────────────────────────────
         // 11. ESCUCHADORES DE EVENTOS
@@ -2581,449 +2633,449 @@
         function haptic(ms = 8) { if (navigator.vibrate) navigator.vibrate(ms); }
 
         document.getElementById('btn-next').addEventListener('click', () => {
-                    if (step < STATES.length - 1) { step++; updateUI(); haptic(); }
+            if (step < STATES.length - 1) { step++; updateUI(); haptic(); }
+        });
+        document.getElementById('btn-prev').addEventListener('click', () => {
+            if (step > 0) { step--; updateUI(); haptic(); }
+        });
+
+        // ── Swipe horizontal en el panel narrativo (móvil) ──
+        ; (() => {
+            const panel = document.getElementById('narrative-panel');
+            let sx = 0, sy = 0;
+            panel.addEventListener('touchstart', e => {
+                sx = e.touches[0].clientX;
+                sy = e.touches[0].clientY;
+            }, { passive: true });
+            panel.addEventListener('touchend', e => {
+                const dx = e.changedTouches[0].clientX - sx;
+                const dy = e.changedTouches[0].clientY - sy;
+                if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 44) {
+                    if (dx < 0 && step < STATES.length - 1) { step++; updateUI(); haptic(); }
+                    else if (dx > 0 && step > 0) { step--; updateUI(); haptic(); }
+                }
+            }, { passive: true });
+        })();
+
+        // ── Timeline plegable (móvil) ──
+        ; (() => {
+            const handle = document.getElementById('timeline-handle');
+            const strip = document.getElementById('timeline-strip');
+            const narr = document.getElementById('narrative-panel');
+            let expanded = true;
+            if (handle) {
+                handle.addEventListener('click', () => {
+                    expanded = !expanded;
+                    strip.classList.toggle('collapsed', !expanded);
+                    narr.classList.toggle('tl-collapsed', !expanded);
+                    haptic(6);
                 });
-            document.getElementById('btn-prev').addEventListener('click', () => {
-                if (step > 0) { step--; updateUI(); haptic(); }
-            });
+            }
+        })();
 
-            // ── Swipe horizontal en el panel narrativo (móvil) ──
-            ; (() => {
-                const panel = document.getElementById('narrative-panel');
-                let sx = 0, sy = 0;
-                panel.addEventListener('touchstart', e => {
-                    sx = e.touches[0].clientX;
-                    sy = e.touches[0].clientY;
-                }, { passive: true });
-                panel.addEventListener('touchend', e => {
-                    const dx = e.changedTouches[0].clientX - sx;
-                    const dy = e.changedTouches[0].clientY - sy;
-                    if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 44) {
-                        if (dx < 0 && step < STATES.length - 1) { step++; updateUI(); haptic(); }
-                        else if (dx > 0 && step > 0) { step--; updateUI(); haptic(); }
-                    }
-                }, { passive: true });
-            })();
+        document.addEventListener('keydown', e => {
+            if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+                if (step < STATES.length - 1) { step++; updateUI(); }
+            } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+                if (step > 0) { step--; updateUI(); }
+            }
+        });
 
-            // ── Timeline plegable (móvil) ──
-            ; (() => {
-                const handle = document.getElementById('timeline-handle');
-                const strip = document.getElementById('timeline-strip');
-                const narr = document.getElementById('narrative-panel');
-                let expanded = true;
-                if (handle) {
-                    handle.addEventListener('click', () => {
-                        expanded = !expanded;
-                        strip.classList.toggle('collapsed', !expanded);
-                        narr.classList.toggle('tl-collapsed', !expanded);
-                        haptic(6);
-                    });
+        // Pills de la gráfica
+        document.getElementById('chart-controls').addEventListener('click', e => {
+            const pill = e.target.closest('.chart-pill');
+            if (!pill) return;
+            const metric = pill.dataset.metric;
+            document.getElementById('year-selector').style.display = metric === 'historico' ? 'none' : 'flex';
+            renderChart(metric, activeClusterLeaves);
+        });
+
+        // Modal de información
+        document.getElementById('info-btn').addEventListener('click', () =>
+            document.getElementById('info-modal').classList.add('active')
+        );
+        document.getElementById('info-close').addEventListener('click', () =>
+            document.getElementById('info-modal').classList.remove('active')
+        );
+        document.getElementById('info-modal').addEventListener('click', e => {
+            if (e.target === e.currentTarget) e.currentTarget.classList.remove('active');
+        });
+
+        // ────────────────────────────────────────────────────────────
+        // 12. GRÁFICA INTERACTIVA
+        // ────────────────────────────────────────────────────────────
+
+        /** Nombres cortos para el eje X */
+        function shortName(n) {
+            const MAP = {
+                'Rafael Uribe Uribe': 'R.Uribe', 'Barrios Unidos': 'B.Unidos',
+                'Ciudad Bolívar': 'C.Bolívar', 'San Cristóbal': 'S.Cristóbal',
+                'Antonio Nariño': 'A.Nariño', 'Los Mártires': 'Mártires',
+                'La Candelaria': 'Candelaria', 'Puente Aranda': 'P.Aranda',
+                'Santa Fe': 'Sta.Fe', 'Teusaquillo': 'Teusaq.',
+            };
+            return MAP[n] || n.split(' ')[0];
+        }
+
+        /** Obtiene localidades únicas a partir de hojas de cluster */
+        function getLocsByLeaves(leaves) {
+            const seen = new Set();
+            const result = [];
+            for (const leaf of leaves) {
+                const name = leaf.properties.name;
+                if (!seen.has(name)) {
+                    seen.add(name);
+                    const loc = LOCALIDADES.find(l => l.name === name);
+                    if (loc) result.push(loc);
                 }
-            })();
+            }
+            return result;
+        }
 
-            document.addEventListener('keydown', e => {
-                if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
-                    if (step < STATES.length - 1) { step++; updateUI(); }
-                } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
-                    if (step > 0) { step--; updateUI(); }
-                }
-            });
+        /** Vuela el mapa a la localidad seleccionada */
+        function flyToLocalidad(name) {
+            const loc = LOCALIDADES.find(l => l.name === name);
+            if (!loc || !map) return;
+            map.flyTo({ center: [loc.lng, loc.lat], zoom: 14.5, duration: 900, essential: true });
+        }
 
-            // Pills de la gráfica
-            document.getElementById('chart-controls').addEventListener('click', e => {
-                const pill = e.target.closest('.chart-pill');
-                if (!pill) return;
-                const metric = pill.dataset.metric;
-                document.getElementById('year-selector').style.display = metric === 'historico' ? 'none' : 'flex';
-                renderChart(metric, activeClusterLeaves);
-            });
+        /**
+         * Renderiza la gráfica según métrica y fuente de datos.
+         * @param {string} metric  'historico' | 'avaluo' | 'area' | 'uso'
+         * @param {Array|null} leaves  hojas de cluster, null = 20 localidades
+         */
+        function renderChart(metric, leaves = null) {
+            chartMetric = metric;
 
-            // Modal de información
-            document.getElementById('info-btn').addEventListener('click', () =>
-                document.getElementById('info-modal').classList.add('active')
+            // Actualizar estado visual de pills
+            document.querySelectorAll('.chart-pill').forEach(p =>
+                p.classList.toggle('active', p.dataset.metric === metric)
             );
-            document.getElementById('info-close').addEventListener('click', () =>
-                document.getElementById('info-modal').classList.remove('active')
-            );
-            document.getElementById('info-modal').addEventListener('click', e => {
-                if (e.target === e.currentTarget) e.currentTarget.classList.remove('active');
+
+            if (timelineChartInstance) { timelineChartInstance.destroy(); timelineChartInstance = null; }
+
+            const isLight = document.body.classList.contains('light-mode');
+            const tickClr = isLight ? 'rgba(0,0,0,.45)' : 'rgba(255,255,255,.32)';
+            const gridClr = isLight ? 'rgba(0,0,0,.07)' : 'rgba(255,255,255,.03)';
+            const tipBg = isLight ? 'rgba(255,255,255,.97)' : 'rgba(0,0,0,.92)';
+            const tipBdr = isLight ? 'rgba(0,0,0,.12)' : 'rgba(255,255,255,.1)';
+            const tipTitle = isLight ? '#333' : undefined;
+            const tipBody = isLight ? '#111' : undefined;
+            const titleClr = isLight ? 'rgba(140,100,0,.55)' : 'rgba(254,180,0,.3)';
+            const cyanTick = isLight ? 'rgba(160,120,0,.6)' : 'rgba(254,180,0,.4)';
+            const magTick = isLight ? 'rgba(160,15,25,.6)' : 'rgba(227,25,47,.4)';
+            const wTick = isLight ? 'rgba(0,0,0,.3)' : 'rgba(255,255,255,.2)';
+            const wLine = isLight ? 'rgba(0,0,0,.25)' : 'rgba(255,255,255,.22)';
+
+            const font = { family: 'Roboto Mono', weight: '300' };
+            const ctx = document.getElementById('timelineChart');
+            const tooltipCfg = {
+                backgroundColor: tipBg, borderColor: tipBdr, borderWidth: 1,
+                titleFont: { ...font, size: 9 }, bodyFont: { ...font, size: 10 },
+                titleColor: tipTitle, bodyColor: tipBody,
+                padding: 8, cornerRadius: 0, displayColors: true, boxWidth: 6, boxHeight: 6,
+            };
+            const titleCfg = (text) => ({
+                display: true, text,
+                color: titleClr,
+                font: { family: 'Roboto Mono', size: 7, weight: '400' },
+                padding: { bottom: 1, top: 0 }, align: 'start',
+            });
+            const xScale = { ticks: { color: tickClr, font: { ...font, size: 7 }, maxRotation: 35, autoSkip: false }, grid: { color: gridClr } };
+            const hoverCursor = (evt, elements) => {
+                if (evt.native) evt.native.target.style.cursor = elements.length ? 'pointer' : 'default';
+            };
+            const ESTRATO_COLOR = { 1: 'rgba(227,25,47,.7)', 2: 'rgba(235,80,20,.7)', 3: 'rgba(243,130,0,.7)', 4: 'rgba(248,158,0,.7)', 5: 'rgba(254,180,0,.75)', 6: 'rgba(254,180,0,.95)' };
+
+            // ── Histórico (serie temporal) ────────────────────────────
+            if (metric === 'historico') {
+                const HIST_YEARS = [2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025, 2026];
+                const labelsH = HIST_YEARS.map(String);
+                const locName = leaves && leaves.length === 1 ? leaves[0].properties.name : null;
+
+                let prediosT, avaluoT, histTitle;
+                if (DATA_LOADED && locName) {
+                    // Serie temporal de una localidad específica
+                    prediosT = HIST_YEARS.map(y => {
+                        const d = (DATA_BY_YEAR[y] || {})[locName];
+                        return d && d.predios > 0 ? Math.round(d.predios / 1000) : null;
+                    });
+                    avaluoT = HIST_YEARS.map(y => {
+                        const d = (DATA_BY_YEAR[y] || {})[locName];
+                        return d && d.areaCons > 0 ? Math.round(d.avaluoTotal / d.areaCons / 1000) : null;
+                    });
+                    histTitle = 'HISTÓRICO · ' + locName.toUpperCase();
+                } else if (DATA_LOADED) {
+                    // Serie temporal total ciudad
+                    prediosT = HIST_YEARS.map(y => {
+                        const byLoc = DATA_BY_YEAR[y] || {};
+                        const tot = Object.values(byLoc).reduce((s, d) => s + d.predios, 0);
+                        return tot > 0 ? Math.round(tot / 1000) : null;
+                    });
+                    avaluoT = HIST_YEARS.map(y => {
+                        const byLoc = DATA_BY_YEAR[y] || {};
+                        let av = 0, ac = 0;
+                        Object.values(byLoc).forEach(d => { av += d.avaluoTotal; ac += d.areaCons; });
+                        return ac > 0 ? Math.round(av / ac / 1000) : null;
+                    });
+                    histTitle = 'HISTÓRICO BOGOTÁ · 2012 – 2026 · 20 localidades';
+                } else {
+                    prediosT = [2050, 2120, 2190, 2260, 2320, 2390, 2430, 2490, 2520, 2560, 2610, 2660, 2720, null, null];
+                    avaluoT = [22, 24, 26, 28, 30, 32, 34, 36, 38, 40, 43, 46, 49, null, null];
+                    histTitle = 'CARGANDO DATOS…';
+                }
+
+                const selIdx = HIST_YEARS.indexOf(selectedYear);
+                const pRadP = HIST_YEARS.map((_, i) => i === selIdx ? 5 : 2);
+                const pRadA = HIST_YEARS.map((_, i) => i === selIdx ? 5 : 2);
+
+                timelineChartInstance = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: labelsH,
+                        datasets: [
+                            { label: 'Predios (miles)', data: prediosT, borderColor: 'rgba(254,180,0,.75)', backgroundColor: 'rgba(254,180,0,.05)', borderWidth: 1.5, pointRadius: pRadP, pointHoverRadius: 6, tension: .35, fill: true, yAxisID: 'y', spanGaps: true },
+                            { label: 'Avalúo prom. ($/m² · miles)', data: avaluoT, borderColor: 'rgba(227,25,47,.75)', backgroundColor: 'rgba(227,25,47,.05)', borderWidth: 1.5, pointRadius: pRadA, pointHoverRadius: 6, tension: .35, fill: true, yAxisID: 'y1', spanGaps: true },
+                        ],
+                    },
+                    options: {
+                        responsive: true, maintainAspectRatio: false,
+                        interaction: { mode: 'index', intersect: false },
+                        plugins: {
+                            legend: { display: false },
+                            title: titleCfg(histTitle),
+                            tooltip: tooltipCfg,
+                        },
+                        scales: {
+                            x: { ticks: { color: tickClr, font: { ...font, size: 8 }, maxRotation: 0, autoSkip: true, maxTicksLimit: 8 }, grid: { color: gridClr, drawBorder: false } },
+                            y: { position: 'right', ticks: { color: cyanTick, font: { ...font, size: 8 }, maxTicksLimit: 4, callback: v => v + 'k' }, grid: { color: gridClr, drawBorder: false } },
+                            y1: { position: 'left', ticks: { color: magTick, font: { ...font, size: 8 }, maxTicksLimit: 4, callback: v => '$' + v + 'k' }, grid: { drawOnChartArea: false, drawBorder: false } },
+                        },
+                    },
+                });
+                return;
+            }
+
+            // ── Base de datos para métricas por localidad ─────────────
+            const locs = leaves ? getLocsByLeaves(leaves) : [...LOCALIDADES];
+            const yrTag = DATA_LOADED ? ` · ${selectedYear}` : '';
+            const clusterLabel = leaves ? `CLUSTER · ${locs.length} LOCALIDAD${locs.length !== 1 ? 'ES' : ''}${yrTag}` : null;
+
+            const clickBar = (sorted) => (evt, elements) => {
+                if (!elements.length) return;
+                flyToLocalidad(sorted[elements[0].index].name);
+            };
+
+            // ── Avalúo catastral ──────────────────────────────────────
+            if (metric === 'avaluo') {
+                const sorted = [...locs].sort((a, b) => b.avaluo - a.avaluo);
+                const labels = sorted.map(l => shortName(l.name));
+                const avaluos = sorted.map(l => Math.round(l.avaluo / 1000));
+                const predios = sorted.map(l => Math.round(l.predios / 1000));
+                const colors = sorted.map(l => ESTRATO_COLOR[l.estrato] || 'rgba(255,255,255,.4)');
+                const borders = colors.map(c => c.replace(/[\d.]+\)$/, '1)'));
+
+                timelineChartInstance = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels,
+                        datasets: [
+                            { label: 'Avalúo (mil/m²)', data: avaluos, backgroundColor: colors, borderColor: borders, borderWidth: 1, yAxisID: 'y' },
+                            { label: 'Predios (miles)', data: predios, borderColor: wLine, backgroundColor: 'transparent', borderWidth: 1, type: 'line', pointRadius: 2, pointHoverRadius: 4, tension: 0, yAxisID: 'y1' },
+                        ],
+                    },
+                    options: {
+                        responsive: true, maintainAspectRatio: false, animation: { duration: 400 },
+                        interaction: { mode: 'index', intersect: false },
+                        onClick: clickBar(sorted), onHover: hoverCursor,
+                        plugins: {
+                            legend: { display: false },
+                            title: titleCfg(clusterLabel || `AVALÚO CATASTRAL · 20 localidades${yrTag} — clic para ver en mapa`),
+                            tooltip: tooltipCfg,
+                        },
+                        scales: {
+                            x: xScale,
+                            y: { position: 'right', ticks: { color: cyanTick, font: { ...font, size: 8 }, maxTicksLimit: 3, callback: v => '$' + v + 'k' }, grid: { color: gridClr } },
+                            y1: { position: 'left', ticks: { color: wTick, font: { ...font, size: 8 }, maxTicksLimit: 3, callback: v => v + 'k' }, grid: { drawOnChartArea: false } },
+                        },
+                    },
+                });
+            }
+
+            // ── Área construida ───────────────────────────────────────
+            else if (metric === 'area') {
+                const sorted = [...locs].sort((a, b) => b.areaCons - a.areaCons);
+                const labels = sorted.map(l => shortName(l.name));
+                const areas = sorted.map(l => l.areaCons);
+                const npisos = sorted.map(l => l.npiso);
+
+                timelineChartInstance = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels,
+                        datasets: [
+                            { label: 'Área construida (ha)', data: areas, backgroundColor: 'rgba(254,180,0,.6)', borderColor: 'rgba(254,180,0,1)', borderWidth: 1, yAxisID: 'y' },
+                            { label: 'Pisos promedio', data: npisos, borderColor: 'rgba(227,25,47,.75)', backgroundColor: 'transparent', borderWidth: 1.5, type: 'line', pointRadius: 3, pointHoverRadius: 5, tension: 0.2, yAxisID: 'y1' },
+                        ],
+                    },
+                    options: {
+                        responsive: true, maintainAspectRatio: false, animation: { duration: 400 },
+                        interaction: { mode: 'index', intersect: false },
+                        onClick: clickBar(sorted), onHover: hoverCursor,
+                        plugins: {
+                            legend: { display: false },
+                            title: titleCfg(clusterLabel || `ÁREA CONSTRUIDA · 20 localidades${yrTag} — clic para ver en mapa`),
+                            tooltip: tooltipCfg,
+                        },
+                        scales: {
+                            x: xScale,
+                            y: { position: 'right', ticks: { color: isLight ? 'rgba(160,120,0,.7)' : 'rgba(254,180,0,.7)', font: { ...font, size: 8 }, maxTicksLimit: 3, callback: v => v + ' ha' }, grid: { color: gridClr } },
+                            y1: { position: 'left', ticks: { color: magTick, font: { ...font, size: 8 }, maxTicksLimit: 4, callback: v => v + ' p.' }, grid: { drawOnChartArea: false } },
+                        },
+                    },
+                });
+            }
+
+            // ── Uso del suelo (barras apiladas) ───────────────────────
+            else if (metric === 'uso') {
+                const sorted = [...locs].sort((a, b) => a.residencial - b.residencial);
+                const labels = sorted.map(l => shortName(l.name));
+
+                timelineChartInstance = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels,
+                        datasets: [
+                            { label: 'Residencial', data: sorted.map(l => l.residencial), backgroundColor: 'rgba(254,180,0,.55)', stack: 'uso' },
+                            { label: 'Comercial', data: sorted.map(l => l.comercial), backgroundColor: 'rgba(227,25,47,.6)', stack: 'uso' },
+                            { label: 'Industrial', data: sorted.map(l => l.industrial), backgroundColor: 'rgba(29,140,248,.65)', stack: 'uso' },
+                            { label: 'Dotacional', data: sorted.map(l => l.dotacional), backgroundColor: 'rgba(109,93,252,.65)', stack: 'uso' },
+                        ],
+                    },
+                    options: {
+                        responsive: true, maintainAspectRatio: false, animation: { duration: 400 },
+                        interaction: { mode: 'index', intersect: false },
+                        onClick: clickBar(sorted), onHover: hoverCursor,
+                        plugins: {
+                            legend: {
+                                display: true, position: 'top', align: 'end',
+                                labels: { color: isLight ? 'rgba(0,0,0,.55)' : 'rgba(255,255,255,.45)', font: { ...font, size: 7 }, boxWidth: 8, boxHeight: 8, padding: 6 },
+                            },
+                            title: titleCfg(clusterLabel || `USO DEL SUELO · 20 localidades${yrTag} — clic para ver en mapa`),
+                            tooltip: { ...tooltipCfg, callbacks: { label: c => ` ${c.dataset.label}: ${c.raw}%` } },
+                        },
+                        scales: {
+                            x: { ...xScale, stacked: true },
+                            y: { stacked: true, max: 100, position: 'right', ticks: { color: wTick, font: { ...font, size: 8 }, maxTicksLimit: 3, callback: v => v + '%' }, grid: { color: gridClr } },
+                        },
+                    },
+                });
+            }
+        }
+
+        // ────────────────────────────────────────────────────────────
+        // 13. ANIMACIÓN DE INTRODUCCIÓN
+        // ────────────────────────────────────────────────────────────
+
+        function initIntroAnimation() {
+            const TOTAL_FRAMES = 148;
+            const FRAME_INTERVAL = 34;
+            const introOverlay = document.getElementById('intro-overlay');
+            const introImage = document.getElementById('intro-image');
+            const progressFill = document.getElementById('intro-progress-fill');
+            const skipBtn = document.getElementById('intro-skip-btn');
+            let currentFrame = 0;
+            let animTimer = null;
+            let preloadedImages = [];
+
+            function preloadImages() {
+                for (let i = 0; i < TOTAL_FRAMES; i++) {
+                    const img = new Image();
+                    img.src = `animacion-campin_${String(i).padStart(3, '0')}.jpeg`;
+                    preloadedImages.push(img);
+                }
+            }
+
+            function showFrame(frameIndex) {
+                introImage.src = `animacion-campin_${String(frameIndex).padStart(3, '0')}.jpeg`;
+                progressFill.style.width = `${((frameIndex + 1) / TOTAL_FRAMES) * 100}%`;
+            }
+
+            function endIntro() {
+                if (animTimer) {
+                    clearInterval(animTimer);
+                    animTimer = null;
+                }
+                introOverlay.classList.add('fade-out');
+                setTimeout(() => {
+                    introOverlay.style.display = 'none';
+                }, 1300);
+            }
+
+            function startAnimation() {
+                animTimer = setInterval(() => {
+                    currentFrame++;
+                    if (currentFrame >= TOTAL_FRAMES) {
+                        endIntro();
+                        return;
+                    }
+                    showFrame(currentFrame);
+                }, FRAME_INTERVAL);
+            }
+
+            skipBtn.addEventListener('click', endIntro);
+            preloadImages();
+            setTimeout(startAnimation, 300);
+        }
+
+        // ────────────────────────────────────────────────────────────
+        // 14. ARRANQUE
+        // ────────────────────────────────────────────────────────────
+
+        document.addEventListener('DOMContentLoaded', () => {
+            initIntroAnimation();
+            initMap();
+            renderChart('historico');
+            document.getElementById('btn-prev').disabled = true;
+            document.getElementById('narrative-text').style.transition = 'opacity .3s ease';
+
+            // Inicializar dots indicadores (móvil)
+            const dotsEl = document.getElementById('step-dots');
+            if (dotsEl) {
+                STATES.forEach((_, i) => {
+                    const d = document.createElement('div');
+                    d.className = 'step-dot' + (i === 0 ? ' active' : '');
+                    d.addEventListener('click', () => { step = i; updateUI(); haptic(); });
+                    dotsEl.appendChild(d);
+                });
+            }
+
+            // Selector de año
+            const yearRange = document.getElementById('year-range');
+            const yearLabel = document.getElementById('year-label');
+            yearRange.addEventListener('input', () => {
+                selectedYear = Number(yearRange.value);
+                yearLabel.textContent = selectedYear;
+                updateLocDataForYear(selectedYear);
+                renderChart(chartMetric, activeClusterLeaves);
             });
 
-            // ────────────────────────────────────────────────────────────
-            // 12. GRÁFICA INTERACTIVA
-            // ────────────────────────────────────────────────────────────
-
-            /** Nombres cortos para el eje X */
-            function shortName(n) {
-                const MAP = {
-                    'Rafael Uribe Uribe': 'R.Uribe', 'Barrios Unidos': 'B.Unidos',
-                    'Ciudad Bolívar': 'C.Bolívar', 'San Cristóbal': 'S.Cristóbal',
-                    'Antonio Nariño': 'A.Nariño', 'Los Mártires': 'Mártires',
-                    'La Candelaria': 'Candelaria', 'Puente Aranda': 'P.Aranda',
-                    'Santa Fe': 'Sta.Fe', 'Teusaquillo': 'Teusaq.',
-                };
-                return MAP[n] || n.split(' ')[0];
-            }
-
-            /** Obtiene localidades únicas a partir de hojas de cluster */
-            function getLocsByLeaves(leaves) {
-                const seen = new Set();
-                const result = [];
-                for (const leaf of leaves) {
-                    const name = leaf.properties.name;
-                    if (!seen.has(name)) {
-                        seen.add(name);
-                        const loc = LOCALIDADES.find(l => l.name === name);
-                        if (loc) result.push(loc);
-                    }
-                }
-                return result;
-            }
-
-            /** Vuela el mapa a la localidad seleccionada */
-            function flyToLocalidad(name) {
-                const loc = LOCALIDADES.find(l => l.name === name);
-                if (!loc || !map) return;
-                map.flyTo({ center: [loc.lng, loc.lat], zoom: 14.5, duration: 900, essential: true });
-            }
-
-            /**
-             * Renderiza la gráfica según métrica y fuente de datos.
-             * @param {string} metric  'historico' | 'avaluo' | 'area' | 'uso'
-             * @param {Array|null} leaves  hojas de cluster, null = 20 localidades
-             */
-            function renderChart(metric, leaves = null) {
-                chartMetric = metric;
-
-                // Actualizar estado visual de pills
-                document.querySelectorAll('.chart-pill').forEach(p =>
-                    p.classList.toggle('active', p.dataset.metric === metric)
-                );
-
-                if (timelineChartInstance) { timelineChartInstance.destroy(); timelineChartInstance = null; }
-
-                const isLight = document.body.classList.contains('light-mode');
-                const tickClr = isLight ? 'rgba(0,0,0,.45)' : 'rgba(255,255,255,.32)';
-                const gridClr = isLight ? 'rgba(0,0,0,.07)' : 'rgba(255,255,255,.03)';
-                const tipBg = isLight ? 'rgba(255,255,255,.97)' : 'rgba(0,0,0,.92)';
-                const tipBdr = isLight ? 'rgba(0,0,0,.12)' : 'rgba(255,255,255,.1)';
-                const tipTitle = isLight ? '#333' : undefined;
-                const tipBody = isLight ? '#111' : undefined;
-                const titleClr = isLight ? 'rgba(140,100,0,.55)' : 'rgba(254,180,0,.3)';
-                const cyanTick = isLight ? 'rgba(160,120,0,.6)' : 'rgba(254,180,0,.4)';
-                const magTick = isLight ? 'rgba(160,15,25,.6)' : 'rgba(227,25,47,.4)';
-                const wTick = isLight ? 'rgba(0,0,0,.3)' : 'rgba(255,255,255,.2)';
-                const wLine = isLight ? 'rgba(0,0,0,.25)' : 'rgba(255,255,255,.22)';
-
-                const font = { family: 'Roboto Mono', weight: '300' };
-                const ctx = document.getElementById('timelineChart');
-                const tooltipCfg = {
-                    backgroundColor: tipBg, borderColor: tipBdr, borderWidth: 1,
-                    titleFont: { ...font, size: 9 }, bodyFont: { ...font, size: 10 },
-                    titleColor: tipTitle, bodyColor: tipBody,
-                    padding: 8, cornerRadius: 0, displayColors: true, boxWidth: 6, boxHeight: 6,
-                };
-                const titleCfg = (text) => ({
-                    display: true, text,
-                    color: titleClr,
-                    font: { family: 'Roboto Mono', size: 7, weight: '400' },
-                    padding: { bottom: 1, top: 0 }, align: 'start',
-                });
-                const xScale = { ticks: { color: tickClr, font: { ...font, size: 7 }, maxRotation: 35, autoSkip: false }, grid: { color: gridClr } };
-                const hoverCursor = (evt, elements) => {
-                    if (evt.native) evt.native.target.style.cursor = elements.length ? 'pointer' : 'default';
-                };
-                const ESTRATO_COLOR = { 1: 'rgba(227,25,47,.7)', 2: 'rgba(235,80,20,.7)', 3: 'rgba(243,130,0,.7)', 4: 'rgba(248,158,0,.7)', 5: 'rgba(254,180,0,.75)', 6: 'rgba(254,180,0,.95)' };
-
-                // ── Histórico (serie temporal) ────────────────────────────
-                if (metric === 'historico') {
-                    const HIST_YEARS = [2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025, 2026];
-                    const labelsH = HIST_YEARS.map(String);
-                    const locName = leaves && leaves.length === 1 ? leaves[0].properties.name : null;
-
-                    let prediosT, avaluoT, histTitle;
-                    if (DATA_LOADED && locName) {
-                        // Serie temporal de una localidad específica
-                        prediosT = HIST_YEARS.map(y => {
-                            const d = (DATA_BY_YEAR[y] || {})[locName];
-                            return d && d.predios > 0 ? Math.round(d.predios / 1000) : null;
-                        });
-                        avaluoT = HIST_YEARS.map(y => {
-                            const d = (DATA_BY_YEAR[y] || {})[locName];
-                            return d && d.areaCons > 0 ? Math.round(d.avaluoTotal / d.areaCons / 1000) : null;
-                        });
-                        histTitle = 'HISTÓRICO · ' + locName.toUpperCase();
-                    } else if (DATA_LOADED) {
-                        // Serie temporal total ciudad
-                        prediosT = HIST_YEARS.map(y => {
-                            const byLoc = DATA_BY_YEAR[y] || {};
-                            const tot = Object.values(byLoc).reduce((s, d) => s + d.predios, 0);
-                            return tot > 0 ? Math.round(tot / 1000) : null;
-                        });
-                        avaluoT = HIST_YEARS.map(y => {
-                            const byLoc = DATA_BY_YEAR[y] || {};
-                            let av = 0, ac = 0;
-                            Object.values(byLoc).forEach(d => { av += d.avaluoTotal; ac += d.areaCons; });
-                            return ac > 0 ? Math.round(av / ac / 1000) : null;
-                        });
-                        histTitle = 'HISTÓRICO BOGOTÁ · 2012 – 2026 · 20 localidades';
-                    } else {
-                        prediosT = [2050, 2120, 2190, 2260, 2320, 2390, 2430, 2490, 2520, 2560, 2610, 2660, 2720, null, null];
-                        avaluoT = [22, 24, 26, 28, 30, 32, 34, 36, 38, 40, 43, 46, 49, null, null];
-                        histTitle = 'CARGANDO DATOS…';
-                    }
-
-                    const selIdx = HIST_YEARS.indexOf(selectedYear);
-                    const pRadP = HIST_YEARS.map((_, i) => i === selIdx ? 5 : 2);
-                    const pRadA = HIST_YEARS.map((_, i) => i === selIdx ? 5 : 2);
-
-                    timelineChartInstance = new Chart(ctx, {
-                        type: 'line',
-                        data: {
-                            labels: labelsH,
-                            datasets: [
-                                { label: 'Predios (miles)', data: prediosT, borderColor: 'rgba(254,180,0,.75)', backgroundColor: 'rgba(254,180,0,.05)', borderWidth: 1.5, pointRadius: pRadP, pointHoverRadius: 6, tension: .35, fill: true, yAxisID: 'y', spanGaps: true },
-                                { label: 'Avalúo prom. ($/m² · miles)', data: avaluoT, borderColor: 'rgba(227,25,47,.75)', backgroundColor: 'rgba(227,25,47,.05)', borderWidth: 1.5, pointRadius: pRadA, pointHoverRadius: 6, tension: .35, fill: true, yAxisID: 'y1', spanGaps: true },
-                            ],
-                        },
-                        options: {
-                            responsive: true, maintainAspectRatio: false,
-                            interaction: { mode: 'index', intersect: false },
-                            plugins: {
-                                legend: { display: false },
-                                title: titleCfg(histTitle),
-                                tooltip: tooltipCfg,
-                            },
-                            scales: {
-                                x: { ticks: { color: tickClr, font: { ...font, size: 8 }, maxRotation: 0, autoSkip: true, maxTicksLimit: 8 }, grid: { color: gridClr, drawBorder: false } },
-                                y: { position: 'right', ticks: { color: cyanTick, font: { ...font, size: 8 }, maxTicksLimit: 4, callback: v => v + 'k' }, grid: { color: gridClr, drawBorder: false } },
-                                y1: { position: 'left', ticks: { color: magTick, font: { ...font, size: 8 }, maxTicksLimit: 4, callback: v => '$' + v + 'k' }, grid: { drawOnChartArea: false, drawBorder: false } },
-                            },
-                        },
-                    });
-                    return;
-                }
-
-                // ── Base de datos para métricas por localidad ─────────────
-                const locs = leaves ? getLocsByLeaves(leaves) : [...LOCALIDADES];
-                const yrTag = DATA_LOADED ? ` · ${selectedYear}` : '';
-                const clusterLabel = leaves ? `CLUSTER · ${locs.length} LOCALIDAD${locs.length !== 1 ? 'ES' : ''}${yrTag}` : null;
-
-                const clickBar = (sorted) => (evt, elements) => {
-                    if (!elements.length) return;
-                    flyToLocalidad(sorted[elements[0].index].name);
-                };
-
-                // ── Avalúo catastral ──────────────────────────────────────
-                if (metric === 'avaluo') {
-                    const sorted = [...locs].sort((a, b) => b.avaluo - a.avaluo);
-                    const labels = sorted.map(l => shortName(l.name));
-                    const avaluos = sorted.map(l => Math.round(l.avaluo / 1000));
-                    const predios = sorted.map(l => Math.round(l.predios / 1000));
-                    const colors = sorted.map(l => ESTRATO_COLOR[l.estrato] || 'rgba(255,255,255,.4)');
-                    const borders = colors.map(c => c.replace(/[\d.]+\)$/, '1)'));
-
-                    timelineChartInstance = new Chart(ctx, {
-                        type: 'bar',
-                        data: {
-                            labels,
-                            datasets: [
-                                { label: 'Avalúo (mil/m²)', data: avaluos, backgroundColor: colors, borderColor: borders, borderWidth: 1, yAxisID: 'y' },
-                                { label: 'Predios (miles)', data: predios, borderColor: wLine, backgroundColor: 'transparent', borderWidth: 1, type: 'line', pointRadius: 2, pointHoverRadius: 4, tension: 0, yAxisID: 'y1' },
-                            ],
-                        },
-                        options: {
-                            responsive: true, maintainAspectRatio: false, animation: { duration: 400 },
-                            interaction: { mode: 'index', intersect: false },
-                            onClick: clickBar(sorted), onHover: hoverCursor,
-                            plugins: {
-                                legend: { display: false },
-                                title: titleCfg(clusterLabel || `AVALÚO CATASTRAL · 20 localidades${yrTag} — clic para ver en mapa`),
-                                tooltip: tooltipCfg,
-                            },
-                            scales: {
-                                x: xScale,
-                                y: { position: 'right', ticks: { color: cyanTick, font: { ...font, size: 8 }, maxTicksLimit: 3, callback: v => '$' + v + 'k' }, grid: { color: gridClr } },
-                                y1: { position: 'left', ticks: { color: wTick, font: { ...font, size: 8 }, maxTicksLimit: 3, callback: v => v + 'k' }, grid: { drawOnChartArea: false } },
-                            },
-                        },
-                    });
-                }
-
-                // ── Área construida ───────────────────────────────────────
-                else if (metric === 'area') {
-                    const sorted = [...locs].sort((a, b) => b.areaCons - a.areaCons);
-                    const labels = sorted.map(l => shortName(l.name));
-                    const areas = sorted.map(l => l.areaCons);
-                    const npisos = sorted.map(l => l.npiso);
-
-                    timelineChartInstance = new Chart(ctx, {
-                        type: 'bar',
-                        data: {
-                            labels,
-                            datasets: [
-                                { label: 'Área construida (ha)', data: areas, backgroundColor: 'rgba(254,180,0,.6)', borderColor: 'rgba(254,180,0,1)', borderWidth: 1, yAxisID: 'y' },
-                                { label: 'Pisos promedio', data: npisos, borderColor: 'rgba(227,25,47,.75)', backgroundColor: 'transparent', borderWidth: 1.5, type: 'line', pointRadius: 3, pointHoverRadius: 5, tension: 0.2, yAxisID: 'y1' },
-                            ],
-                        },
-                        options: {
-                            responsive: true, maintainAspectRatio: false, animation: { duration: 400 },
-                            interaction: { mode: 'index', intersect: false },
-                            onClick: clickBar(sorted), onHover: hoverCursor,
-                            plugins: {
-                                legend: { display: false },
-                                title: titleCfg(clusterLabel || `ÁREA CONSTRUIDA · 20 localidades${yrTag} — clic para ver en mapa`),
-                                tooltip: tooltipCfg,
-                            },
-                            scales: {
-                                x: xScale,
-                                y: { position: 'right', ticks: { color: isLight ? 'rgba(160,120,0,.7)' : 'rgba(254,180,0,.7)', font: { ...font, size: 8 }, maxTicksLimit: 3, callback: v => v + ' ha' }, grid: { color: gridClr } },
-                                y1: { position: 'left', ticks: { color: magTick, font: { ...font, size: 8 }, maxTicksLimit: 4, callback: v => v + ' p.' }, grid: { drawOnChartArea: false } },
-                            },
-                        },
-                    });
-                }
-
-                // ── Uso del suelo (barras apiladas) ───────────────────────
-                else if (metric === 'uso') {
-                    const sorted = [...locs].sort((a, b) => a.residencial - b.residencial);
-                    const labels = sorted.map(l => shortName(l.name));
-
-                    timelineChartInstance = new Chart(ctx, {
-                        type: 'bar',
-                        data: {
-                            labels,
-                            datasets: [
-                                { label: 'Residencial', data: sorted.map(l => l.residencial), backgroundColor: 'rgba(254,180,0,.55)', stack: 'uso' },
-                                { label: 'Comercial', data: sorted.map(l => l.comercial), backgroundColor: 'rgba(227,25,47,.6)', stack: 'uso' },
-                                { label: 'Industrial', data: sorted.map(l => l.industrial), backgroundColor: 'rgba(29,140,248,.65)', stack: 'uso' },
-                                { label: 'Dotacional', data: sorted.map(l => l.dotacional), backgroundColor: 'rgba(109,93,252,.65)', stack: 'uso' },
-                            ],
-                        },
-                        options: {
-                            responsive: true, maintainAspectRatio: false, animation: { duration: 400 },
-                            interaction: { mode: 'index', intersect: false },
-                            onClick: clickBar(sorted), onHover: hoverCursor,
-                            plugins: {
-                                legend: {
-                                    display: true, position: 'top', align: 'end',
-                                    labels: { color: isLight ? 'rgba(0,0,0,.55)' : 'rgba(255,255,255,.45)', font: { ...font, size: 7 }, boxWidth: 8, boxHeight: 8, padding: 6 },
-                                },
-                                title: titleCfg(clusterLabel || `USO DEL SUELO · 20 localidades${yrTag} — clic para ver en mapa`),
-                                tooltip: { ...tooltipCfg, callbacks: { label: c => ` ${c.dataset.label}: ${c.raw}%` } },
-                            },
-                            scales: {
-                                x: { ...xScale, stacked: true },
-                                y: { stacked: true, max: 100, position: 'right', ticks: { color: wTick, font: { ...font, size: 8 }, maxTicksLimit: 3, callback: v => v + '%' }, grid: { color: gridClr } },
-                            },
-                        },
-                    });
-                }
-            }
-
-            // ────────────────────────────────────────────────────────────
-            // 13. ANIMACIÓN DE INTRODUCCIÓN
-            // ────────────────────────────────────────────────────────────
-
-            function initIntroAnimation() {
-                const TOTAL_FRAMES = 148;
-                const FRAME_INTERVAL = 34;
-                const introOverlay = document.getElementById('intro-overlay');
-                const introImage = document.getElementById('intro-image');
-                const progressFill = document.getElementById('intro-progress-fill');
-                const skipBtn = document.getElementById('intro-skip-btn');
-                let currentFrame = 0;
-                let animTimer = null;
-                let preloadedImages = [];
-
-                function preloadImages() {
-                    for (let i = 0; i < TOTAL_FRAMES; i++) {
-                        const img = new Image();
-                        img.src = `animacion-campin_${String(i).padStart(3, '0')}.jpeg`;
-                        preloadedImages.push(img);
-                    }
-                }
-
-                function showFrame(frameIndex) {
-                    introImage.src = `animacion-campin_${String(frameIndex).padStart(3, '0')}.jpeg`;
-                    progressFill.style.width = `${((frameIndex + 1) / TOTAL_FRAMES) * 100}%`;
-                }
-
-                function endIntro() {
-                    if (animTimer) {
-                        clearInterval(animTimer);
-                        animTimer = null;
-                    }
-                    introOverlay.classList.add('fade-out');
-                    setTimeout(() => {
-                        introOverlay.style.display = 'none';
-                    }, 1300);
-                }
-
-                function startAnimation() {
-                    animTimer = setInterval(() => {
-                        currentFrame++;
-                        if (currentFrame >= TOTAL_FRAMES) {
-                            endIntro();
-                            return;
-                        }
-                        showFrame(currentFrame);
-                    }, FRAME_INTERVAL);
-                }
-
-                skipBtn.addEventListener('click', endIntro);
-                preloadImages();
-                setTimeout(startAnimation, 300);
-            }
-
-            // ────────────────────────────────────────────────────────────
-            // 14. ARRANQUE
-            // ────────────────────────────────────────────────────────────
-
-            document.addEventListener('DOMContentLoaded', () => {
-                initIntroAnimation();
-                initMap();
-                renderChart('historico');
-                document.getElementById('btn-prev').disabled = true;
-                document.getElementById('narrative-text').style.transition = 'opacity .3s ease';
-
-                // Inicializar dots indicadores (móvil)
-                const dotsEl = document.getElementById('step-dots');
-                if (dotsEl) {
-                    STATES.forEach((_, i) => {
-                        const d = document.createElement('div');
-                        d.className = 'step-dot' + (i === 0 ? ' active' : '');
-                        d.addEventListener('click', () => { step = i; updateUI(); haptic(); });
-                        dotsEl.appendChild(d);
-                    });
-                }
-
-                // Selector de año
-                const yearRange = document.getElementById('year-range');
-                const yearLabel = document.getElementById('year-label');
-                yearRange.addEventListener('input', () => {
-                    selectedYear = Number(yearRange.value);
-                    yearLabel.textContent = selectedYear;
-                    updateLocDataForYear(selectedYear);
-                    renderChart(chartMetric, activeClusterLeaves);
-                });
-
-                // Toggle de tema oscuro / claro
-                const themeToggle = document.getElementById('theme-toggle');
-                themeToggle.addEventListener('change', () => {
-                    const isLight = themeToggle.checked;
-                    document.body.classList.toggle('light-mode', isLight);
-                    map.setLayoutProperty('basemap-dark', 'visibility', isLight ? 'none' : 'visible');
-                    map.setLayoutProperty('basemap-light', 'visibility', isLight ? 'visible' : 'none');
-                    renderChart(chartMetric, activeClusterLeaves);
-                });
-
-                // Carga asíncrona de los 15 JSON — re-renderiza la gráfica activa al terminar
-                loadAllData().then(() => {
-                    updateLocDataForYear(selectedYear);
-                    renderChart(chartMetric, activeClusterLeaves);
-                });
+            // Toggle de tema oscuro / claro
+            const themeToggle = document.getElementById('theme-toggle');
+            themeToggle.addEventListener('change', () => {
+                const isLight = themeToggle.checked;
+                document.body.classList.toggle('light-mode', isLight);
+                map.setLayoutProperty('basemap-dark', 'visibility', isLight ? 'none' : 'visible');
+                map.setLayoutProperty('basemap-light', 'visibility', isLight ? 'visible' : 'none');
+                renderChart(chartMetric, activeClusterLeaves);
             });
+
+            // Carga asíncrona de los 15 JSON — re-renderiza la gráfica activa al terminar
+            loadAllData().then(() => {
+                updateLocDataForYear(selectedYear);
+                renderChart(chartMetric, activeClusterLeaves);
+            });
+        });
     </script>
 </body>
 
