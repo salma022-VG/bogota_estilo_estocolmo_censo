@@ -231,28 +231,81 @@
         }
 
         .narrative-text strong {
-            color: var(--cyan);
+            color: #FEB400;
             font-weight: 400;
-            text-shadow: 0 0 16px var(--cyan-g);
+            text-shadow: 0 0 16px rgba(254, 180, 0, .5);
         }
 
         .narrative-text .magenta {
-            color: var(--mag);
+            color: #E3192F;
             font-weight: 400;
-            text-shadow: 0 0 16px var(--mag-g);
+            text-shadow: 0 0 16px rgba(227, 25, 47, .5);
         }
 
         .narrative-text .blue {
-            color: var(--blue);
+            color: #F8A000;
             font-weight: 400;
-            text-shadow: 0 0 16px rgba(29, 140, 248, .5);
+            text-shadow: 0 0 16px rgba(248, 160, 0, .5);
         }
 
         .narrative-text .purple {
-            color: var(--purple);
+            color: #F04020;
             font-weight: 400;
-            text-shadow: 0 0 16px rgba(109, 93, 252, .5);
+            text-shadow: 0 0 16px rgba(240, 64, 32, .5);
         }
+
+        /* ── Botón Más Información ── */
+        .Documents-btn {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            width: fit-content;
+            height: 45px;
+            border: none;
+            padding: 0px 15px;
+            border-radius: 5px;
+            background-color: rgba(254,180,0,.15);
+            border: 1px solid rgba(254,180,0,.4);
+            gap: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 18px;
+            display: none;
+        }
+        .folderContainer {
+            width: 40px;
+            height: fit-content;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-end;
+            position: relative;
+        }
+        .fileBack { z-index: 1; width: 80%; height: auto; }
+        .filePage {
+            width: 50%; height: auto;
+            position: absolute; z-index: 2;
+            transition: all 0.3s ease-out;
+        }
+        .fileFront {
+            width: 85%; height: auto;
+            position: absolute; z-index: 3;
+            opacity: 0.95;
+            transform-origin: bottom;
+            transition: all 0.3s ease-out;
+        }
+        .Documents-btn .text {
+            color: #FEB400;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            font-family: var(--mono);
+            text-transform: uppercase;
+        }
+        .Documents-btn:hover .filePage { transform: translateY(-5px); }
+        .Documents-btn:hover { background-color: rgba(254,180,0,.25); border-color: #FEB400; }
+        .Documents-btn:active { transform: scale(0.95); }
+        .Documents-btn:hover .fileFront { transform: rotateX(30deg); }
 
         /* ── Botones Fantasma ── */
         .narrative-buttons {
@@ -345,7 +398,7 @@
         }
 
         .legend-gradient.cluster {
-            background: linear-gradient(to right, #1d8cf8, #6d5dfc, #e23670);
+            background: linear-gradient(to right, #E3192F, #F04020, #F8A000, #FEB400);
             box-shadow: 0 0 12px rgba(29, 140, 248, .3), 0 0 12px rgba(226, 54, 112, .2);
         }
 
@@ -385,7 +438,7 @@
             bottom: 0;
             left: 0;
             right: 0;
-            height: 145px;
+            height: 165px;
             z-index: 600;
             display: flex;
             background: var(--timeline-bg);
@@ -396,7 +449,7 @@
         .timeline-chart-container {
             flex: 1;
             position: relative;
-            padding: 8px 20px 8px 40px;
+            padding: 42px 20px 8px 40px;
             min-width: 0;
         }
 
@@ -1538,22 +1591,22 @@
         }
 
         body.light-mode .narrative-text strong {
-            color: var(--cyan) !important;
+            color: #C88000 !important;
             text-shadow: none;
         }
 
         body.light-mode .narrative-text .magenta {
-            color: var(--mag) !important;
+            color: #C0101F !important;
             text-shadow: none;
         }
 
         body.light-mode .narrative-text .blue {
-            color: var(--blue) !important;
+            color: #C07800 !important;
             text-shadow: none;
         }
 
         body.light-mode .narrative-text .purple {
-            color: var(--purple) !important;
+            color: #C03018 !important;
             text-shadow: none;
         }
 
@@ -1652,6 +1705,23 @@
                 <button class="ghost-btn" id="btn-prev">Anterior</button>
                 <button class="ghost-btn" id="btn-next">Siguiente</button>
             </div>
+            <button class="Documents-btn" id="btn-mas-info" onclick="window.open('https://salma022-vg.github.io/mockup_Boletin_Censo/','_blank')">
+                <span class="folderContainer">
+                    <svg class="fileBack" width="146" height="113" viewBox="0 0 146 113" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M0 4C0 1.79086 1.79086 0 4 0H50.3802C51.8285 0 53.2056 0.627965 54.1553 1.72142L64.3303 13.4371C65.2799 14.5306 66.657 15.1585 68.1053 15.1585H141.509C143.718 15.1585 145.509 16.9494 145.509 19.1585V109C145.509 111.209 143.718 113 141.509 113H3.99999C1.79085 113 0 111.209 0 109V4Z" fill="url(#paint0_linear_117_4)"></path>
+                        <defs><linearGradient id="paint0_linear_117_4" x1="0" y1="0" x2="72.93" y2="95.4804" gradientUnits="userSpaceOnUse"><stop stop-color="#FEB400"></stop><stop offset="1" stop-color="#C88000"></stop></linearGradient></defs>
+                    </svg>
+                    <svg class="filePage" width="88" height="99" viewBox="0 0 88 99" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect width="88" height="99" fill="url(#paint0_linear_117_6)"></rect>
+                        <defs><linearGradient id="paint0_linear_117_6" x1="0" y1="0" x2="81" y2="160.5" gradientUnits="userSpaceOnUse"><stop stop-color="white"></stop><stop offset="1" stop-color="#C88000"></stop></linearGradient></defs>
+                    </svg>
+                    <svg class="fileFront" width="160" height="79" viewBox="0 0 160 79" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M0.29306 12.2478C0.133905 9.38186 2.41499 6.97059 5.28537 6.97059H30.419H58.1902C59.5751 6.97059 60.9288 6.55982 62.0802 5.79025L68.977 1.18034C70.1283 0.410771 71.482 0 72.8669 0H77H155.462C157.87 0 159.733 2.1129 159.43 4.50232L150.443 75.5023C150.19 77.5013 148.489 79 146.474 79H7.78403C5.66106 79 3.9079 77.3415 3.79019 75.2218L0.29306 12.2478Z" fill="url(#paint0_linear_117_5)"></path>
+                        <defs><linearGradient id="paint0_linear_117_5" x1="38.7619" y1="8.71323" x2="66.9106" y2="82.8317" gradientUnits="userSpaceOnUse"><stop stop-color="#FFD966"></stop><stop offset="1" stop-color="#E3192F"></stop></linearGradient></defs>
+                    </svg>
+                </span>
+                <p class="text">Más información · click aquí</p>
+            </button>
             <div class="step-dots" id="step-dots"></div>
         </div>
 
@@ -1666,19 +1736,19 @@
             <div class="legend-clusters" id="legend-clusters">
                 <div class="legend-cluster-row">
                     <span class="legend-dot-label">Avalúo alto</span>
-                    <div class="legend-dot" style="background:#00e5ff;box-shadow:0 0 6px #00e5ff;"></div>
+                    <div class="legend-dot" style="background:#FEB400;box-shadow:0 0 6px #FEB400;"></div>
                 </div>
                 <div class="legend-cluster-row">
                     <span class="legend-dot-label">Avalúo medio-alto</span>
-                    <div class="legend-dot" style="background:#1d8cf8;box-shadow:0 0 6px #1d8cf8;"></div>
+                    <div class="legend-dot" style="background:#F8A000;box-shadow:0 0 6px #F8A000;"></div>
                 </div>
                 <div class="legend-cluster-row">
                     <span class="legend-dot-label">Avalúo medio</span>
-                    <div class="legend-dot" style="background:#6d5dfc;box-shadow:0 0 6px #6d5dfc;"></div>
+                    <div class="legend-dot" style="background:#F04020;box-shadow:0 0 6px #F04020;"></div>
                 </div>
                 <div class="legend-cluster-row">
                     <span class="legend-dot-label">Avalúo bajo</span>
-                    <div class="legend-dot" style="background:#e23670;box-shadow:0 0 6px #e23670;"></div>
+                    <div class="legend-dot" style="background:#E3192F;box-shadow:0 0 6px #E3192F;"></div>
                 </div>
             </div>
         </div>
@@ -2090,10 +2160,10 @@
         // ────────────────────────────────────────────────────────────
 
         const ESTRATO_COLORS_MAP = {
-            1: '#e23670', 2: '#e23670',
-            3: '#6d5dfc',
-            4: '#1d8cf8',
-            5: '#00e5ff', 6: '#00e5ff',
+            1: '#E3192F', 2: '#E3192F',
+            3: '#F04020',
+            4: '#F8A000',
+            5: '#FEB400', 6: '#FEB400',
         };
 
         /** Crea el elemento DOM para el marcador de una localidad con imagen */
@@ -2184,10 +2254,10 @@
             const yearLabel = `Datos ${selectedYear}`;
 
             const usoBars = [
-                { label: `Res. ${loc.residencial}%`, pct: loc.residencial, color: '#00e5ff' },
-                { label: `Com. ${loc.comercial}%`, pct: loc.comercial, color: '#ff2d78' },
-                { label: `Ind. ${loc.industrial}%`, pct: loc.industrial, color: '#1d8cf8' },
-                { label: `Dot. ${loc.dotacional}%`, pct: loc.dotacional, color: '#6d5dfc' },
+                { label: `Res. ${loc.residencial}%`, pct: loc.residencial, color: '#FEB400' },
+                { label: `Com. ${loc.comercial}%`, pct: loc.comercial, color: '#E3192F' },
+                { label: `Ind. ${loc.industrial}%`, pct: loc.industrial, color: '#F8A000' },
+                { label: `Dot. ${loc.dotacional}%`, pct: loc.dotacional, color: '#F04020' },
             ];
 
             const usoBarHTML = usoBars.map(u =>
@@ -2242,10 +2312,9 @@
 
             // ── Íconos WebGL — renderizados en el mismo pase que las tiles, nunca se mueven ──
             const IMG_PX = 56;
-            const isLight = document.body.classList.contains('light-mode');
-            const borderCol = isLight ? 'rgba(30,30,30,0.75)' : 'rgba(255,255,255,0.55)';
             Promise.all(LOCALIDADES.map(async loc => {
                 const src = LOC_IMG[loc.name] ?? 'Localidades/Usaquen.png';
+                const borderCol = ESTRATO_COLORS_MAP[loc.estrato] || '#FEB400';
                 const imgData = await loadRoundImage(src, IMG_PX, borderCol);
                 if (imgData) {
                     if (map.hasImage('loc-' + loc.name)) map.removeImage('loc-' + loc.name);
@@ -2367,14 +2436,14 @@
             const statsEl = document.getElementById('timeline-stats');
             statsEl.innerHTML = `
                 <div class="stat-row" style="width:100%;border-bottom:1px solid var(--border);padding-bottom:3px;margin-bottom:4px;">
-                    <span style="font-size:.55rem;font-weight:600;color:var(--cyan);letter-spacing:.1em;text-transform:uppercase;">20 localidades · ${selectedYear} · clic para explorar</span>
+                    <span style="font-size:.55rem;font-weight:600;color:#FEB400;letter-spacing:.1em;text-transform:uppercase;">20 localidades · ${selectedYear} · clic para explorar</span>
                 </div>
                 ${sorted.map((loc, idx) => {
                 const pct = Math.round((loc.predios / maxPredios) * 100);
-                const avaluoColor = loc.avaluo > 60000 ? 'var(--cyan)'
-                    : loc.avaluo > 30000 ? 'var(--blue)'
-                        : loc.avaluo > 15000 ? 'var(--purple)'
-                            : 'var(--mag)';
+                const avaluoColor = loc.avaluo > 60000 ? '#FEB400'
+                    : loc.avaluo > 30000 ? '#F8A000'
+                        : loc.avaluo > 15000 ? '#F04020'
+                            : '#E3192F';
                 const avaluoK = loc.avaluo >= 1000 ? `$${(loc.avaluo / 1000).toFixed(0)}k` : `$${loc.avaluo}`;
                 return `
                         <div class="stat-row clickable" data-loc="${loc.name}" style="flex-direction:column;align-items:flex-start;gap:0;">
@@ -2455,6 +2524,7 @@
                     // Botones
                     document.getElementById('btn-prev').disabled = step === 0;
                     document.getElementById('btn-next').disabled = step === STATES.length - 1;
+                    document.getElementById('btn-mas-info').style.display = step === STATES.length - 1 ? 'flex' : 'none';
 
                     // Puntos indicadores (móvil)
                     const dotsEl = document.getElementById('step-dots');
@@ -2639,9 +2709,9 @@
                 const tipBdr = isLight ? 'rgba(0,0,0,.12)' : 'rgba(255,255,255,.1)';
                 const tipTitle = isLight ? '#333' : undefined;
                 const tipBody = isLight ? '#111' : undefined;
-                const titleClr = isLight ? 'rgba(0,80,150,.55)' : 'rgba(0,229,255,.3)';
-                const cyanTick = isLight ? 'rgba(0,100,160,.6)' : 'rgba(0,229,255,.4)';
-                const magTick = isLight ? 'rgba(160,0,60,.6)' : 'rgba(255,45,120,.4)';
+                const titleClr = isLight ? 'rgba(140,100,0,.55)' : 'rgba(254,180,0,.3)';
+                const cyanTick = isLight ? 'rgba(160,120,0,.6)' : 'rgba(254,180,0,.4)';
+                const magTick = isLight ? 'rgba(160,15,25,.6)' : 'rgba(227,25,47,.4)';
                 const wTick = isLight ? 'rgba(0,0,0,.3)' : 'rgba(255,255,255,.2)';
                 const wLine = isLight ? 'rgba(0,0,0,.25)' : 'rgba(255,255,255,.22)';
 
@@ -2663,7 +2733,7 @@
                 const hoverCursor = (evt, elements) => {
                     if (evt.native) evt.native.target.style.cursor = elements.length ? 'pointer' : 'default';
                 };
-                const ESTRATO_COLOR = { 1: 'rgba(255,45,120,.7)', 2: 'rgba(226,54,112,.7)', 3: 'rgba(109,93,252,.7)', 4: 'rgba(29,140,248,.7)', 5: 'rgba(0,229,255,.75)', 6: 'rgba(0,229,255,.95)' };
+                const ESTRATO_COLOR = { 1: 'rgba(227,25,47,.7)', 2: 'rgba(235,80,20,.7)', 3: 'rgba(243,130,0,.7)', 4: 'rgba(248,158,0,.7)', 5: 'rgba(254,180,0,.75)', 6: 'rgba(254,180,0,.95)' };
 
                 // ── Histórico (serie temporal) ────────────────────────────
                 if (metric === 'historico') {
@@ -2712,8 +2782,8 @@
                         data: {
                             labels: labelsH,
                             datasets: [
-                                { label: 'Predios (miles)', data: prediosT, borderColor: 'rgba(0,229,255,.75)', backgroundColor: 'rgba(0,229,255,.05)', borderWidth: 1.5, pointRadius: pRadP, pointHoverRadius: 6, tension: .35, fill: true, yAxisID: 'y', spanGaps: true },
-                                { label: 'Avalúo prom. ($/m² · miles)', data: avaluoT, borderColor: 'rgba(255,45,120,.75)', backgroundColor: 'rgba(255,45,120,.05)', borderWidth: 1.5, pointRadius: pRadA, pointHoverRadius: 6, tension: .35, fill: true, yAxisID: 'y1', spanGaps: true },
+                                { label: 'Predios (miles)', data: prediosT, borderColor: 'rgba(254,180,0,.75)', backgroundColor: 'rgba(254,180,0,.05)', borderWidth: 1.5, pointRadius: pRadP, pointHoverRadius: 6, tension: .35, fill: true, yAxisID: 'y', spanGaps: true },
+                                { label: 'Avalúo prom. ($/m² · miles)', data: avaluoT, borderColor: 'rgba(227,25,47,.75)', backgroundColor: 'rgba(227,25,47,.05)', borderWidth: 1.5, pointRadius: pRadA, pointHoverRadius: 6, tension: .35, fill: true, yAxisID: 'y1', spanGaps: true },
                             ],
                         },
                         options: {
@@ -2792,8 +2862,8 @@
                         data: {
                             labels,
                             datasets: [
-                                { label: 'Área construida (ha)', data: areas, backgroundColor: 'rgba(109,93,252,.6)', borderColor: 'rgba(109,93,252,1)', borderWidth: 1, yAxisID: 'y' },
-                                { label: 'Pisos promedio', data: npisos, borderColor: 'rgba(255,45,120,.75)', backgroundColor: 'transparent', borderWidth: 1.5, type: 'line', pointRadius: 3, pointHoverRadius: 5, tension: 0.2, yAxisID: 'y1' },
+                                { label: 'Área construida (ha)', data: areas, backgroundColor: 'rgba(254,180,0,.6)', borderColor: 'rgba(254,180,0,1)', borderWidth: 1, yAxisID: 'y' },
+                                { label: 'Pisos promedio', data: npisos, borderColor: 'rgba(227,25,47,.75)', backgroundColor: 'transparent', borderWidth: 1.5, type: 'line', pointRadius: 3, pointHoverRadius: 5, tension: 0.2, yAxisID: 'y1' },
                             ],
                         },
                         options: {
@@ -2807,7 +2877,7 @@
                             },
                             scales: {
                                 x: xScale,
-                                y: { position: 'right', ticks: { color: isLight ? 'rgba(80,50,200,.7)' : 'rgba(109,93,252,.7)', font: { ...font, size: 8 }, maxTicksLimit: 3, callback: v => v + ' ha' }, grid: { color: gridClr } },
+                                y: { position: 'right', ticks: { color: isLight ? 'rgba(160,120,0,.7)' : 'rgba(254,180,0,.7)', font: { ...font, size: 8 }, maxTicksLimit: 3, callback: v => v + ' ha' }, grid: { color: gridClr } },
                                 y1: { position: 'left', ticks: { color: magTick, font: { ...font, size: 8 }, maxTicksLimit: 4, callback: v => v + ' p.' }, grid: { drawOnChartArea: false } },
                             },
                         },
@@ -2824,8 +2894,8 @@
                         data: {
                             labels,
                             datasets: [
-                                { label: 'Residencial', data: sorted.map(l => l.residencial), backgroundColor: 'rgba(0,229,255,.55)', stack: 'uso' },
-                                { label: 'Comercial', data: sorted.map(l => l.comercial), backgroundColor: 'rgba(255,45,120,.6)', stack: 'uso' },
+                                { label: 'Residencial', data: sorted.map(l => l.residencial), backgroundColor: 'rgba(254,180,0,.55)', stack: 'uso' },
+                                { label: 'Comercial', data: sorted.map(l => l.comercial), backgroundColor: 'rgba(227,25,47,.6)', stack: 'uso' },
                                 { label: 'Industrial', data: sorted.map(l => l.industrial), backgroundColor: 'rgba(29,140,248,.65)', stack: 'uso' },
                                 { label: 'Dotacional', data: sorted.map(l => l.dotacional), backgroundColor: 'rgba(109,93,252,.65)', stack: 'uso' },
                             ],
