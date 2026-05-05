@@ -1601,7 +1601,7 @@
     </style>
 </head>
 
-<body>
+<body class="light-mode">
 
     <!-- ═══════════ CAPA DE ANIMACIÓN DE INTRODUCCIÓN ═══════════ -->
     <div id="intro-overlay">
@@ -1626,7 +1626,7 @@
             <span class="header-logo-text">Catastro Bogota</span>
             <button class="info-btn" id="info-btn" aria-label="Información">i</button>
             <label class="switch" title="Cambiar tema">
-                <input type="checkbox" id="theme-toggle">
+                <input type="checkbox" id="theme-toggle" checked>
                 <span class="slider"></span>
             </label>
         </div>
@@ -2033,8 +2033,8 @@
                 },
             },
             layers: [
-                { id: 'basemap-dark', type: 'raster', source: 'carto-dark', layout: { visibility: 'visible' } },
-                { id: 'basemap-light', type: 'raster', source: 'carto-light', layout: { visibility: 'none' } },
+                { id: 'basemap-dark', type: 'raster', source: 'carto-dark', layout: { visibility: 'none' } },
+                { id: 'basemap-light', type: 'raster', source: 'carto-light', layout: { visibility: 'visible' } },
             ],
         };
 
