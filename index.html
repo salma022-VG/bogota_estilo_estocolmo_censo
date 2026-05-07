@@ -601,6 +601,10 @@
         }
 
         /* ── Popup de MapLibre ── */
+        .maplibregl-popup {
+            z-index: 700 !important;
+        }
+
         .maplibregl-popup-content {
             background: var(--popup-bg) !important;
             border: 1px solid rgba(29, 140, 248, .35) !important;
@@ -610,7 +614,9 @@
             font-family: var(--mono) !important;
             box-shadow: 0 0 30px rgba(29, 140, 248, .15), 0 4px 20px rgba(0, 0, 0, .6) !important;
             max-width: 300px !important;
-            overflow: hidden !important;
+            max-height: 80vh !important;
+            overflow-y: auto !important;
+            overflow-x: hidden !important;
         }
 
         .maplibregl-popup-close-button {
@@ -1291,6 +1297,21 @@
             /* ── Popup ── */
             .maplibregl-popup-content {
                 max-width: calc(100vw - 24px) !important;
+                max-height: 60vh !important;
+                padding: 10px 14px !important;
+            }
+
+            .popup-img-wrap {
+                margin: -10px -14px 8px;
+                height: 80px;
+            }
+
+            .popup-name {
+                font-size: 0.95rem;
+            }
+
+            .popup-row {
+                font-size: 10px;
             }
 
             /* ── Pantalla de intro ── */
@@ -1431,6 +1452,20 @@
 
         /* ── Teléfonos muy pequeños (≤ 390px) ── */
         @media (max-width: 390px) {
+            .maplibregl-popup-content {
+                max-height: 55vh !important;
+                padding: 8px 12px !important;
+            }
+
+            .popup-img-wrap {
+                margin: -8px -12px 6px;
+                height: 60px;
+            }
+
+            .popup-name {
+                font-size: 0.85rem;
+            }
+
             .narrative-panel {
                 max-height: 40vh;
                 bottom: 110px;
@@ -1467,6 +1502,16 @@
 
         /* ── Orientación horizontal en móvil ── */
         @media (max-width: 768px) and (orientation: landscape) {
+            .maplibregl-popup-content {
+                max-height: 75vh !important;
+                padding: 8px 14px !important;
+            }
+
+            .popup-img-wrap {
+                margin: -8px -14px 6px;
+                height: 60px;
+            }
+
             .narrative-panel {
                 max-height: 50vh;
                 bottom: 90px;
@@ -2131,7 +2176,7 @@
         let activeClusterLeaves = null; // hojas del cluster activo
 
         // ────────────────────────────────────────────────────────────
-        // 5. MAPA — MapLibre GL con Clusters
+        // 5. MAPA — ArcGIS-con Clusters
         // ────────────────────────────────────────────────────────────
 
         const MAP_STYLE = {
