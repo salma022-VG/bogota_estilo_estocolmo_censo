@@ -852,89 +852,6 @@
             color: var(--text);
         }
 
-        /* ── Modal Boletín Censo ── */
-        #boletin-modal {
-            position: fixed;
-            inset: 0;
-            z-index: 3000;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            background: rgba(0, 0, 0, .75);
-            backdrop-filter: blur(4px);
-        }
-
-        #boletin-modal.active {
-            display: flex;
-        }
-
-        #boletin-modal-box {
-            position: relative;
-            width: calc(100vw - 40px);
-            height: calc(100vh - 60px);
-            max-width: 1200px;
-            background: #fff;
-            border: 1px solid rgba(254, 180, 0, .4);
-            box-shadow: 0 0 40px rgba(254, 180, 0, .15), 0 8px 40px rgba(0, 0, 0, .7);
-            display: flex;
-            flex-direction: column;
-        }
-
-        #boletin-modal-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 8px 14px;
-            background: #111;
-            border-bottom: 1px solid rgba(254, 180, 0, .35);
-            flex-shrink: 0;
-        }
-
-        #boletin-modal-header span {
-            font-family: var(--mono);
-            font-size: .6rem;
-            letter-spacing: .14em;
-            text-transform: uppercase;
-            color: #FEB400;
-        }
-
-        #boletin-modal-close {
-            background: none;
-            border: none;
-            color: rgba(255, 255, 255, .6);
-            font-size: 1.4rem;
-            cursor: pointer;
-            line-height: 1;
-            padding: 0 4px;
-            transition: color .2s;
-        }
-
-        #boletin-modal-close:hover {
-            color: #FEB400;
-        }
-
-        #boletin-iframe {
-            width: 100%;
-            flex: 1;
-            border: none;
-        }
-
-        @media (max-width: 768px) {
-            #boletin-modal-box {
-                width: 100vw;
-                height: 100vh;
-                max-width: none;
-                border: none;
-            }
-        }
-
-        .hallazgos-grid {
-            display: flex;
-            gap: 20px;
-            align-items: stretch;
-            /* 🔥 clave */
-        }
-
         /* ── Animaciones ── */
         @keyframes fadeIn {
             from {
@@ -1859,7 +1776,7 @@
                 <button class="ghost-btn" id="btn-prev">Anterior</button>
                 <button class="ghost-btn" id="btn-next">Siguiente</button>
             </div>
-            <button class="Documents-btn" id="btn-mas-info" onclick="openBoletinModal()">
+            <button class="Documents-btn" id="btn-mas-info" onclick="window.open('https://salma022-vg.github.io/mockup_Boletin_Censo/','_blank')">
                 <span class="folderContainer">
                     <svg class="fileBack" width="146" height="113" viewBox="0 0 146 113" fill="none"
                         xmlns="http://www.w3.org/2000/svg">
@@ -1959,17 +1876,6 @@
     </div>
 
     <!-- Modal de información -->
-    <!-- ═══════════ MODAL BOLETÍN CENSO ═══════════ -->
-    <div id="boletin-modal">
-        <div id="boletin-modal-box">
-            <div id="boletin-modal-header">
-                <span>Más información · Censo Inmobiliario Bogotá</span>
-                <button id="boletin-modal-close">&times;</button>
-            </div>
-            <iframe id="boletin-iframe" src="" title="Boletín Censo Inmobiliario"></iframe>
-        </div>
-    </div>
-
     <div class="info-modal" id="info-modal">
         <div class="info-modal-content">
             <button class="info-close" id="info-close">&times;</button>
@@ -2837,23 +2743,6 @@
         );
         document.getElementById('info-modal').addEventListener('click', e => {
             if (e.target === e.currentTarget) e.currentTarget.classList.remove('active');
-        });
-
-        // Modal Boletín Censo
-        const BOLETIN_URL = 'https://salma022-vg.github.io/mockup_Boletin_Censo/';
-        function openBoletinModal() {
-            const iframe = document.getElementById('boletin-iframe');
-            if (!iframe.src || iframe.src === window.location.href) iframe.src = BOLETIN_URL;
-            document.getElementById('boletin-modal').classList.add('active');
-        }
-        document.getElementById('boletin-modal-close').addEventListener('click', () =>
-            document.getElementById('boletin-modal').classList.remove('active')
-        );
-        document.getElementById('boletin-modal').addEventListener('click', e => {
-            if (e.target === e.currentTarget) e.currentTarget.classList.remove('active');
-        });
-        document.addEventListener('keydown', e => {
-            if (e.key === 'Escape') document.getElementById('boletin-modal').classList.remove('active');
         });
 
         // ────────────────────────────────────────────────────────────
