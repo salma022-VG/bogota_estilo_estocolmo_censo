@@ -2278,6 +2278,9 @@
                 pitch: v.pitch,
                 bearing: v.bearing,
                 antialias: true,
+                minZoom: 9,
+                maxZoom: 16,
+                maxBounds: [[-74.80, 3.65], [-73.60, 5.05]],
             });
 
             map.on('load', () => {
