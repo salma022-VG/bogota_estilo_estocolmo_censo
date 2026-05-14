@@ -1823,7 +1823,7 @@
         </div>
 
         <!-- Leyenda (inferior derecha) -->
-        <div class="map-legend" id="map-legend">
+        <div class="map-legend" id="map-legend" style="display:none;">
             <div class="legend-title" id="legend-title">Predios por localidad</div>
             <div class="legend-scale">
                 <span class="legend-label">menor</span>
@@ -2841,7 +2841,7 @@
             const tipBdr = isLight ? 'rgba(0,0,0,.12)' : 'rgba(255,255,255,.1)';
             const tipTitle = isLight ? '#333' : undefined;
             const tipBody = isLight ? '#111' : undefined;
-            const titleClr = isLight ? 'rgba(140,100,0,.55)' : 'rgba(254,180,0,.3)';
+            const titleClr = isLight ? 'rgba(0,0,0,0.7)' : 'rgba(0,0,0,0.9)';
             const cyanTick = isLight ? 'rgba(160,120,0,.6)' : 'rgba(254,180,0,.4)';
             const magTick = isLight ? 'rgba(160,15,25,.6)' : 'rgba(227,25,47,.4)';
             const wTick = isLight ? 'rgba(0,0,0,.3)' : 'rgba(255,255,255,.2)';
@@ -2858,8 +2858,8 @@
             const titleCfg = (text) => ({
                 display: true, text,
                 color: titleClr,
-                font: { family: 'Roboto Mono', size: 7, weight: '400' },
-                padding: { bottom: 1, top: 0 }, align: 'start',
+                font: { family: 'Roboto Mono', size: 15, weight: '400' },
+                padding: { bottom: 4, top: 4 }, align: 'center',
             });
             const xScale = { ticks: { color: tickClr, font: { ...font, size: 7 }, maxRotation: 35, autoSkip: false }, grid: { color: gridClr } };
             const hoverCursor = (evt, elements) => {
