@@ -2101,7 +2101,7 @@
             {
                 // Datos reales 2026: 2.929.879 predios · avalúo $938,2 billones COP
                 // Crecimiento 2016→2026: predios +18 %, avalúo +93 %
-                text: 'El censo inmobiliario de Bogotá registra <strong>2,93 millones</strong> de predios en las 20 localidades. El avalúo catastral total para 2026 alcanza los <strong class="magenta">$938 billones de pesos</strong> — un incremento del <strong>93 %</strong> frente a los $486 billones de 2016, evidenciando la revalorización acelerada del suelo bogotano.',
+                text: 'El censo inmobiliario de Bogotá registra <strong>2,93 millones</strong> de predios en las 20 localidades — más de <strong>660.000 nuevos</strong> desde 2012. El avalúo catastral total para 2026 alcanza los <strong class="magenta">$938 billones de pesos</strong> — un incremento del <strong>93,1 %</strong> frente a 2016 y del <strong class="magenta">235 %</strong> frente a los $280 billones de 2012.',
                 mode: 'overview',
                 legend: { title: 'Predios por localidad', type: 'cluster' },
                 view: { lng: -74.0960, lat: 4.6486, zoom: 11.2, pitch: 0, bearing: 0 },
@@ -2119,17 +2119,17 @@
             },
             {
                 // Top 6 por avalúo/m² según LOCALIDADES: Chapinero 112k, Usaquén 98.5k, Teusaquillo 65k, Barrios Unidos 56k, La Candelaria 48k, Fontibón 45k
-                text: 'Las seis localidades con mayor avalúo/m² se concentran en el centro y norte de la ciudad. <strong>Chapinero</strong> lidera con <strong>$112.000/m²</strong> — casi el doble que la siguiente — mientras localidades del sur como Ciudad Bolívar registran apenas <strong>$9.800/m²</strong>.',
+                text: 'El <strong>avalúo promedio por predio</strong> revela un patrón inesperado: <strong>La Candelaria</strong> lidera con <strong>$565,7 millones</strong> por predio (+89,3 % vs 2016), seguida de <strong>Puente Aranda</strong> ($536,7M, +94,4 %) y <strong>Teusaquillo</strong> ($528,8M, +74,7 %). El centro histórico y las zonas industriales superan al corredor norte en avalúo total por predio.',
                 mode: 'avaluo-top',
-                legend: { title: 'Top Avalúo Catastral', type: 'cyan' },
+                legend: { title: 'Top Avalúo Promedio', type: 'cyan' },
                 view: { lng: -74.055, lat: 4.66, zoom: 13.0, pitch: 0, bearing: 0 },
                 stats: [
-                    { label: 'Chapinero', pct: '$112 mil/m²', up: true },
-                    { label: 'Usaquén', pct: '$98,5 mil/m²', up: true },
-                    { label: 'Teusaquillo', pct: '$65 mil/m²', up: true },
-                    { label: 'Barrios Unidos', pct: '$56 mil/m²', up: true },
-                    { label: 'La Candelaria', pct: '$48 mil/m²', up: true },
-                    { label: 'Fontibón', pct: '$45 mil/m²', up: true },
+                    { label: 'La Candelaria', pct: '$565,7M (+89,3%)', up: true },
+                    { label: 'Puente Aranda', pct: '$536,7M (+94,4%)', up: true },
+                    { label: 'Teusaquillo', pct: '$528,8M (+74,7%)', up: true },
+                    { label: 'Barrios Unidos', pct: '$504,6M (+92,0%)', up: true },
+                    { label: 'Chapinero', pct: '$501,9M (+76,7%)', up: true },
+                    { label: 'Antonio Nariño', pct: '$488,9M (+102,5%)', up: true },
                 ],
                 pointColor: 'avaluo',
             },
@@ -2150,30 +2150,32 @@
             },
             {
                 // Usos del suelo: residencial domina en casi todas. Industrial en Puente Aranda (14%) y Fontibón (12%). Dotacional en La Candelaria (15%) y Santa Fe (12%). 10 grupos económicos en total.
-                text: 'El uso del suelo revela la especialización funcional de la ciudad: <strong class="blue">Puente Aranda</strong> (14% industrial) y <strong class="blue">Fontibón</strong> (12% industrial) concentran la mayor actividad fabril. El uso <strong class="magenta">dotacional</strong> predomina en <strong>La Candelaria</strong> (15%) y <strong>Santa Fe</strong> (12%), sede del centro histórico y administrativo. En total, el catastro registra <strong>10 grupos económicos</strong> distintos.',
+                text: 'El uso del suelo de Bogotá es predominantemente <strong>residencial</strong> (<strong>59,4 %</strong> de los predios), seguido por otros usos (12,7 %), oficinas (<strong class="blue">9,2 %</strong>) y comercio (<strong class="blue">7,0 %</strong>). Las bodegas representan el 5,8 % e industria apenas el <strong class="magenta">1,3 %</strong>, concentrada en <strong class="blue">Puente Aranda</strong> y <strong class="blue">Fontibón</strong>. Universidades y colegios suman el 3,3 %.',
                 mode: 'uso',
                 legend: { title: 'Uso del suelo', type: 'dual' },
                 view: { lng: -74.10, lat: 4.63, zoom: 11.8, pitch: 0, bearing: 0 },
                 stats: [
-                    { label: 'Puente Aranda — industrial', pct: '14 %', up: true },
-                    { label: 'Fontibón — industrial', pct: '12 %', up: true },
-                    { label: 'La Candelaria — dotacional', pct: '15 %', up: true },
-                    { label: 'Santa Fe — dotacional', pct: '12 %', up: true },
-                    { label: 'Barrios Unidos — comercial', pct: '24 %', up: false },
+                    { label: 'Residencial', pct: '59,4 %', up: true },
+                    { label: 'Otros', pct: '12,7 %', up: false },
+                    { label: 'Oficinas', pct: '9,2 %', up: true },
+                    { label: 'Comercio', pct: '7,0 %', up: true },
+                    { label: 'Bodegas', pct: '5,8 %', up: false },
+                    { label: 'Industria', pct: '1,3 %', up: true },
                 ],
                 pointColor: 'default',
             },
             {
                 // Segregación real: norte (Chapinero $112k, Usaquén $98.5k) vs periferia sur (Ciudad Bolívar $9.8k, Sumapaz $5.2k). Ratio 21,5x.
                 // Sur y occidente = Suba 310k + Kennedy 250k + Engativá 210k + Bosa 165k + Ciudad Bolívar 180k = 1.115.000 predios (~40% del total)
-                text: 'La segregación espacial marca el territorio: el corredor norte (Usaquén–Chapinero) promedia <strong>$105.000/m²</strong>, frente a <strong>$9.800/m²</strong> en Ciudad Bolívar y apenas <strong>$5.200/m²</strong> en Sumapaz — una diferencia de <strong class="magenta">más de 21 veces</strong>. Mientras el norte densifica en altura, el sur crece en extensión con predios de estrato 1 y 2.',
+                text: 'La segregación espacial marca el territorio: el corredor norte (Usaquén–Chapinero) promedia <strong>$105.000/m²</strong>, frente a <strong>$9.800/m²</strong> en Ciudad Bolívar y apenas <strong>$5.200/m²</strong> en Sumapaz — una diferencia de <strong class="magenta">más de 21 veces</strong>. Sin embargo, son las localidades de menor valor las que más crecen: <strong>Tunjuelito</strong> (+124,9 %), <strong>Fontibón</strong> (+106,9 %) y <strong>Los Mártires</strong> (+104,0 %).',
                 mode: 'estratos',
                 legend: { title: 'Avalúo vs Estratificación', type: 'dual' },
                 view: { lng: -74.08, lat: 4.64, zoom: 11.8, pitch: 0, bearing: 0 },
                 stats: [
-                    { label: 'Chapinero (norte)', pct: '$112 mil/m²', up: true },
-                    { label: 'Usaquén (norte)', pct: '$98,5 mil/m²', up: true },
-                    { label: 'Teusaquillo (centro)', pct: '$65 mil/m²', up: true },
+                    { label: 'Tunjuelito (mayor crecimiento)', pct: '+124,9 %', up: true },
+                    { label: 'Fontibón', pct: '+106,9 %', up: true },
+                    { label: 'Los Mártires', pct: '+104,0 %', up: true },
+                    { label: 'Antonio Nariño', pct: '+102,5 %', up: true },
                     { label: 'Ciudad Bolívar (sur)', pct: '$9,8 mil/m²', up: false },
                     { label: 'Sumapaz (rural)', pct: '$5,2 mil/m²', up: false },
                 ],
