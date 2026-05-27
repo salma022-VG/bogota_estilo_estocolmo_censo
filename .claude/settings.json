@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(node -e \"const d=require\\('./datos_2026.json'\\); const vals=[...new Set\\(d.map\\(r=>r.CLASE_PREDIO\\)\\)]; console.log\\(vals\\);\")"
+    ]
+  }
+}
