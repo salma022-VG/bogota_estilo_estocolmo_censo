@@ -1766,10 +1766,10 @@
         <div class="narrative-panel" id="narrative-panel">
             <div class="narrative-content" id="narrative-content">
                 <p class="narrative-text" id="narrative-text">
-                    El censo inmobiliario de Bogotá registra <strong>2,81 millones</strong> de predios
+                    El censo inmobiliario de Bogotá registra <strong>2,97 millones</strong> de predios
                     en las 20 localidades. El avalúo catastral total para 2026 alcanza los
-                    <strong class="magenta">$938 billones de pesos</strong> — un incremento del
-                    <strong>93 %</strong> frente a 2016, evidenciando la revalorización acelerada del suelo bogotano.
+                    <strong class="magenta">$945 billones de pesos</strong> — evidenciando la revalorización
+                    acelerada del suelo bogotano en la última década.
                 </p>
             </div>
             <div class="narrative-buttons" id="narrative-buttons">
@@ -1890,15 +1890,13 @@
             <p style="font-size:0.78rem;line-height:1.7;color:var(--dim);">
                 <strong style="color:var(--text);display:block;margin-bottom:6px;">Datos en cifras (2026)</strong>
                 <span style="display:flex;justify-content:space-between;margin-bottom:3px;"><span>Predios
-                        registrados</span><strong style="color:var(--cyan);">2.929.879</strong></span>
+                        registrados</span><strong style="color:var(--cyan);">2.966.000</strong></span>
                 <span style="display:flex;justify-content:space-between;margin-bottom:3px;"><span>Avalúo catastral
-                        total</span><strong style="color:var(--cyan);">$938,2 billones COP</strong></span>
+                        total</span><strong style="color:var(--cyan);">$945,2 billones COP</strong></span>
                 <span style="display:flex;justify-content:space-between;margin-bottom:3px;"><span>Área construida
-                        total</span><strong style="color:var(--cyan);">182.780 hectáreas</strong></span>
+                        total</span><strong style="color:var(--cyan);">312,9 mill m²</strong></span>
                 <span style="display:flex;justify-content:space-between;margin-bottom:3px;"><span>Crecimiento predios
-                        2016–2026</span><strong style="color:var(--mag);">+18 %</strong></span>
-                <span style="display:flex;justify-content:space-between;margin-bottom:3px;"><span>Crecimiento avalúo
-                        2016–2026</span><strong style="color:var(--mag);">+93 %</strong></span>
+                        2016–2026</span><strong style="color:var(--mag);">+19,5 %</strong></span>
                 <span style="display:flex;justify-content:space-between;margin-bottom:3px;"><span>Usos del suelo
                         clasificados</span><strong style="color:var(--text);">10</strong></span>
                 <span style="display:flex;justify-content:space-between;"><span>Fuente</span><strong
@@ -1952,6 +1950,7 @@
                     name: loc.name,
                     predios: loc.predios,
                     avaluo: loc.avaluo,
+                    avaluoCatastral: null,
                     areaCons: loc.areaCons,
                     estrato: loc.estrato,
                     residencial: loc.residencial,
@@ -2058,6 +2057,35 @@
             2021: 2429238, 2022: 2481706, 2023: 2543290, 2024: 2587226, 2025: 2643666, 2026: 2681886,
         };
 
+        // Avalúo catastral total por localidad — Fuente: Censo Inmobiliario UAECD
+        const AVALUO_CATASTRAL_REAL = {
+            'Usaquén':            137613794118500,
+            'Chapinero':           95977101855100,
+            'Santa Fe':            25905202221500,
+            'San Cristóbal':       17978838636500,
+            'Usme':                13830611734100,
+            'Tunjuelito':          13759607160000,
+            'Bosa':                35571399086000,
+            'Kennedy':             80310291791500,
+            'Fontibón':            77835012601500,
+            'Engativá':            78196030149000,
+            'Suba':               147819711099500,
+            'Barrios Unidos':      32343459430000,
+            'Teusaquillo':         50030962814000,
+            'Los Mártires':        20589469463000,
+            'Antonio Nariño':      12840924237000,
+            'Puente Aranda':       45064151007500,
+            'La Candelaria':        8831623038000,
+            'Rafael Uribe Uribe':  20823244591000,
+            'Ciudad Bolívar':      29558343549000,
+            'Sumapaz':               325228053500,
+        };
+        LOCALIDADES.forEach(loc => { loc.avaluoCatastral = AVALUO_CATASTRAL_REAL[loc.name] ?? null; });
+        pointsData.features.forEach(f => {
+            const loc = LOCALIDADES.find(l => l.name === f.properties.name);
+            if (loc) f.properties.avaluoCatastral = loc.avaluoCatastral;
+        });
+
         async function loadAllData() {
             const YEARS = [2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025, 2026];
 
@@ -2098,6 +2126,7 @@
                 loc.prediosRural = (PREDIOS_RURALES[loc.name] != null) ? (PREDIOS_RURALES[loc.name][2026] ?? null) : null;
                 loc.participacion = parseFloat((loc.predios / TOTAL_PREDIOS_BOGOTA[2026] * 100).toFixed(1));
                 loc.avaluo = Math.round(d.avaluoTotal / d.areaCons);   // COP/m²
+                loc.avaluoCatastral = AVALUO_CATASTRAL_REAL[loc.name] ?? d.avaluoTotal;
                 loc.areaCons = Math.round(d.areaCons / 10000);           // m² → ha
                 const total = (d.residencial + d.comercial + d.industrial + d.dotacional) || 1;
                 loc.residencial = Math.round(d.residencial / total * 100);
@@ -2112,7 +2141,7 @@
                 if (loc) Object.assign(f.properties, {
                     predios: loc.predios, prediosCensados: loc.prediosCensados, prediosRural: loc.prediosRural,
                     participacion: loc.participacion,
-                    avaluo: loc.avaluo, areaCons: loc.areaCons,
+                    avaluo: loc.avaluo, avaluoCatastral: loc.avaluoCatastral, areaCons: loc.areaCons,
                     residencial: loc.residencial, comercial: loc.comercial,
                     industrial: loc.industrial, dotacional: loc.dotacional,
                 });
@@ -2137,6 +2166,7 @@
                 loc.prediosRural = (PREDIOS_RURALES[loc.name] != null) ? (PREDIOS_RURALES[loc.name][year] ?? null) : null;
                 loc.participacion = parseFloat((loc.predios / TOTAL_PREDIOS_BOGOTA[year] * 100).toFixed(1));
                 loc.avaluo = Math.round(d.avaluoTotal / d.areaCons);
+                loc.avaluoCatastral = AVALUO_CATASTRAL_REAL[loc.name] ?? d.avaluoTotal;
                 loc.areaCons = Math.round(d.areaCons / 10000);
                 const total = (d.residencial + d.comercial + d.industrial + d.dotacional) || 1;
                 loc.residencial = Math.round(d.residencial / total * 100);
@@ -2149,7 +2179,7 @@
                 if (loc) Object.assign(f.properties, {
                     predios: loc.predios, prediosCensados: loc.prediosCensados, prediosRural: loc.prediosRural,
                     participacion: loc.participacion,
-                    avaluo: loc.avaluo, areaCons: loc.areaCons,
+                    avaluo: loc.avaluo, avaluoCatastral: loc.avaluoCatastral, areaCons: loc.areaCons,
                     residencial: loc.residencial, comercial: loc.comercial,
                     industrial: loc.industrial, dotacional: loc.dotacional,
                 });
@@ -2163,9 +2193,9 @@
 
         const STATES = [
             {
-                // Datos reales 2026: 2.681.886 predios (UAECD) · Crecimiento 2016→2026: +25,3%
-                // Suba 19,7% · Usaquén 14,6% · Kennedy 11,6% · Engativá 9,0% · Fontibón 7,3%
-                text: 'El <strong>censo inmobiliario</strong> de Bogotá es el inventario oficial de todos los bienes inmuebles de la ciudad. En 2026 registra <strong>2,68 millones de predios</strong> — un crecimiento del <strong>25,3 %</strong> desde 2016, impulsado por la expansión residencial en el norte y occidente.',
+                // Datos reales 2026: ~2.966.000 predios (suma por localidad UAECD) · Crecimiento 2016→2026: +19,5%
+                // Suba 17,8% · Usaquén 13,2% · Kennedy 10,5% · Engativá 8,1% · Fontibón 6,6%
+                text: 'El <strong>censo inmobiliario</strong> de Bogotá es el inventario oficial de todos los bienes inmuebles de la ciudad. En 2026 registra <strong>2,97 millones de predios</strong> — un crecimiento del <strong>19,5 %</strong> desde 2016, impulsado por la expansión residencial en el norte y occidente.',
                 mode: 'overview',
                 legend: { title: 'Predios por localidad', type: 'cluster' },
                 view: { lng: -74.0960, lat: 4.6486, zoom: 11.2, pitch: 0, bearing: 0 },
@@ -2173,8 +2203,10 @@
                 pointColor: 'default',
             },
             {
-                // Brecha real: Chapinero $112.000/m² vs Sumapaz $5.200/m² = 21,5 veces
-                text: 'Los <strong class="blue">marcadores</strong> señalan cada localidad. El <strong>avalúo catastral por metro cuadrado</strong> varía drásticamente de norte a sur: el corredor norte concentra los valores más altos, mientras las localidades rurales y periféricas registran avalúos significativamente menores.',
+                // Avalúo/m² real (AVALUO_CATASTRAL_REAL ÷ área construida):
+                // Chapinero $5.842.257/m² · Teusaquillo $4.823.628/m² · Usaquén $4.723.127/m²
+                // Mínimo: Usme $1.285.636/m² · Brecha Chapinero–Usme: 4,5 veces
+                text: 'Los <strong class="blue">marcadores</strong> señalan cada localidad. El <strong>avalúo catastral por metro cuadrado</strong> varía drásticamente: <strong>Chapinero</strong> encabeza con $5,8 millones/m², más de <strong>4,5 veces</strong> el valor de Usme ($1,3 millones/m²). El corredor norte concentra los valores más altos de la ciudad.',
                 mode: 'avaluo',
                 legend: { title: 'Avalúo catastral/m²', type: 'cyan' },
                 view: { lng: -74.065, lat: 4.66, zoom: 12.2, pitch: 0, bearing: 0 },
@@ -2182,34 +2214,36 @@
                 pointColor: 'avaluo',
             },
             {
-                // Top 6 por avalúo/m² según LOCALIDADES: Chapinero 112k, Usaquén 98.5k, Teusaquillo 65k, Barrios Unidos 56k, La Candelaria 48k, Fontibón 45k
-                text: 'El <strong>avalúo promedio por predio</strong> revela un patrón inesperado: el <strong>centro histórico</strong> y las zonas industriales encabezan el ranking, superando incluso al corredor norte. <strong>La Candelaria</strong>, <strong>Puente Aranda</strong> y <strong>Teusaquillo</strong> lideran, con crecimientos sostenidos frente a 2016.',
+                // Top 6 por avalúo/m² (AVALUO_CATASTRAL_REAL ÷ área construida UAECD):
+                // Chapinero $5.842k · Teusaquillo $4.824k · Usaquén $4.723k
+                // Santa Fe $3.491k · Suba $3.443k · Fontibón $3.421k
+                text: 'El <strong>avalúo por metro cuadrado</strong> confirma el liderazgo del corredor norte y el centro. <strong>Chapinero</strong>, <strong>Teusaquillo</strong> y <strong>Usaquén</strong> encabezan el ranking, seguidos de <strong>Santa Fe</strong> y <strong>Suba</strong>, que supera a otras localidades de estrato alto gracias a su alta densidad de construcción.',
                 mode: 'avaluo-top',
                 legend: { title: 'Top Avalúo Promedio', type: 'cyan' },
                 view: { lng: -74.055, lat: 4.66, zoom: 13.0, pitch: 0, bearing: 0 },
                 stats: [
-                    { label: 'La Candelaria', pct: '1° lugar', up: true },
-                    { label: 'Puente Aranda', pct: '2° lugar', up: true },
-                    { label: 'Teusaquillo', pct: '3° lugar', up: true },
-                    { label: 'Barrios Unidos', pct: '4° lugar', up: true },
-                    { label: 'Chapinero', pct: '5° lugar', up: true },
-                    { label: 'Antonio Nariño', pct: '6° lugar', up: true },
+                    { label: 'Chapinero', pct: '1° lugar', up: true },
+                    { label: 'Teusaquillo', pct: '2° lugar', up: true },
+                    { label: 'Usaquén', pct: '3° lugar', up: true },
+                    { label: 'Santa Fe', pct: '4° lugar', up: true },
+                    { label: 'Suba', pct: '5° lugar', up: true },
+                    { label: 'Fontibón', pct: '6° lugar', up: true },
                 ],
                 pointColor: 'avaluo',
             },
             {
-                // Área construida real: suma LOCALIDADES = 182.780 ha. Suba 28.000 ha, Kennedy 19.800 ha, Engativá 17.500 ha
-                // Participación en predios 2026: Suba 19,7% · Kennedy 11,6% · Usaquén 14,6% · Engativá 9,0%
-                text: 'El <strong class="magenta">área construida</strong> refleja la expansión horizontal de Bogotá hacia el norte y occidente. <strong>Suba</strong> (19,7 % de los predios), <strong>Kennedy</strong> (11,6 %) y <strong>Engativá</strong> (9,0 %) concentran la mayor superficie edificada, impulsadas por el crecimiento residencial de las últimas décadas.',
+                // Área construida real (UAECD): Suba 4.293 ha · Kennedy 3.388 ha · Usaquén 2.913 ha · Engativá 2.870 ha · Fontibón 2.275 ha
+                // Participación en predios 2026: Suba 19,7% · Usaquén 14,6% · Kennedy 11,6% · Engativá 9,0% · Bosa 6,7%
+                text: 'El <strong class="magenta">área construida</strong> refleja la expansión horizontal de Bogotá. <strong>Suba</strong> lidera con más de <strong>4.293 hectáreas</strong> edificadas (19,7 % de los predios de la ciudad), seguida por <strong>Kennedy</strong> (3.388 ha) y <strong>Usaquén</strong> (2.913 ha), impulsadas por décadas de crecimiento residencial.',
                 mode: 'area',
                 legend: { title: 'Área construida (ha)', type: 'magenta' },
                 view: { lng: -74.09, lat: 4.64, zoom: 11.5, pitch: 0, bearing: 0 },
                 stats: [
-                    { label: 'Suba', pct: '19,7 %', up: true },
-                    { label: 'Kennedy', pct: '11,6 %', up: true },
-                    { label: 'Usaquén', pct: '14,6 %', up: true },
-                    { label: 'Engativá', pct: '9,0 %', up: true },
-                    { label: 'Bosa', pct: '6,7 %', up: false },
+                    { label: 'Suba', pct: '4.293 ha', up: true },
+                    { label: 'Kennedy', pct: '3.388 ha', up: true },
+                    { label: 'Usaquén', pct: '2.913 ha', up: true },
+                    { label: 'Engativá', pct: '2.870 ha', up: true },
+                    { label: 'Fontibón', pct: '2.275 ha', up: false },
                 ],
                 pointColor: 'area',
             },
@@ -2229,10 +2263,10 @@
                 pointColor: 'default',
             },
             {
-                // Segregación real: norte (Chapinero $112k, Usaquén $98.5k) vs periferia sur (Ciudad Bolívar $9.8k, Sumapaz $5.2k). Ratio 21,5x.
-                // Sur y occidente 2026: Suba 529k + Kennedy 312k + Engativá 242k + Bosa 178k + Ciudad Bolívar 164k = 1.425.451 predios (53,2% del total)
+                // Brecha avalúo/m²: Chapinero $5.842k vs Usme $1.286k = 4,5 veces (real UAECD)
+                // Sur y occidente 2026: Suba 529k + Kennedy 312k + Engativá 242k + Bosa 178k + Ciudad Bolívar 164k = 1.426k predios (53,2% del total)
                 // Crecimiento predios 2016→2026: Fontibón +35,6% · Los Mártires +33,2% · Santa Fe +24,4% · Puente Aranda +24,2% · Antonio Nariño +20,7%
-                text: 'La <strong class="magenta">brecha territorial</strong> es una de las más marcadas de América Latina: entre el norte y el sur de Bogotá existe una diferencia abismal en el valor del suelo. Sin embargo, las localidades periféricas como <strong>Fontibón</strong> (+35,6 %) y <strong>Los Mártires</strong> (+33,2 %) son las que más predios han sumado desde 2016.',
+                text: 'La <strong class="magenta">brecha territorial</strong> es evidente: Chapinero vale 4,5 veces más por m² que Usme. Sin embargo, las localidades periféricas son las que más crecen: <strong>Fontibón</strong> (+35,6 %) y <strong>Los Mártires</strong> (+33,2 %) lideran la expansión de predios desde 2016, transformando el mapa urbano.',
                 mode: 'estratos',
                 legend: { title: 'Avalúo vs Estratificación', type: 'dual' },
                 view: { lng: -74.08, lat: 4.64, zoom: 11.8, pitch: 0, bearing: 0 },
@@ -2432,6 +2466,13 @@
             'Sumapaz': 'Localidades/Sumapaz.jpg',
         };
 
+        function fmtAvaluoCatastral(v) {
+            if (v == null) return '–';
+            if (v >= 1e12) return '$' + (v / 1e12).toLocaleString('es-CO', { minimumFractionDigits: 1, maximumFractionDigits: 1 }) + ' bill.';
+            if (v >= 1e9)  return '$' + (v / 1e9).toLocaleString('es-CO',  { minimumFractionDigits: 1, maximumFractionDigits: 1 }) + ' mil mill.';
+            return '$' + Number(v).toLocaleString('es-CO');
+        }
+
         /** Muestra popup enriquecido con imagen y datos del censo */
         function showLocalidadPopup(loc) {
             if (activePopup) activePopup.remove();
@@ -2484,7 +2525,7 @@
                     <div class="popup-row"><span class="popup-label">Participación en Bogotá</span><span class="popup-value">${loc.participacion != null ? loc.participacion.toFixed(1) + '%' : '–'}</span></div>
                     <div class="popup-row"><span class="popup-label">· Predios rurales</span><span class="popup-value">${loc.prediosRural != null ? Number(loc.prediosRural).toLocaleString('es-CO') : '–'}</span></div>
                     <hr class="popup-divider">
-                    <div class="popup-row"><span class="popup-label">Avalúo catastral/m²</span><span class="popup-value cyan">$${Number(loc.avaluo).toLocaleString('es-CO')}</span></div>
+                    <div class="popup-row"><span class="popup-label">Avalúo catastral total</span><span class="popup-value cyan">${fmtAvaluoCatastral(loc.avaluoCatastral)}</span></div>
                     <div class="popup-row"><span class="popup-label">Ranking avalúo ciudad</span><span class="popup-value" style="color:${color};">${rankLabel}</span></div>
                     <div class="popup-row"><span class="popup-label">Área construida</span><span class="popup-value magenta">${Number(loc.areaCons).toLocaleString('es-CO')} ha</span></div>
                     <hr class="popup-divider">
