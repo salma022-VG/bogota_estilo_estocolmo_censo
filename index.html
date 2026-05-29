@@ -893,11 +893,11 @@
             pointer-events: none;
         }
 
-        #intro-image {
+        #intro-video {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            object-position: right bottom;
+            object-position: center center;
         }
 
         .intro-controls {
@@ -1319,7 +1319,7 @@
                 justify-content: flex-end;
             }
 
-            #intro-image {
+            #intro-video {
                 position: absolute;
                 inset: 0;
                 width: 100%;
@@ -1729,8 +1729,8 @@
 
     <!-- ═══════════ CAPA DE ANIMACIÓN DE INTRODUCCIÓN ═══════════ -->
     <div id="intro-overlay">
-        <div class="intro-title">Bogotá — Animación Campín</div>
-        <img id="intro-image" src="animacion-campin_000.jpeg" alt="Animación Campín">
+        <div class="intro-title">Bogotá — Censo Inmobiliario</div>
+        <video id="intro-video" src="video/Intro.mp4" muted playsinline preload="auto"></video>
         <div class="intro-controls">
             <div class="intro-progress-bar">
                 <div class="intro-progress-fill" id="intro-progress-fill"></div>
@@ -2198,7 +2198,7 @@
                 text: 'El <strong>censo inmobiliario</strong> de Bogotá es el inventario oficial de todos los bienes inmuebles de la ciudad. En 2026 registra <strong>2,97 millones de predios</strong> — un crecimiento del <strong>19,5 %</strong> desde 2016, impulsado por la expansión residencial en el norte y occidente.',
                 mode: 'overview',
                 legend: { title: 'Predios por localidad', type: 'cluster' },
-                view: { lng: -74.0960, lat: 4.6486, zoom: 11.2, pitch: 0, bearing: 0 },
+                view: { lng: -74.0818, lat: 4.6281, zoom: 11.2, pitch: 0, bearing: 0 },
                 stats: null,
                 pointColor: 'default',
             },
@@ -3163,54 +3163,26 @@
         // ────────────────────────────────────────────────────────────
 
         function initIntroAnimation() {
-            const TOTAL_FRAMES = 148;
-            const FRAME_INTERVAL = 34;
             const introOverlay = document.getElementById('intro-overlay');
-            const introImage = document.getElementById('intro-image');
+            const introVideo   = document.getElementById('intro-video');
             const progressFill = document.getElementById('intro-progress-fill');
-            const skipBtn = document.getElementById('intro-skip-btn');
-            let currentFrame = 0;
-            let animTimer = null;
-            let preloadedImages = [];
-
-            function preloadImages() {
-                for (let i = 0; i < TOTAL_FRAMES; i++) {
-                    const img = new Image();
-                    img.src = `animacion-campin_${String(i).padStart(3, '0')}.jpeg`;
-                    preloadedImages.push(img);
-                }
-            }
-
-            function showFrame(frameIndex) {
-                introImage.src = `animacion-campin_${String(frameIndex).padStart(3, '0')}.jpeg`;
-                progressFill.style.width = `${((frameIndex + 1) / TOTAL_FRAMES) * 100}%`;
-            }
+            const skipBtn      = document.getElementById('intro-skip-btn');
 
             function endIntro() {
-                if (animTimer) {
-                    clearInterval(animTimer);
-                    animTimer = null;
-                }
+                introVideo.pause();
                 introOverlay.classList.add('fade-out');
-                setTimeout(() => {
-                    introOverlay.style.display = 'none';
-                }, 1300);
+                setTimeout(() => { introOverlay.style.display = 'none'; }, 1300);
             }
 
-            function startAnimation() {
-                animTimer = setInterval(() => {
-                    currentFrame++;
-                    if (currentFrame >= TOTAL_FRAMES) {
-                        endIntro();
-                        return;
-                    }
-                    showFrame(currentFrame);
-                }, FRAME_INTERVAL);
-            }
+            introVideo.addEventListener('timeupdate', () => {
+                if (introVideo.duration > 0) {
+                    progressFill.style.width = `${(introVideo.currentTime / introVideo.duration) * 100}%`;
+                }
+            });
 
+            introVideo.addEventListener('ended', endIntro);
             skipBtn.addEventListener('click', endIntro);
-            preloadImages();
-            setTimeout(startAnimation, 300);
+            introVideo.play().catch(() => { /* autoplay bloqueado — el usuario puede presionar skip */ });
         }
 
         // ────────────────────────────────────────────────────────────
