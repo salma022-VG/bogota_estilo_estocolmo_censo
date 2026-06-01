@@ -2234,7 +2234,7 @@
             {
                 // Área construida real (UAECD): Suba 4.293 ha · Kennedy 3.388 ha · Usaquén 2.913 ha · Engativá 2.870 ha · Fontibón 2.275 ha
                 // Participación en predios 2026: Suba 19,7% · Usaquén 14,6% · Kennedy 11,6% · Engativá 9,0% · Bosa 6,7%
-                text: 'El <strong class="magenta">área construida</strong> refleja la expansión horizontal de Bogotá. <strong>Suba</strong> lidera con más de <strong>4.293 hectáreas</strong> edificadas (19,7 % de los predios de la ciudad), seguida por <strong>Kennedy</strong> (3.388 ha) y <strong>Usaquén</strong> (2.913 ha), impulsadas por décadas de crecimiento residencial.',
+                text: 'El <strong class="magenta">área construida</strong> revela dos grandes ejes de expansión urbana. Al norte, <strong>Suba</strong> concentra el 19,7 % de los predios de la ciudad; al occidente, <strong>Kennedy</strong> y <strong>Engativá</strong> suman más de 6.258 ha edificadas. Estos tres grandes nodos explican más del <strong>40 % del suelo construido</strong> de Bogotá.',
                 mode: 'area',
                 legend: { title: 'Área construida (ha)', type: 'magenta' },
                 view: { lng: -74.09, lat: 4.64, zoom: 11.5, pitch: 0, bearing: 0 },
@@ -3035,9 +3035,9 @@
                             tooltip: tooltipCfg,
                         },
                         scales: {
-                            x: { ticks: { color: tickClr, font: { ...font, size: 8 }, maxRotation: 0, autoSkip: false, maxTicksLimit: 11 }, grid: { color: gridClr, drawBorder: false } },
-                            y: { position: 'right', ticks: { color: cyanTick, font: { ...font, size: 8 }, maxTicksLimit: 4, callback: v => v + 'k' }, grid: { color: gridClr, drawBorder: false } },
-                            y1: { position: 'left', ticks: { color: magTick, font: { ...font, size: 8 }, maxTicksLimit: 4, callback: v => '$' + v + 'k' }, grid: { drawOnChartArea: false, drawBorder: false } },
+                            x: { ticks: { color: '#000', font: { ...font, size: 8, weight: '700' }, maxRotation: 0, autoSkip: false, maxTicksLimit: 11 }, grid: { color: gridClr, drawBorder: false } },
+                            y: { position: 'right', ticks: { color: '#000', font: { ...font, size: 8, weight: '700' }, maxTicksLimit: 4, callback: v => v + ' M' }, grid: { color: gridClr, drawBorder: false } },
+                            y1: { position: 'left', ticks: { color: '#000', font: { ...font, size: 8, weight: '700' }, maxTicksLimit: 4, callback: v => '$' + v + ' M' }, grid: { drawOnChartArea: false, drawBorder: false } },
                         },
                     },
                 });
