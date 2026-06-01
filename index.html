@@ -3036,8 +3036,8 @@
                         },
                         scales: {
                             x: { ticks: { color: '#000', font: { ...font, size: 8, weight: '700' }, maxRotation: 0, autoSkip: false, maxTicksLimit: 11 }, grid: { color: gridClr, drawBorder: false } },
-                            y: { position: 'right', ticks: { color: '#000', font: { ...font, size: 8, weight: '700' }, maxTicksLimit: 4, callback: v => v + ' M' }, grid: { color: gridClr, drawBorder: false } },
-                            y1: { position: 'left', ticks: { color: '#000', font: { ...font, size: 8, weight: '700' }, maxTicksLimit: 4, callback: v => '$' + v + ' M' }, grid: { drawOnChartArea: false, drawBorder: false } },
+                            y: { position: 'right', title: { display: true, text: 'Predios', color: '#000', font: { ...font, size: 8, weight: '700' } }, ticks: { color: '#000', font: { ...font, size: 8, weight: '700' }, maxTicksLimit: 4, callback: v => v + ' M' }, grid: { color: gridClr, drawBorder: false } },
+                            y1: { position: 'left', title: { display: true, text: 'Avalúo $/m²', color: '#000', font: { ...font, size: 8, weight: '700' } }, ticks: { color: '#000', font: { ...font, size: 8, weight: '700' }, maxTicksLimit: 4, callback: v => '$' + v + ' M' }, grid: { drawOnChartArea: false, drawBorder: false } },
                         },
                     },
                 });
