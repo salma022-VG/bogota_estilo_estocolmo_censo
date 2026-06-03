@@ -464,7 +464,7 @@
             bottom: 0;
             left: 0;
             right: 0;
-            height: 165px;
+            height: 240px;
             z-index: 600;
             display: flex;
             background: var(--timeline-bg);
@@ -475,7 +475,7 @@
         .timeline-chart-container {
             flex: 1;
             position: relative;
-            padding: 42px 20px 8px 40px;
+            padding: 48px 20px 12px 50px;
             min-width: 0;
         }
 
@@ -1222,7 +1222,7 @@
 
             /* ── Timeline ── */
             .timeline-strip {
-                height: 180px;
+                height: 340px;
             }
 
             .timeline-stats {
@@ -2127,7 +2127,7 @@
                 loc.participacion = parseFloat((loc.predios / TOTAL_PREDIOS_BOGOTA[2026] * 100).toFixed(1));
                 loc.avaluo = Math.round(d.avaluoTotal / d.areaCons);   // COP/m²
                 loc.avaluoCatastral = AVALUO_CATASTRAL_REAL[loc.name] ?? d.avaluoTotal;
-                loc.areaCons = Math.round(d.areaCons / 10000);           // m² → ha
+                loc.areaCons = Math.round(d.areaCons);                     // m²
                 const total = (d.residencial + d.comercial + d.industrial + d.dotacional) || 1;
                 loc.residencial = Math.round(d.residencial / total * 100);
                 loc.comercial = Math.round(d.comercial / total * 100);
@@ -2234,16 +2234,16 @@
             {
                 // Área construida real (UAECD): Suba 4.293 ha · Kennedy 3.388 ha · Usaquén 2.913 ha · Engativá 2.870 ha · Fontibón 2.275 ha
                 // Participación en predios 2026: Suba 19,7% · Usaquén 14,6% · Kennedy 11,6% · Engativá 9,0% · Bosa 6,7%
-                text: 'El <strong class="magenta">área construida</strong> revela dos grandes ejes de expansión urbana. Al norte, <strong>Suba</strong> concentra el 19,7 % de los predios de la ciudad; al occidente, <strong>Kennedy</strong> y <strong>Engativá</strong> suman más de 6.258 ha edificadas. Estos tres grandes nodos explican más del <strong>40 % del suelo construido</strong> de Bogotá.',
+                text: 'El <strong class="magenta">área construida</strong> revela dos grandes ejes de expansión urbana. Al norte, <strong>Suba</strong> concentra el 19,7 % de los predios de la ciudad; al occidente, <strong>Kennedy</strong> y <strong>Engativá</strong> suman más de 62.580.000 m² edificados. Estos tres grandes nodos explican más del <strong>40 % del suelo construido</strong> de Bogotá.',
                 mode: 'area',
-                legend: { title: 'Área construida (ha)', type: 'magenta' },
+                legend: { title: 'Área construida (m²)', type: 'magenta' },
                 view: { lng: -74.09, lat: 4.64, zoom: 11.5, pitch: 0, bearing: 0 },
                 stats: [
-                    { label: 'Suba', pct: '4.293 ha', up: true },
-                    { label: 'Kennedy', pct: '3.388 ha', up: true },
-                    { label: 'Usaquén', pct: '2.913 ha', up: true },
-                    { label: 'Engativá', pct: '2.870 ha', up: true },
-                    { label: 'Fontibón', pct: '2.275 ha', up: false },
+                    { label: 'Suba', pct: '42.930.000 m²', up: true },
+                    { label: 'Kennedy', pct: '33.880.000 m²', up: true },
+                    { label: 'Usaquén', pct: '29.130.000 m²', up: true },
+                    { label: 'Engativá', pct: '28.700.000 m²', up: true },
+                    { label: 'Fontibón', pct: '22.750.000 m²', up: false },
                 ],
                 pointColor: 'area',
             },
@@ -2527,7 +2527,7 @@
                     <hr class="popup-divider">
                     <div class="popup-row"><span class="popup-label">Avalúo catastral total</span><span class="popup-value cyan">${fmtAvaluoCatastral(loc.avaluoCatastral)}</span></div>
                     <div class="popup-row"><span class="popup-label">Ranking avalúo ciudad</span><span class="popup-value" style="color:${color};">${rankLabel}</span></div>
-                    <div class="popup-row"><span class="popup-label">Área construida</span><span class="popup-value magenta">${Number(loc.areaCons).toLocaleString('es-CO')} ha</span></div>
+                    <div class="popup-row"><span class="popup-label">Área construida</span><span class="popup-value magenta">${Number(Math.round(loc.areaCons * 10000)).toLocaleString('es-CO')} m²</span></div>
                     <hr class="popup-divider">
 
                     <div style="margin-top:7px;">
@@ -2635,7 +2635,7 @@
             const cityAvgAvaluo = Math.round(LOCALIDADES.reduce((s, l) => s + l.avaluo, 0) / LOCALIDADES.length);
             const avaluoVsCity = avgAvaluo > 0 ? ((avgAvaluo / cityAvgAvaluo - 1) * 100).toFixed(0) : null;
             const avaluoVsCityLabel = avaluoVsCity !== null
-                ? (avaluoVsCity >= 0 ? `+${avaluoVsCity}% vs prom. ciudad` : `${avaluoVsCity}% vs prom. ciudad`)
+                ? (avaluoVsCity >= 0 ? `+${avaluoVsCity}% vs prom. de Bogotá` : `${avaluoVsCity}% vs prom. de Bogotá`)
                 : '';
             const avaluoVsCityColor = avaluoVsCity !== null && Number(avaluoVsCity) >= 0 ? 'var(--cyan)' : 'var(--mag)';
 
@@ -2658,8 +2658,8 @@
                 <div class="stat-row"><span class="stat-pct up">${Number(totalCensados).toLocaleString('es-CO')}</span><span class="stat-label">predios censados</span></div>
                 <div class="stat-row"><span class="stat-pct up">${totalParticipacion.toFixed(1)}%</span><span class="stat-label">participación en Bogotá</span></div>
                 <div class="stat-row"><span class="stat-pct up">${ruralKnown ? Number(totalRural).toLocaleString('es-CO') : '–'}</span><span class="stat-label">· predios rurales</span></div>
-                <div class="stat-row"><span class="stat-pct up">$${Number(avgAvaluo).toLocaleString('es-CO')}/m²</span><span class="stat-label" style="color:${avaluoVsCityColor};">${avaluoVsCityLabel}</span></div>
-                <div class="stat-row"><span class="stat-pct up">${Number(Math.round(totalArea)).toLocaleString('es-CO')} ha</span><span class="stat-label">área construida total</span></div>
+                <div class="stat-row"><span class="stat-pct up">$${Number(avgAvaluo).toLocaleString('es-CO')}/m²</span></div>
+                <div class="stat-row"><span class="stat-pct up">${Number(Math.round(totalArea * 10000)).toLocaleString('es-CO')} m²</span><span class="stat-label">área construida total</span></div>
                 <div style="width:100%;margin:4px 0 2px;font-family:var(--mono);font-size:.44rem;color:var(--dim);letter-spacing:.07em;text-transform:uppercase;">Uso del suelo</div>
                 <div class="stat-row"><span class="stat-pct" style="color:var(--cyan);">${avgResid}%</span><span class="stat-label">residencial</span></div>
                 <div class="stat-row"><span class="stat-pct down">${avgCom}%</span><span class="stat-label">comercial</span></div>
@@ -3035,9 +3035,9 @@
                             tooltip: tooltipCfg,
                         },
                         scales: {
-                            x: { ticks: { color: '#000', font: { ...font, size: 8, weight: '700' }, maxRotation: 0, autoSkip: false, maxTicksLimit: 11 }, grid: { color: gridClr, drawBorder: false } },
-                            y: { position: 'right', title: { display: true, text: 'Predios', color: '#000', font: { ...font, size: 8, weight: '700' } }, ticks: { color: '#000', font: { ...font, size: 8, weight: '700' }, maxTicksLimit: 4, callback: v => v + ' M' }, grid: { color: gridClr, drawBorder: false } },
-                            y1: { position: 'left', title: { display: true, text: 'Avalúo $/m²', color: '#000', font: { ...font, size: 8, weight: '700' } }, ticks: { color: '#000', font: { ...font, size: 8, weight: '700' }, maxTicksLimit: 4, callback: v => '$' + v + ' M' }, grid: { drawOnChartArea: false, drawBorder: false } },
+                            x: { ticks: { color: isLight ? '#000' : 'rgba(255,255,255,.9)', font: { ...font, size: 8, weight: '700' }, maxRotation: 0, autoSkip: false, maxTicksLimit: 11 }, grid: { color: gridClr, drawBorder: false } },
+                            y: { position: 'right', title: { display: true, text: 'Predios', color: isLight ? '#000' : 'rgba(255,255,255,.9)', font: { ...font, size: 13, weight: '700' } }, ticks: { color: isLight ? '#000' : 'rgba(255,255,255,.9)', font: { ...font, size: 8, weight: '700' }, maxTicksLimit: 4, callback: v => v + ' M' }, grid: { color: gridClr, drawBorder: false } },
+                            y1: { position: 'left', title: { display: true, text: 'Avalúo $/m²', color: isLight ? '#000' : 'rgba(255,255,255,.9)', font: { ...font, size: 13, weight: '700' } }, ticks: { color: isLight ? '#000' : 'rgba(255,255,255,.9)', font: { ...font, size: 8, weight: '700' }, maxTicksLimit: 4, callback: v => '$' + v + ' M' }, grid: { drawOnChartArea: false, drawBorder: false } },
                         },
                     },
                 });
@@ -3082,9 +3082,9 @@
                             tooltip: tooltipCfg,
                         },
                         scales: {
-                            x: xScale,
-                            y: { position: 'right', ticks: { color: cyanTick, font: { ...font, size: 8 }, maxTicksLimit: 3, callback: v => '$' + v + 'k' }, grid: { color: gridClr } },
-                            y1: { position: 'left', ticks: { color: wTick, font: { ...font, size: 8 }, maxTicksLimit: 3, callback: v => v + 'k' }, grid: { drawOnChartArea: false } },
+                            x: { ...xScale, ticks: { ...xScale.ticks, color: isLight ? '#000' : 'rgba(255,255,255,.9)', font: { ...font, size: 8, weight: '700' } } },
+                            y: { position: 'right', ticks: { color: isLight ? '#000' : 'rgba(255,255,255,.9)', font: { ...font, size: 8, weight: '700' }, maxTicksLimit: 3, callback: v => '$' + v + 'k' }, grid: { color: gridClr } },
+                            y1: { position: 'left', ticks: { color: isLight ? '#000' : 'rgba(255,255,255,.9)', font: { ...font, size: 8, weight: '700' }, maxTicksLimit: 3, callback: v => v + 'k' }, grid: { drawOnChartArea: false } },
                         },
                     },
                 });
@@ -3101,7 +3101,7 @@
                     data: {
                         labels,
                         datasets: [
-                            { label: 'Área construida (ha)', data: areas, backgroundColor: 'rgba(254,180,0,.6)', borderColor: 'rgba(254,180,0,1)', borderWidth: 1 },
+                            { label: 'Área construida (m²)', data: areas, backgroundColor: 'rgba(254,180,0,.6)', borderColor: 'rgba(254,180,0,1)', borderWidth: 1 },
                         ],
                     },
                     options: {
@@ -3115,7 +3115,7 @@
                         },
                         scales: {
                             x: xScale,
-                            y: { position: 'right', ticks: { color: isLight ? 'rgba(160,120,0,.7)' : 'rgba(254,180,0,.7)', font: { ...font, size: 8 }, maxTicksLimit: 3, callback: v => v + ' ha' }, grid: { color: gridClr } },
+                            y: { position: 'right', ticks: { color: isLight ? 'rgba(160,120,0,.7)' : 'rgba(254,180,0,.7)', font: { ...font, size: 8 }, maxTicksLimit: 3, callback: v => Number(v).toLocaleString('es-CO') + ' m²' }, grid: { color: gridClr } },
                         },
                     },
                 });
