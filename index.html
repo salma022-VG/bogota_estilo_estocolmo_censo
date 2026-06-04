@@ -1148,11 +1148,11 @@
                 left: 0;
                 right: 0;
                 top: auto;
-                bottom: 180px;
+                bottom: 220px;
                 width: 100%;
                 max-width: none;
-                max-height: 36vh;
-                padding: 16px 20px 14px;
+                max-height: 32vh;
+                padding: 12px 18px 12px;
                 background: var(--panel-bg);
                 border-right: none;
                 border-top: 1px solid var(--border);
@@ -1222,7 +1222,7 @@
 
             /* ── Timeline ── */
             .timeline-strip {
-                height: 340px;
+                height: 220px;
             }
 
             .timeline-stats {
@@ -1230,7 +1230,7 @@
             }
 
             .timeline-chart-container {
-                padding: 2px 8px 4px 8px;
+                padding: 4px 10px 6px 10px;
                 display: flex;
                 flex-direction: column;
             }
@@ -1417,7 +1417,7 @@
             }
 
             .narrative-panel.tl-collapsed {
-                bottom: 22px !important;
+                bottom: 24px !important;
             }
 
             /* Feedback táctil en botones */
@@ -1467,8 +1467,8 @@
             }
 
             .narrative-panel {
-                max-height: 40vh;
-                bottom: 180px;
+                max-height: 34vh;
+                bottom: 220px;
                 padding: 12px 16px 12px;
             }
 
@@ -3035,9 +3035,9 @@
                             tooltip: tooltipCfg,
                         },
                         scales: {
-                            x: { ticks: { color: isLight ? '#000' : 'rgba(255,255,255,.9)', font: { ...font, size: 8, weight: '700' }, maxRotation: 0, autoSkip: false, maxTicksLimit: 11 }, grid: { color: gridClr, drawBorder: false } },
-                            y: { position: 'right', title: { display: true, text: 'Predios', color: isLight ? '#000' : 'rgba(255,255,255,.9)', font: { ...font, size: 13, weight: '700' } }, ticks: { color: isLight ? '#000' : 'rgba(255,255,255,.9)', font: { ...font, size: 8, weight: '700' }, maxTicksLimit: 4, callback: v => v + ' M' }, grid: { color: gridClr, drawBorder: false } },
-                            y1: { position: 'left', title: { display: true, text: 'Avalúo $/m²', color: isLight ? '#000' : 'rgba(255,255,255,.9)', font: { ...font, size: 13, weight: '700' } }, ticks: { color: isLight ? '#000' : 'rgba(255,255,255,.9)', font: { ...font, size: 8, weight: '700' }, maxTicksLimit: 4, callback: v => '$' + v + ' M' }, grid: { drawOnChartArea: false, drawBorder: false } },
+                            x: { ticks: { color: isLight ? '#000' : 'rgba(255,255,255,.9)', font: { ...font, size: isMobile ? 6 : 8, weight: '700' }, maxRotation: isMobile ? 45 : 0, autoSkip: isMobile, maxTicksLimit: isMobile ? 6 : 11 }, grid: { color: gridClr, drawBorder: false } },
+                            y: { position: 'right', title: { display: !isMobile, text: 'Predios', color: isLight ? '#000' : 'rgba(255,255,255,.9)', font: { ...font, size: isMobile ? 8 : 13, weight: '700' } }, ticks: { color: isLight ? '#000' : 'rgba(255,255,255,.9)', font: { ...font, size: isMobile ? 7 : 8, weight: '700' }, maxTicksLimit: isMobile ? 3 : 4, callback: v => v + ' M' }, grid: { color: gridClr, drawBorder: false } },
+                            y1: { position: 'left', title: { display: !isMobile, text: 'Avalúo $/m²', color: isLight ? '#000' : 'rgba(255,255,255,.9)', font: { ...font, size: isMobile ? 8 : 13, weight: '700' } }, ticks: { color: isLight ? '#000' : 'rgba(255,255,255,.9)', font: { ...font, size: isMobile ? 7 : 8, weight: '700' }, maxTicksLimit: isMobile ? 3 : 4, callback: v => '$' + v + ' M' }, grid: { drawOnChartArea: false, drawBorder: false } },
                         },
                     },
                 });
@@ -3082,9 +3082,9 @@
                             tooltip: tooltipCfg,
                         },
                         scales: {
-                            x: { ...xScale, ticks: { ...xScale.ticks, color: isLight ? '#000' : 'rgba(255,255,255,.9)', font: { ...font, size: 8, weight: '700' } } },
-                            y: { position: 'right', ticks: { color: isLight ? '#000' : 'rgba(255,255,255,.9)', font: { ...font, size: 8, weight: '700' }, maxTicksLimit: 3, callback: v => '$' + v + 'k' }, grid: { color: gridClr } },
-                            y1: { position: 'left', ticks: { color: isLight ? '#000' : 'rgba(255,255,255,.9)', font: { ...font, size: 8, weight: '700' }, maxTicksLimit: 3, callback: v => v + 'k' }, grid: { drawOnChartArea: false } },
+                            x: { ...xScale, ticks: { ...xScale.ticks, color: isLight ? '#000' : 'rgba(255,255,255,.9)', font: { ...font, size: isMobile ? 6 : 8, weight: '700' }, maxRotation: isMobile ? 90 : 35, minRotation: isMobile ? 90 : 0 } },
+                            y: { position: 'right', ticks: { color: isLight ? '#000' : 'rgba(255,255,255,.9)', font: { ...font, size: isMobile ? 7 : 8, weight: '700' }, maxTicksLimit: 3, callback: v => '$' + v + 'k' }, grid: { color: gridClr } },
+                            y1: { position: 'left', ticks: { color: isLight ? '#000' : 'rgba(255,255,255,.9)', font: { ...font, size: isMobile ? 7 : 8, weight: '700' }, maxTicksLimit: 3, callback: v => v + 'k' }, grid: { drawOnChartArea: false } },
                         },
                     },
                 });
@@ -3114,8 +3114,8 @@
                             tooltip: tooltipCfg,
                         },
                         scales: {
-                            x: xScale,
-                            y: { position: 'right', ticks: { color: isLight ? 'rgba(160,120,0,.7)' : 'rgba(254,180,0,.7)', font: { ...font, size: 8 }, maxTicksLimit: 3, callback: v => Number(v).toLocaleString('es-CO') + ' m²' }, grid: { color: gridClr } },
+                            x: { ...xScale, ticks: { ...xScale.ticks, color: isLight ? '#000' : 'rgba(255,255,255,.9)', font: { ...font, size: isMobile ? 6 : 8, weight: '700' }, maxRotation: isMobile ? 90 : 35, minRotation: isMobile ? 90 : 0 } },
+                            y: { position: 'right', ticks: { color: isLight ? '#000' : 'rgba(255,255,255,.9)', font: { ...font, size: isMobile ? 7 : 8, weight: '700' }, maxTicksLimit: 3, callback: v => Number(v).toLocaleString('es-CO') + ' m²' }, grid: { color: gridClr } },
                         },
                     },
                 });
@@ -3150,8 +3150,8 @@
                             tooltip: { ...tooltipCfg, callbacks: { label: c => ` ${c.dataset.label}: ${c.raw}%` } },
                         },
                         scales: {
-                            x: { ...xScale, stacked: true },
-                            y: { stacked: true, max: 100, position: 'right', ticks: { color: wTick, font: { ...font, size: 8 }, maxTicksLimit: 3, callback: v => v + '%' }, grid: { color: gridClr } },
+                            x: { ...xScale, stacked: true, ticks: { ...xScale.ticks, color: isLight ? '#000' : 'rgba(255,255,255,.9)', font: { ...font, size: isMobile ? 6 : 8, weight: '700' }, maxRotation: isMobile ? 90 : 35, minRotation: isMobile ? 90 : 0 } },
+                            y: { stacked: true, max: 100, position: 'right', ticks: { color: isLight ? '#000' : 'rgba(255,255,255,.9)', font: { ...font, size: isMobile ? 7 : 8, weight: '700' }, maxTicksLimit: 3, callback: v => v + '%' }, grid: { color: gridClr } },
                         },
                     },
                 });
