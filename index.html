@@ -1096,9 +1096,9 @@
         }
 
         /* ══════════════════════════════════════
-           MÓVIL — diseño centrado y organizado
+           MÓVIL + TABLET — hasta 1024px
            ══════════════════════════════════════ */
-        @media (max-width: 768px) {
+        @media (max-width: 1024px) {
 
             /* ── Header ── */
             #header {
@@ -1747,7 +1747,7 @@
         <div class="header-logos">
             <span class="header-logo-text">Alcaldía de Bogotá</span>
             <span class="header-logo-sep">|</span>
-            <span class="header-logo-text">Catastro Bogotá</span>
+            <a class="header-logo-text" href="https://www.catastrobogota.gov.co/" target="_blank" rel="noopener" style="text-decoration:none;color:inherit;cursor:pointer;">Catastro Bogotá</a>
             <button class="info-btn" id="info-btn" aria-label="Información">i</button>
             <label class="switch" title="Cambiar tema">
                 <input type="checkbox" id="theme-toggle" checked>
@@ -1766,7 +1766,7 @@
         <div class="narrative-panel" id="narrative-panel">
             <div class="narrative-content" id="narrative-content">
                 <p class="narrative-text" id="narrative-text">
-                    El censo inmobiliario de Bogotá registra <strong>2,97 millones</strong> de predios
+                    El censo inmobiliario de Bogotá registra <strong>2,966 mill.</strong> de predios
                     en las 20 localidades. El avalúo catastral total para 2026 alcanza los
                     <strong class="magenta">$945 billones de pesos</strong> — evidenciando la revalorización
                     acelerada del suelo bogotano en la última década.
@@ -2983,7 +2983,7 @@
                 titleColor: tipTitle, bodyColor: tipBody,
                 padding: 8, cornerRadius: 0, displayColors: true, boxWidth: 6, boxHeight: 6,
             };
-            const isMobile = window.innerWidth <= 768;
+            const isMobile = window.innerWidth <= 1024;
             const titleCfg = (text) => ({
                 display: true, text,
                 color: titleClr,
