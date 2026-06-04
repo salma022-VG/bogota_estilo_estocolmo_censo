@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="es">
+      bottom: 210px;
+            right: 12px;<html lang="es">
 
 <head>
     <meta charset="utf-8" />
@@ -540,7 +541,7 @@
 
         .stat-pct {
             font-family: var(--mono);
-            font-size: .68rem;
+            font-size: .78rem;
             font-weight: 600;
             min-width: 55px;
         }
@@ -555,8 +556,8 @@
 
         .stat-label {
             font-family: var(--mono);
-            font-size: .62rem;
-            font-weight: 300;
+            font-size: .72rem;
+            font-weight: 700;
             color: var(--dim);
             text-align: right;
             flex: 1;
@@ -580,8 +581,8 @@
         }
 
         .stat-loc-name {
-            font-size: .58rem;
-            font-weight: 400;
+            font-size: .68rem;
+            font-weight: 700;
             color: var(--text);
             transition: color .15s;
         }
@@ -672,7 +673,7 @@
 
         .popup-category {
             font-family: var(--mono);
-            font-size: .48rem;
+            font-size: .58rem;
             letter-spacing: .12em;
             text-transform: uppercase;
             color: rgba(255, 255, 255, .35);
@@ -695,9 +696,9 @@
 
         .popup-uso-label {
             font-family: var(--mono);
-            font-size: .44rem;
-            font-weight: 300;
-            color: rgba(255, 255, 255, .3);
+            font-size: .56rem;
+            font-weight: 700;
+            color: #111;
         }
 
         /* ── Marcadores de localidad ── */
@@ -764,12 +765,12 @@
             justify-content: space-between;
             gap: 14px;
             margin-top: 3px;
-            font-size: 11px;
+            font-size: 13px;
         }
 
         .popup-label {
             color: var(--dim);
-            font-weight: 300;
+            font-weight: 700;
         }
 
         .popup-value {
@@ -789,6 +790,64 @@
             border: none;
             border-top: 1px solid rgba(255, 255, 255, .08);
             margin: 6px 0;
+        }
+
+        /* ── Botón centrar mapa ── */
+        .center-map-btn {
+            --glow-color: #ffee00;
+            --glow-spread-color: rgba(255, 208, 0, 0.45);
+            --btn-color: rgba(10, 30, 50, 0.88);
+            position: fixed;
+            bottom: 230px;
+            right: 20px;
+            z-index: 800;
+            border: 0.18em solid var(--glow-color);
+            padding: 0.3em 0.55em;
+            color: var(--glow-color);
+            font-size: 20px;
+            font-weight: 700;
+            font-family: var(--mono);
+            letter-spacing: .06em;
+            background-color: var(--btn-color);
+            border-radius: 0.6em;
+            outline: none;
+            cursor: pointer;
+            box-shadow: 0 0 0.6em 0.15em var(--glow-color),
+                0 0 2.5em 0.6em var(--glow-spread-color),
+                inset 0 0 0.5em 0.15em var(--glow-color);
+            text-shadow: 0 0 0.4em var(--glow-color);
+            transition: all 0.25s;
+        }
+        .center-map-btn::after {
+            pointer-events: none;
+            content: "";
+            position: absolute;
+            top: 120%;
+            left: 0;
+            height: 100%;
+            width: 100%;
+            background-color: var(--glow-spread-color);
+            filter: blur(1.5em);
+            opacity: 0.6;
+            transform: perspective(1.5em) rotateX(35deg) scale(1, 0.6);
+        }
+        .center-map-btn:hover {
+            color: var(--btn-color);
+            background-color: var(--glow-color);
+            box-shadow: 0 0 0.8em 0.25em var(--glow-color),
+                0 0 3em 1.5em var(--glow-spread-color),
+                inset 0 0 0.5em 0.15em var(--glow-color);
+        }
+        .center-map-btn:active {
+            box-shadow: 0 0 0.4em 0.15em var(--glow-color),
+                0 0 1.5em 1em var(--glow-spread-color),
+                inset 0 0 0.35em 0.15em var(--glow-color);
+            transform: scale(0.96);
+        }
+        body.light-mode .center-map-btn {
+            --btn-color: rgba(255, 220, 220, 0.92);
+            --glow-color: #aa0000;
+            --glow-spread-color: rgba(0, 119, 170, 0.35);
         }
 
         /* ── Modal de Información ── */
@@ -1609,15 +1668,15 @@
         }
 
         body.light-mode .popup-label {
-            color: rgba(0, 0, 0, .55) !important;
+            color: #111 !important;
         }
 
         body.light-mode .popup-category {
-            color: rgba(0, 0, 0, .45) !important;
+            color: #111 !important;
         }
 
         body.light-mode .popup-uso-label {
-            color: rgba(0, 0, 0, .4) !important;
+            color: #111 !important;
         }
 
         body.light-mode .popup-name {
@@ -1634,6 +1693,14 @@
 
         body.light-mode .popup-divider {
             border-color: rgba(0, 0, 0, .1) !important;
+        }
+
+        body.light-mode .stat-label {
+            color: #111 !important;
+        }
+
+        body.light-mode .stat-loc-name {
+            color: #111 !important;
         }
 
         body.light-mode .chart-pill {
@@ -1761,6 +1828,7 @@
 
         <!-- Mapa (pantalla completa) -->
         <div id="map"></div>
+        <button class="center-map-btn" onclick="centerMap()" title="Centrar mapa en Bogotá">◉ Centrar</button>
 
         <!-- Panel narrativo (lado izquierdo) -->
         <div class="narrative-panel" id="narrative-panel">
@@ -2377,6 +2445,12 @@
 
         const localidadMarkers = [];
 
+        function centerMap() {
+            if (!map) return;
+            const v = STATES[0].view;
+            map.flyTo({ center: [v.lng, v.lat], zoom: v.zoom, pitch: v.pitch, bearing: v.bearing, duration: 900, essential: true });
+        }
+
         function initMap() {
             const v = STATES[0].view;
             map = new maplibregl.Map({
@@ -2482,6 +2556,7 @@
         /** Muestra popup enriquecido con imagen y datos del censo */
         function showLocalidadPopup(loc) {
             if (activePopup) activePopup.remove();
+            const dimColor = document.body.classList.contains('light-mode') ? '#111' : 'var(--dim)';
 
             const color = ESTRATO_COLORS_MAP[loc.estrato] || '#1d8cf8';
             const imgSrc = LOC_IMG[loc.name] ?? 'Localidades/Usaquen.png';
@@ -2512,7 +2587,7 @@
                 `<div style="width:${Math.max(u.pct, 0.5)}%;background:${u.color};height:100%;"></div>`
             ).join('');
             const usoLabelHTML = usoBars.map(u =>
-                `<span class="popup-uso-label" style="color:${u.color};opacity:${u.pct > 0 ? 1 : 0.3};">${u.label}</span>`
+                `<span class="popup-uso-label" style="color:#111;opacity:${u.pct > 0 ? 1 : 0.3};">${u.label}</span>`
             ).join('');
 
             activePopup = new maplibregl.Popup({ offset: 18, closeButton: true, maxWidth: '310px' })
@@ -2525,7 +2600,7 @@
                     </div>
                     <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px;">
                         <div class="popup-name" style="border-left:2px solid ${color};padding-left:8px;margin-bottom:0;">${loc.name}</div>
-                        <span style="font-family:var(--mono);font-size:.45rem;color:var(--dim);letter-spacing:.08em;">${yearLabel}</span>
+                        <span style="font-family:var(--mono);font-size:.55rem;font-weight:700;color:${dimColor};letter-spacing:.08em;">${yearLabel}</span>
                     </div>
                     <div class="popup-row"><span class="popup-label">Predios censados</span><span class="popup-value cyan">${Number(loc.prediosCensados || loc.predios).toLocaleString('es-CO')}</span></div>
                     <div class="popup-row"><span class="popup-label">Participación en Bogotá</span><span class="popup-value">${loc.participacion != null ? loc.participacion.toFixed(1) + '%' : '–'}</span></div>
@@ -2537,7 +2612,7 @@
                     <hr class="popup-divider">
 
                     <div style="margin-top:7px;">
-                        <div style="font-family:var(--mono);font-size:.44rem;color:var(--dim);letter-spacing:.08em;margin-bottom:4px;text-transform:uppercase;">Distribución de uso del suelo</div>
+                        <div style="font-family:var(--mono);font-size:.56rem;font-weight:700;color:${dimColor};letter-spacing:.08em;margin-bottom:4px;text-transform:uppercase;">Distribución de uso del suelo</div>
                         <div class="popup-uso-bar" style="height:5px;border-radius:2px;">${usoBarHTML}</div>
                         <div class="popup-uso-labels" style="flex-wrap:wrap;gap:3px 6px;margin-top:5px;">${usoLabelHTML}</div>
                     </div>
@@ -2601,6 +2676,7 @@
         // ────────────────────────────────────────────────────────────
 
         function showClusterCard(leaves) {
+            const dimColor = document.body.classList.contains('light-mode') ? '#111' : 'var(--dim)';
             let totalPredios = 0, totalCensados = 0, totalArea = 0, weightedAvaluo = 0;
             let totalResid = 0, totalCom = 0, totalInd = 0, totalDot = 0;
             let totalParticipacion = 0, totalRural = 0, ruralKnown = false;
@@ -2654,18 +2730,18 @@
             const statsEl = document.getElementById('timeline-stats');
             statsEl.innerHTML = `
                 <div class="stat-row" style="width:100%;border-bottom:1px solid var(--border);padding-bottom:3px;margin-bottom:4px;">
-                    <span style="font-family:var(--mono);font-size:.58rem;font-weight:600;color:var(--cyan);letter-spacing:.1em;text-transform:uppercase;">${headerTitle}</span>
-                    <button onclick="closeClusterCard()" style="background:none;border:none;color:var(--dim);cursor:pointer;font-size:15px;line-height:1;padding:0;" title="Cerrar">×</button>
+                    <span style="font-family:var(--mono);font-size:.68rem;font-weight:700;color:var(--cyan);letter-spacing:.1em;text-transform:uppercase;">${headerTitle}</span>
+                    <button onclick="closeClusterCard()" style="background:none;border:none;color:${dimColor};cursor:pointer;font-size:15px;line-height:1;padding:0;" title="Cerrar">×</button>
                 </div>
                 <div class="stat-row" style="margin-bottom:2px;">
-                    <span style="font-family:var(--mono);font-size:.5rem;color:${estratoColor};letter-spacing:.07em;">ESTRATO ${domEstrato}${n > 1 ? ' (dom.)' : ''}</span>
-                    <span style="font-family:var(--mono);font-size:.48rem;color:var(--dim);letter-spacing:.06em;">AÑO ${selectedYear}</span>
+                    <span style="font-family:var(--mono);font-size:.6rem;font-weight:700;color:${estratoColor};letter-spacing:.07em;">ESTRATO ${domEstrato}${n > 1 ? ' (dom.)' : ''}</span>
+                    <span style="font-family:var(--mono);font-size:.58rem;font-weight:700;color:${dimColor};letter-spacing:.06em;">AÑO ${selectedYear}</span>
                 </div>
                 <div class="stat-row"><span class="stat-pct up">${Number(totalCensados).toLocaleString('es-CO')}</span><span class="stat-label">predios censados</span></div>
                 <div class="stat-row"><span class="stat-pct up">${totalParticipacion.toFixed(1)}%</span><span class="stat-label">participación en Bogotá</span></div>
                 <div class="stat-row"><span class="stat-pct up">${ruralKnown ? Number(totalRural).toLocaleString('es-CO') : '–'}</span><span class="stat-label">· predios rurales</span></div>
                 <div class="stat-row"><span class="stat-pct up">${Number(Math.round(totalArea * 10000)).toLocaleString('es-CO')} m²</span><span class="stat-label">área construida total</span></div>
-                <div style="width:100%;margin:4px 0 2px;font-family:var(--mono);font-size:.44rem;color:var(--dim);letter-spacing:.07em;text-transform:uppercase;">Uso del suelo</div>
+                <div style="width:100%;margin:4px 0 2px;font-family:var(--mono);font-size:.56rem;font-weight:700;color:${dimColor};letter-spacing:.07em;text-transform:uppercase;">Uso del suelo</div>
                 <div class="stat-row"><span class="stat-pct" style="color:var(--cyan);">${avgResid}%</span><span class="stat-label">residencial</span></div>
                 <div class="stat-row"><span class="stat-pct down">${avgCom}%</span><span class="stat-label">comercial</span></div>
                 <div class="stat-row"><span class="stat-pct" style="color:var(--blue)">${avgInd}%</span><span class="stat-label">industrial</span></div>
@@ -2674,12 +2750,13 @@
         }
 
         function renderOverviewStats() {
+            const dimColor = document.body.classList.contains('light-mode') ? '#111' : 'var(--dim)';
             const sorted = [...LOCALIDADES].sort((a, b) => b.predios - a.predios);
             const maxPredios = sorted[0].predios;
             const statsEl = document.getElementById('timeline-stats');
             statsEl.innerHTML = `
                 <div class="stat-row" style="width:100%;border-bottom:1px solid var(--border);padding-bottom:3px;margin-bottom:4px;">
-                    <span style="font-size:.55rem;font-weight:600;color:#FEB400;letter-spacing:.1em;text-transform:uppercase;">20 localidades · ${selectedYear} · clic para explorar</span>
+                    <span style="font-size:.65rem;font-weight:700;color:#FEB400;letter-spacing:.1em;text-transform:uppercase;">20 localidades · ${selectedYear} · clic para explorar</span>
                 </div>
                 ${sorted.map((loc, idx) => {
                 const pct = Math.round((loc.predios / maxPredios) * 100);
@@ -2693,8 +2770,8 @@
                             <div style="display:flex;justify-content:space-between;width:100%;align-items:baseline;">
                                 <span class="stat-loc-name">${idx + 1}. ${loc.name}</span>
                                 <span style="display:flex;gap:6px;align-items:baseline;">
-                                    <span style="font-size:.48rem;color:${avaluoColor};font-family:var(--mono);">${avaluoK}/m²</span>
-                                    <span style="font-size:.53rem;font-weight:600;color:var(--dim);font-family:var(--mono);">${Number(loc.predios).toLocaleString('es-CO')}</span>
+                                    <span style="font-size:.58rem;font-weight:700;color:${avaluoColor};font-family:var(--mono);">${avaluoK}/m²</span>
+                                    <span style="font-size:.63rem;font-weight:700;color:${dimColor};font-family:var(--mono);">${Number(loc.predios).toLocaleString('es-CO')}</span>
                                 </span>
                             </div>
                             <div class="stat-mini-bar"><div class="stat-mini-bar-fill" style="width:${pct}%;background:${avaluoColor};"></div></div>
