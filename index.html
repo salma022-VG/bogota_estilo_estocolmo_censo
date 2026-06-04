@@ -3057,9 +3057,9 @@
                             tooltip: tooltipCfg,
                         },
                         scales: {
-                            x: { ticks: { color: isLight ? '#000' : '#fff', font: { ...font, size: isMobile ? 6 : 10, weight: '700' }, maxRotation: isMobile ? 45 : 0, autoSkip: isMobile, maxTicksLimit: isMobile ? 6 : 11 }, grid: { color: gridClr, drawBorder: false } },
-                            y: { position: 'right', title: { display: !isMobile, text: 'Predios', color: isLight ? '#000' : '#fff', font: { ...font, size: isMobile ? 8 : 13, weight: '700' } }, ticks: { color: isLight ? '#000' : '#fff', font: { ...font, size: isMobile ? 7 : 10, weight: '700' }, maxTicksLimit: isMobile ? 3 : 4, callback: v => v + ' M' }, grid: { color: gridClr, drawBorder: false } },
-                            y1: { position: 'left', title: { display: !isMobile, text: 'Avalúo $/m²', color: isLight ? '#000' : '#fff', font: { ...font, size: isMobile ? 8 : 13, weight: '700' } }, ticks: { color: isLight ? '#000' : '#fff', font: { ...font, size: isMobile ? 7 : 10, weight: '700' }, maxTicksLimit: isMobile ? 3 : 4, callback: v => '$' + v + ' M' }, grid: { drawOnChartArea: false, drawBorder: false } },
+                            x: { ticks: { color: isLight ? '#111' : '#fff', font: { ...font, size: isMobile ? 8 : 10, weight: '700' }, maxRotation: isMobile ? 45 : 0, autoSkip: isMobile, maxTicksLimit: isMobile ? 6 : 11 }, grid: { color: gridClr, drawBorder: false } },
+                            y: { position: 'right', title: { display: !isMobile, text: 'Predios', color: isLight ? '#111' : '#fff', font: { ...font, size: isMobile ? 8 : 13, weight: '700' } }, ticks: { color: isLight ? '#111' : '#fff', font: { ...font, size: isMobile ? 9 : 10, weight: '700' }, maxTicksLimit: isMobile ? 3 : 4, callback: v => v + ' M' }, grid: { color: gridClr, drawBorder: false } },
+                            y1: { position: 'left', title: { display: !isMobile, text: 'Avalúo $/m²', color: isLight ? '#111' : '#fff', font: { ...font, size: isMobile ? 8 : 13, weight: '700' } }, ticks: { color: isLight ? '#111' : '#fff', font: { ...font, size: isMobile ? 9 : 10, weight: '700' }, maxTicksLimit: isMobile ? 3 : 4, callback: v => '$' + v + ' M' }, grid: { drawOnChartArea: false, drawBorder: false } },
                         },
                     },
                 });
