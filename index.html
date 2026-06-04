@@ -199,7 +199,7 @@
             position: absolute;
             top: 50px;
             left: 0;
-            bottom: 150px;
+            bottom: 240px;
             width: 36%;
             max-width: 440px;
             z-index: 500;
@@ -640,7 +640,7 @@
         /* ── Imagen en popup ── */
         .popup-img-wrap {
             margin: -14px -18px 10px;
-            height: 120px;
+            height: 160px;
             overflow: hidden;
             position: relative;
         }
@@ -650,13 +650,13 @@
             height: 100%;
             object-fit: cover;
             display: block;
-            filter: brightness(.75) saturate(.9);
+            filter: brightness(.95) saturate(1.05);
         }
 
         .popup-img-overlay {
             position: absolute;
             inset: 0;
-            background: linear-gradient(to bottom, transparent 40%, rgba(0, 0, 0, .7) 100%);
+            background: linear-gradient(to bottom, transparent 50%, rgba(0, 0, 0, .45) 100%);
         }
 
         .popup-img-estrato {
@@ -1902,7 +1902,7 @@
                 <span style="display:flex;justify-content:space-between;"><span>Fuente</span><strong
                         style="color:var(--text);">Catastro Distrital de Bogotá</strong></span>
             </p>
-            <p class="info-tech">Arcgis · Chart.js · GeoJSON Clusters · Datos 2016–2026</p>
+            <p class="info-tech">Arcgis · Chart.js · Datos 2016–2026</p>
         </div>
     </div>
 
@@ -2221,6 +2221,8 @@
                 mode: 'avaluo-top',
                 legend: { title: 'Top Avalúo Promedio', type: 'cyan' },
                 view: { lng: -74.055, lat: 4.66, zoom: 13.0, pitch: 0, bearing: 0 },
+                statsTitle: 'Ranking avalúo catastral / m²',
+                statsTitle: 'Ranking avalúo catastral / m²',
                 stats: [
                     { label: 'Chapinero', pct: '1° lugar', up: true },
                     { label: 'Teusaquillo', pct: '2° lugar', up: true },
@@ -2238,6 +2240,7 @@
                 mode: 'area',
                 legend: { title: 'Área construida (m²)', type: 'magenta' },
                 view: { lng: -74.09, lat: 4.64, zoom: 11.5, pitch: 0, bearing: 0 },
+                statsTitle: 'Mayor área construida (m²)',
                 stats: [
                     { label: 'Suba', pct: '42.930.000 m²', up: true },
                     { label: 'Kennedy', pct: '33.880.000 m²', up: true },
@@ -2253,6 +2256,7 @@
                 mode: 'uso',
                 legend: { title: 'Uso del suelo', type: 'dual' },
                 view: { lng: -74.10, lat: 4.63, zoom: 11.8, pitch: 0, bearing: 0 },
+                statsTitle: 'Usos del suelo predominantes',
                 stats: [
                     { label: 'Residencial', pct: 'Mayoría', up: true },
                     { label: 'Oficinas', pct: 'Segundo uso', up: true },
@@ -2270,6 +2274,7 @@
                 mode: 'estratos',
                 legend: { title: 'Avalúo vs Estratificación', type: 'dual' },
                 view: { lng: -74.08, lat: 4.64, zoom: 11.8, pitch: 0, bearing: 0 },
+                statsTitle: 'Crecimiento de predios 2016 – 2026',
                 stats: [
                     { label: 'Fontibón', pct: '+35,6 %', up: true },
                     { label: 'Los Mártires', pct: '+33,2 %', up: true },
@@ -2288,6 +2293,7 @@
                 mode: 'explore',
                 legend: { title: 'Censo Inmobiliario · 10 años', type: 'cluster' },
                 view: { lng: -74.08, lat: 4.64, zoom: 11.6, pitch: 0, bearing: 0 },
+                statsTitle: 'Participación de predios · 2026',
                 stats: [
                     { label: 'Suba', pct: '19,7 %', up: true },
                     { label: 'Usaquén', pct: '14,6 %', up: true },
@@ -2658,7 +2664,6 @@
                 <div class="stat-row"><span class="stat-pct up">${Number(totalCensados).toLocaleString('es-CO')}</span><span class="stat-label">predios censados</span></div>
                 <div class="stat-row"><span class="stat-pct up">${totalParticipacion.toFixed(1)}%</span><span class="stat-label">participación en Bogotá</span></div>
                 <div class="stat-row"><span class="stat-pct up">${ruralKnown ? Number(totalRural).toLocaleString('es-CO') : '–'}</span><span class="stat-label">· predios rurales</span></div>
-                <div class="stat-row"><span class="stat-pct up">$${Number(avgAvaluo).toLocaleString('es-CO')}/m²</span></div>
                 <div class="stat-row"><span class="stat-pct up">${Number(Math.round(totalArea * 10000)).toLocaleString('es-CO')} m²</span><span class="stat-label">área construida total</span></div>
                 <div style="width:100%;margin:4px 0 2px;font-family:var(--mono);font-size:.44rem;color:var(--dim);letter-spacing:.07em;text-transform:uppercase;">Uso del suelo</div>
                 <div class="stat-row"><span class="stat-pct" style="color:var(--cyan);">${avgResid}%</span><span class="stat-label">residencial</span></div>
@@ -2716,7 +2721,7 @@
             } else {
                 const statsEl = document.getElementById('timeline-stats');
                 statsEl.innerHTML = s.stats
-                    ? s.stats.map(r => `<div class="stat-row"><span class="stat-pct ${r.up ? 'up' : 'down'}">${r.pct}</span><span class="stat-label">${r.label}</span></div>`).join('')
+                    ? `${s.statsTitle ? `<div style="width:100%;margin-bottom:6px;padding-bottom:4px;border-bottom:1px solid var(--border);font-family:var(--mono);font-size:.52rem;font-weight:600;color:var(--cyan);letter-spacing:.09em;text-transform:uppercase;">${s.statsTitle}</div>` : ''}${s.stats.map(r => `<div class="stat-row"><span class="stat-pct ${r.up ? 'up' : 'down'}">${r.pct}</span><span class="stat-label">${r.label}</span></div>`).join('')}`
                     : '';
             }
             renderChart('historico');
@@ -2801,7 +2806,7 @@
                 renderOverviewStats();
             } else {
                 statsEl.innerHTML = s.stats
-                    ? s.stats.map(r => `<div class="stat-row"><span class="stat-pct ${r.up ? 'up' : 'down'}">${r.pct}</span><span class="stat-label">${r.label}</span></div>`).join('')
+                    ? `${s.statsTitle ? `<div style="width:100%;margin-bottom:6px;padding-bottom:4px;border-bottom:1px solid var(--border);font-family:var(--mono);font-size:.52rem;font-weight:600;color:var(--cyan);letter-spacing:.09em;text-transform:uppercase;">${s.statsTitle}</div>` : ''}${s.stats.map(r => `<div class="stat-row"><span class="stat-pct ${r.up ? 'up' : 'down'}">${r.pct}</span><span class="stat-label">${r.label}</span></div>`).join('')}`
                     : '';
             }
 
@@ -2903,6 +2908,23 @@
             return MAP[n] || n.split(' ')[0];
         }
 
+        /** Nombres ultra-cortos para móvil (máx ~5 chars) */
+        function tinyName(n) {
+            const MAP = {
+                'Rafael Uribe Uribe': 'R.U.U', 'Barrios Unidos': 'B.Uni',
+                'Ciudad Bolívar': 'C.Bol', 'San Cristóbal': 'S.Cri',
+                'Antonio Nariño': 'A.Nar', 'Los Mártires': 'Már',
+                'La Candelaria': 'Cand', 'Puente Aranda': 'P.Ar',
+                'Santa Fe': 'S.Fe', 'Teusaquillo': 'Teus',
+                'Chapinero': 'Chap', 'Usaquén': 'Usa',
+                'Engativá': 'Eng', 'Fontibón': 'Font',
+                'Tunjuelito': 'Tunj', 'Kennedy': 'Ken',
+                'Sumapaz': 'Sum', 'Usme': 'Usme',
+                'Bosa': 'Bosa', 'Suba': 'Suba',
+            };
+            return MAP[n] || n.slice(0, 4);
+        }
+
         /** Obtiene localidades únicas a partir de hojas de cluster */
         function getLocsByLeaves(leaves) {
             const seen = new Set();
@@ -2947,7 +2969,7 @@
             const tipBdr = isLight ? 'rgba(0,0,0,.12)' : 'rgba(255,255,255,.1)';
             const tipTitle = isLight ? '#333' : undefined;
             const tipBody = isLight ? '#111' : undefined;
-            const titleClr = isLight ? 'rgba(0,0,0,0.7)' : 'rgba(0,0,0,0.9)';
+            const titleClr = isLight ? 'rgba(0,0,0,0.85)' : 'rgba(255,255,255,0.95)';
             const cyanTick = isLight ? 'rgba(160,120,0,.6)' : 'rgba(254,180,0,.4)';
             const magTick = isLight ? 'rgba(160,15,25,.6)' : 'rgba(227,25,47,.4)';
             const wTick = isLight ? 'rgba(0,0,0,.3)' : 'rgba(255,255,255,.2)';
@@ -3035,9 +3057,9 @@
                             tooltip: tooltipCfg,
                         },
                         scales: {
-                            x: { ticks: { color: isLight ? '#000' : 'rgba(255,255,255,.9)', font: { ...font, size: isMobile ? 6 : 8, weight: '700' }, maxRotation: isMobile ? 45 : 0, autoSkip: isMobile, maxTicksLimit: isMobile ? 6 : 11 }, grid: { color: gridClr, drawBorder: false } },
-                            y: { position: 'right', title: { display: !isMobile, text: 'Predios', color: isLight ? '#000' : 'rgba(255,255,255,.9)', font: { ...font, size: isMobile ? 8 : 13, weight: '700' } }, ticks: { color: isLight ? '#000' : 'rgba(255,255,255,.9)', font: { ...font, size: isMobile ? 7 : 8, weight: '700' }, maxTicksLimit: isMobile ? 3 : 4, callback: v => v + ' M' }, grid: { color: gridClr, drawBorder: false } },
-                            y1: { position: 'left', title: { display: !isMobile, text: 'Avalúo $/m²', color: isLight ? '#000' : 'rgba(255,255,255,.9)', font: { ...font, size: isMobile ? 8 : 13, weight: '700' } }, ticks: { color: isLight ? '#000' : 'rgba(255,255,255,.9)', font: { ...font, size: isMobile ? 7 : 8, weight: '700' }, maxTicksLimit: isMobile ? 3 : 4, callback: v => '$' + v + ' M' }, grid: { drawOnChartArea: false, drawBorder: false } },
+                            x: { ticks: { color: isLight ? '#000' : '#fff', font: { ...font, size: isMobile ? 6 : 10, weight: '700' }, maxRotation: isMobile ? 45 : 0, autoSkip: isMobile, maxTicksLimit: isMobile ? 6 : 11 }, grid: { color: gridClr, drawBorder: false } },
+                            y: { position: 'right', title: { display: !isMobile, text: 'Predios', color: isLight ? '#000' : '#fff', font: { ...font, size: isMobile ? 8 : 13, weight: '700' } }, ticks: { color: isLight ? '#000' : '#fff', font: { ...font, size: isMobile ? 7 : 10, weight: '700' }, maxTicksLimit: isMobile ? 3 : 4, callback: v => v + ' M' }, grid: { color: gridClr, drawBorder: false } },
+                            y1: { position: 'left', title: { display: !isMobile, text: 'Avalúo $/m²', color: isLight ? '#000' : '#fff', font: { ...font, size: isMobile ? 8 : 13, weight: '700' } }, ticks: { color: isLight ? '#000' : '#fff', font: { ...font, size: isMobile ? 7 : 10, weight: '700' }, maxTicksLimit: isMobile ? 3 : 4, callback: v => '$' + v + ' M' }, grid: { drawOnChartArea: false, drawBorder: false } },
                         },
                     },
                 });
@@ -3047,7 +3069,7 @@
             // ── Base de datos para métricas por localidad ─────────────
             const locs = leaves ? getLocsByLeaves(leaves) : [...LOCALIDADES];
             const yrTag = DATA_LOADED ? ` · ${selectedYear}` : '';
-            const clusterLabel = leaves ? `CLUSTER · ${locs.length} LOCALIDAD${locs.length !== 1 ? 'ES' : ''}${yrTag}` : null;
+            const clusterLabel = leaves ? `${locs.length} LOCALIDAD${locs.length !== 1 ? 'ES' : ''}${yrTag}` : null;
 
             const clickBar = (sorted) => (evt, elements) => {
                 if (!elements.length) return;
@@ -3057,7 +3079,7 @@
             // ── Avalúo catastral ──────────────────────────────────────
             if (metric === 'avaluo') {
                 const sorted = [...locs].sort((a, b) => b.avaluo - a.avaluo);
-                const labels = sorted.map(l => shortName(l.name));
+                const labels = sorted.map(l => isMobile ? tinyName(l.name) : shortName(l.name));
                 const avaluos = sorted.map(l => Math.round(l.avaluo / 1000));
                 const predios = sorted.map(l => Math.round(l.predios / 1000));
                 const colors = sorted.map(l => ESTRATO_COLOR[l.estrato] || 'rgba(255,255,255,.4)');
@@ -3093,7 +3115,7 @@
             // ── Área construida ───────────────────────────────────────
             else if (metric === 'area') {
                 const sorted = [...locs].sort((a, b) => b.areaCons - a.areaCons);
-                const labels = sorted.map(l => shortName(l.name));
+                const labels = sorted.map(l => isMobile ? tinyName(l.name) : shortName(l.name));
                 const areas = sorted.map(l => l.areaCons);
 
                 timelineChartInstance = new Chart(ctx, {
@@ -3124,7 +3146,7 @@
             // ── Uso del suelo (barras apiladas) ───────────────────────
             else if (metric === 'uso') {
                 const sorted = [...locs].sort((a, b) => a.residencial - b.residencial);
-                const labels = sorted.map(l => shortName(l.name));
+                const labels = sorted.map(l => isMobile ? tinyName(l.name) : shortName(l.name));
 
                 timelineChartInstance = new Chart(ctx, {
                     type: 'bar',
