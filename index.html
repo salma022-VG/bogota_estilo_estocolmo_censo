@@ -794,8 +794,8 @@
         /* ── Botón centrar mapa ── */
         .center-map-btn {
             --glow-color: #ffee00;
-            --glow-spread-color: rgba(255, 208, 0, 0.45);
-            --btn-color: rgba(10, 30, 50, 0.88);
+            --glow-spread-color: rgba(255, 208, 0, 0.178);
+            --btn-color: rgba(10, 30, 50, 0.329);
             position: fixed;
             bottom: 260px;
             right: 11px;
@@ -844,7 +844,7 @@
             transform: scale(0.96);
         }
         body.light-mode .center-map-btn {
-            --btn-color: rgba(255, 220, 220, 0.92);
+            --btn-color: rgba(255, 0, 0, 0);
             --glow-color: #d14848;
             --glow-spread-color: rgba(69, 135, 163, 0.35);
         }
@@ -3180,9 +3180,9 @@
                             tooltip: tooltipCfg,
                         },
                         scales: {
-                            x: { ...xScale, ticks: { ...xScale.ticks, color: isLight ? '#000' : 'rgba(255,255,255,.9)', font: { ...font, size: isMobile ? 6 : 8, weight: '700' }, maxRotation: isMobile ? 90 : 35, minRotation: isMobile ? 90 : 0 } },
-                            y: { position: 'right', ticks: { color: isLight ? '#000' : 'rgba(255,255,255,.9)', font: { ...font, size: isMobile ? 7 : 8, weight: '700' }, maxTicksLimit: 3, callback: v => '$' + v + 'k' }, grid: { color: gridClr } },
-                            y1: { position: 'left', ticks: { color: isLight ? '#000' : 'rgba(255,255,255,.9)', font: { ...font, size: isMobile ? 7 : 8, weight: '700' }, maxTicksLimit: 3, callback: v => v + 'k' }, grid: { drawOnChartArea: false } },
+                            x: { ...xScale, ticks: { ...xScale.ticks, color: isLight ? '#000' : 'rgba(255,255,255,.9)', font: { ...font, size: isMobile ? 6 : 11, weight: '700' }, maxRotation: isMobile ? 90 : 35, minRotation: isMobile ? 90 : 0 } },
+                            y: { position: 'right', ticks: { color: isLight ? '#000' : 'rgba(255,255,255,.9)', font: { ...font, size: isMobile ? 7 : 11, weight: '700' }, maxTicksLimit: 3, callback: v => '$' + v + 'k' }, grid: { color: gridClr } },
+                            y1: { position: 'left', ticks: { color: isLight ? '#000' : 'rgba(255,255,255,.9)', font: { ...font, size: isMobile ? 7 : 11, weight: '700' }, maxTicksLimit: 3, callback: v => v + 'k' }, grid: { drawOnChartArea: false } },
                         },
                     },
                 });
@@ -3212,8 +3212,8 @@
                             tooltip: tooltipCfg,
                         },
                         scales: {
-                            x: { ...xScale, ticks: { ...xScale.ticks, color: isLight ? '#000' : 'rgba(255,255,255,.9)', font: { ...font, size: isMobile ? 6 : 8, weight: '700' }, maxRotation: isMobile ? 90 : 35, minRotation: isMobile ? 90 : 0 } },
-                            y: { position: 'right', ticks: { color: isLight ? '#000' : 'rgba(255,255,255,.9)', font: { ...font, size: isMobile ? 7 : 8, weight: '700' }, maxTicksLimit: 3, callback: v => Number(v).toLocaleString('es-CO') + ' m²' }, grid: { color: gridClr } },
+                            x: { ...xScale, ticks: { ...xScale.ticks, color: isLight ? '#000' : 'rgba(255,255,255,.9)', font: { ...font, size: isMobile ? 6 : 11, weight: '700' }, maxRotation: isMobile ? 90 : 35, minRotation: isMobile ? 90 : 0 } },
+                            y: { position: 'right', ticks: { color: isLight ? '#000' : 'rgba(255,255,255,.9)', font: { ...font, size: isMobile ? 7 : 11, weight: '700' }, maxTicksLimit: 3, callback: v => Number(v).toLocaleString('es-CO') + ' m²' }, grid: { color: gridClr } },
                         },
                     },
                 });
@@ -3248,8 +3248,8 @@
                             tooltip: { ...tooltipCfg, callbacks: { label: c => ` ${c.dataset.label}: ${c.raw}%` } },
                         },
                         scales: {
-                            x: { ...xScale, stacked: true, ticks: { ...xScale.ticks, color: isLight ? '#000' : 'rgba(255,255,255,.9)', font: { ...font, size: isMobile ? 6 : 8, weight: '700' }, maxRotation: isMobile ? 90 : 35, minRotation: isMobile ? 90 : 0 } },
-                            y: { stacked: true, max: 100, position: 'right', ticks: { color: isLight ? '#000' : 'rgba(255,255,255,.9)', font: { ...font, size: isMobile ? 7 : 8, weight: '700' }, maxTicksLimit: 3, callback: v => v + '%' }, grid: { color: gridClr } },
+                            x: { ...xScale, stacked: true, ticks: { ...xScale.ticks, color: isLight ? '#000' : 'rgba(255,255,255,.9)', font: { ...font, size: isMobile ? 6 : 11, weight: '700' }, maxRotation: isMobile ? 90 : 35, minRotation: isMobile ? 90 : 0 } },
+                            y: { stacked: true, max: 100, position: 'right', ticks: { color: isLight ? '#000' : 'rgba(255,255,255,.9)', font: { ...font, size: isMobile ? 7 : 11, weight: '700' }, maxTicksLimit: 3, callback: v => v + '%' }, grid: { color: gridClr } },
                         },
                     },
                 });
