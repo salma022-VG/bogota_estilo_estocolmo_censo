@@ -1827,7 +1827,7 @@
 
         <!-- Mapa (pantalla completa) -->
         <div id="map"></div>
-        <button class="center-map-btn" onclick="centerMap()" title="Centrar mapa en Bogotá">⊗ Centrar</button>
+        <button class="center-map-btn" onclick="centerMap()" title="Centrar mapa en Bogotá">📌 Centrar</button>
 
         <!-- Panel narrativo (lado izquierdo) -->
         <div class="narrative-panel" id="narrative-panel">
@@ -1843,6 +1843,7 @@
                 <button class="ghost-btn" id="btn-prev">Anterior</button>
                 <button class="ghost-btn" id="btn-next">Siguiente</button>
             </div>
+            <!-- Redireccion a pagina secundaria   -->
             <button class="Documents-btn" id="btn-mas-info"
                 onclick="window.open('https://salma022-vg.github.io/mockup_Boletin_Censo/','_blank')">
                 <span class="folderContainer">
@@ -3275,6 +3276,7 @@
             introVideo.addEventListener('timeupdate', () => {
                 if (introVideo.duration > 0) {
                     progressFill.style.width = `${(introVideo.currentTime / introVideo.duration) * 100}%`;
+                    if (introVideo.currentTime >= introVideo.duration - 2) endIntro();
                 }
             });
 
