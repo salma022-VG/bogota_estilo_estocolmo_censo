@@ -3276,7 +3276,6 @@
             introVideo.addEventListener('timeupdate', () => {
                 if (introVideo.duration > 0) {
                     progressFill.style.width = `${(introVideo.currentTime / introVideo.duration) * 100}%`;
-                    if (introVideo.currentTime >= introVideo.duration - 2) endIntro();
                 }
             });
 
