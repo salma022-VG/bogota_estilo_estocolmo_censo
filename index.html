@@ -220,6 +220,53 @@
             justify-content: center;
         }
 
+        /* ── Minimizar panel narrativo ── */
+        .narrative-min-btn {
+            position: absolute;
+            top: 10px;
+            right: 12px;
+            z-index: 10;
+            width: 28px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: none;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            color: var(--dim);
+            font-size: 15px;
+            line-height: 1;
+            cursor: pointer;
+            transition: color .2s, background .2s;
+        }
+
+        .narrative-min-btn:hover {
+            color: var(--text);
+            background: rgba(128, 128, 128, .18);
+        }
+
+        .narrative-panel.minimized {
+            width: 56px;
+            height: 56px;
+            bottom: auto;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        .narrative-panel.minimized .narrative-content,
+        .narrative-panel.minimized .narrative-buttons,
+        .narrative-panel.minimized .Documents-btn {
+            display: none !important;
+        }
+
+        .narrative-panel.minimized .narrative-min-btn {
+            top: 50%;
+            left: 50%;
+            right: auto;
+            transform: translate(-50%, -50%);
+        }
+
         .narrative-text {
             font-family: var(--serif);
             font-size: 1.3rem;
@@ -470,6 +517,25 @@
             background: var(--timeline-bg);
             border-top: 1px solid var(--border);
             backdrop-filter: blur(3px);
+            transition: height .3s ease;
+        }
+
+        .timeline-min-btn {
+            top: 6px;
+            right: 10px;
+        }
+
+        .timeline-strip.minimized {
+            height: 40px;
+        }
+
+        .timeline-strip.minimized .timeline-chart-container,
+        .timeline-strip.minimized .timeline-stats {
+            display: none;
+        }
+
+        body.tl-minimized .center-map-btn {
+            bottom: 60px;
         }
 
         .timeline-chart-container {
@@ -793,60 +859,51 @@
 
         /* ── Botón centrar mapa ── */
         .center-map-btn {
-            --glow-color: #ffee00;
-            --glow-spread-color: rgba(255, 208, 0, 0.178);
-            --btn-color: rgba(10, 30, 50, 0.329);
             position: fixed;
             bottom: 260px;
             right: 11px;
             z-index: 800;
-            border: 0.18em solid var(--glow-color);
-            padding: 0.3em 0.55em;
-            color: var(--glow-color);
-            font-size: 20px;
-            font-weight: 700;
-            font-family: var(--mono);
-            letter-spacing: .06em;
-            background-color: var(--btn-color);
-            border-radius: 0.6em;
-            outline: none;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            background-color: rgb(161, 255, 20);
+            border-radius: 30px;
+            color: rgb(19, 19, 19);
+            font-weight: 600;
+            border: none;
             cursor: pointer;
-            box-shadow: 0 0 0.6em 0.15em var(--glow-color),
-                0 0 2.5em 0.6em var(--glow-spread-color),
-                inset 0 0 0.5em 0.15em var(--glow-color);
-            text-shadow: 0 0 0.4em var(--glow-color);
-            transition: all 0.25s;
+            box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.116);
+            padding-left: 8px;
+            overflow: hidden;
+            white-space: nowrap;
+            transition: width .5s, background-color .5s, bottom .3s ease;
         }
-        .center-map-btn::after {
-            pointer-events: none;
-            content: "";
-            position: absolute;
-            top: 120%;
-            left: 0;
-            height: 100%;
-            width: 100%;
-            background-color: var(--glow-spread-color);
-            filter: blur(1.5em);
-            opacity: 0.6;
-            transform: perspective(1.5em) rotateX(35deg) scale(1, 0.6);
+        .center-map-btn .svgIcon {
+            height: 25px;
+            flex-shrink: 0;
+            fill: rgb(19, 19, 19);
+            transition-duration: 1.5s;
+        }
+        .center-map-btn .btn-text {
+            opacity: 0;
+            margin-left: 10px;
+            transition: opacity .4s;
         }
         .center-map-btn:hover {
-            color: var(--btn-color);
-            background-color: var(--glow-color);
-            box-shadow: 0 0 0.8em 0.25em var(--glow-color),
-                0 0 3em 1.5em var(--glow-spread-color),
-                inset 0 0 0.5em 0.15em var(--glow-color);
+            width: 110px;
+            background-color: rgb(192, 255, 20);
+        }
+        .center-map-btn:hover .btn-text {
+            opacity: 1;
         }
         .center-map-btn:active {
-            box-shadow: 0 0 0.4em 0.15em var(--glow-color),
-                0 0 1.5em 1em var(--glow-spread-color),
-                inset 0 0 0.35em 0.15em var(--glow-color);
-            transform: scale(0.96);
+            transform: scale(0.97);
         }
-        body.light-mode .center-map-btn {
-            --btn-color: rgba(255, 0, 0, 0);
-            --glow-color: #d14848;
-            --glow-spread-color: rgba(69, 135, 163, 0.35);
+        .center-map-btn:hover .svgIcon {
+            transform: rotate(250deg);
+            transition-duration: 1.5s;
         }
 
         /* ── Modal de Información ── */
@@ -1827,10 +1884,15 @@
 
         <!-- Mapa (pantalla completa) -->
         <div id="map"></div>
-        <button class="center-map-btn" onclick="centerMap()" title="Centrar mapa en Bogotá">📌 Centrar</button>
+        <button class="center-map-btn" onclick="centerMap()" title="Centrar mapa en Bogotá">
+            <svg class="svgIcon" viewBox="0 0 512 512" height="1em" xmlns="http://www.w3.org/2000/svg"><path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zm50.7-186.9L162.4 380.6c-19.4 7.5-38.5-11.6-31-31l55.5-144.3c3.3-8.5 9.9-15.1 18.4-18.4l144.3-55.5c19.4-7.5 38.5 11.6 31 31L325.1 306.7c-3.2 8.5-9.9 15.1-18.4 18.4zM288 256a32 32 0 1 0 -64 0 32 32 0 1 0 64 0z"></path></svg>
+            <span class="btn-text">Centrar</span>
+        </button>
 
         <!-- Panel narrativo (lado izquierdo) -->
         <div class="narrative-panel" id="narrative-panel">
+            <button class="narrative-min-btn" id="narrative-min-btn" onclick="toggleNarrativePanel()"
+                title="Minimizar panel">−</button>
             <div class="narrative-content" id="narrative-content">
                 <p class="narrative-text" id="narrative-text">
                     El censo inmobiliario de Bogotá registra <strong>2,966 mill.</strong> de predios
@@ -1920,6 +1982,8 @@
 
         <!-- Barra de línea de tiempo inferior -->
         <div class="timeline-strip" id="timeline-strip">
+            <button class="narrative-min-btn timeline-min-btn" id="timeline-min-btn" onclick="toggleTimelinePanel()"
+                title="Minimizar panel">−</button>
             <div class="timeline-handle" id="timeline-handle">
                 <div class="handle-bar"></div>
             </div>
@@ -2451,6 +2515,23 @@
             map.flyTo({ center: [v.lng, v.lat], zoom: v.zoom, pitch: v.pitch, bearing: v.bearing, duration: 900, essential: true });
         }
 
+        function toggleNarrativePanel() {
+            const panel = document.getElementById('narrative-panel');
+            const btn = document.getElementById('narrative-min-btn');
+            const min = panel.classList.toggle('minimized');
+            btn.textContent = min ? '❯' : '−';
+            btn.title = min ? 'Expandir panel' : 'Minimizar panel';
+        }
+
+        function toggleTimelinePanel() {
+            const strip = document.getElementById('timeline-strip');
+            const btn = document.getElementById('timeline-min-btn');
+            const min = strip.classList.toggle('minimized');
+            document.body.classList.toggle('tl-minimized', min);
+            btn.textContent = min ? '⌃' : '−';
+            btn.title = min ? 'Expandir panel' : 'Minimizar panel';
+        }
+
         function initMap() {
             const v = STATES[0].view;
             map = new maplibregl.Map({
@@ -2514,9 +2595,7 @@
 
             el.addEventListener('click', (e) => {
                 e.stopPropagation();
-                showLocalidadPopup(loc);
-                showLocalidadCard(loc);
-                map.flyTo({ center: [loc.lng, loc.lat], zoom: 14, duration: 800, essential: true });
+                focusLocalidad(loc);
             });
 
             return el;
@@ -2551,6 +2630,19 @@
             if (v >= 1e12) return '$' + (v / 1e12).toLocaleString('es-CO', { minimumFractionDigits: 1, maximumFractionDigits: 1 }) + ' bill.';
             if (v >= 1e9)  return '$' + (v / 1e9).toLocaleString('es-CO',  { minimumFractionDigits: 1, maximumFractionDigits: 1 }) + ' mil mill.';
             return '$' + Number(v).toLocaleString('es-CO');
+        }
+
+        /** Abre popup + tarjeta y vuela dejando espacio para que la tarjeta quede visible */
+        function focusLocalidad(loc) {
+            showLocalidadPopup(loc);
+            showLocalidadCard(loc);
+            const h = map.getContainer().clientHeight;
+            const strip = document.getElementById('timeline-strip');
+            const stripH = strip ? strip.offsetHeight : 0;
+            // El popup se ancla abajo (crece hacia arriba): bajamos el punto en pantalla
+            // hasta justo encima de la barra inferior para que la tarjeta quepa completa.
+            const offsetY = Math.max(0, (h - stripH - 50) - h / 2);
+            map.flyTo({ center: [loc.lng, loc.lat], zoom: 14, duration: 800, essential: true, offset: [0, offsetY] });
         }
 
         /** Muestra popup enriquecido con imagen y datos del censo */
@@ -2590,7 +2682,7 @@
                 `<span class="popup-uso-label" style="color:#111;opacity:${u.pct > 0 ? 1 : 0.3};">${u.label}</span>`
             ).join('');
 
-            activePopup = new maplibregl.Popup({ offset: 18, closeButton: true, maxWidth: '310px' })
+            activePopup = new maplibregl.Popup({ offset: 18, closeButton: true, maxWidth: '310px', anchor: 'bottom' })
                 .setLngLat([loc.lng, loc.lat])
                 .setHTML(`
                     <div class="popup-img-wrap">
@@ -2662,9 +2754,7 @@
                     if (!e.features?.length) return;
                     const loc = LOCALIDADES.find(l => l.name === e.features[0].properties.name);
                     if (!loc) return;
-                    showLocalidadPopup(loc);
-                    showLocalidadCard(loc);
-                    map.flyTo({ center: [loc.lng, loc.lat], zoom: 14, duration: 800, essential: true });
+                    focusLocalidad(loc);
                 });
                 map.on('mouseenter', 'localidades-icons', () => { map.getCanvas().style.cursor = 'pointer'; });
                 map.on('mouseleave', 'localidades-icons', () => { map.getCanvas().style.cursor = ''; });
@@ -2782,9 +2872,7 @@
                 row.addEventListener('click', () => {
                     const loc = LOCALIDADES.find(l => l.name === row.dataset.loc);
                     if (!loc) return;
-                    showLocalidadPopup(loc);
-                    showLocalidadCard(loc);
-                    map.flyTo({ center: [loc.lng, loc.lat], zoom: 14, duration: 800, essential: true });
+                    focusLocalidad(loc);
                 });
             });
         }
