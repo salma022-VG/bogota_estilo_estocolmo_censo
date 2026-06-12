@@ -522,7 +522,7 @@
 
         .timeline-min-btn {
             top: 6px;
-            right: 10px;
+            right: 300px;
         }
 
         .timeline-strip.minimized {
@@ -1344,6 +1344,10 @@
                 display: none;
             }
 
+            .timeline-min-btn {
+                display: none;
+            }
+
             .timeline-chart-container {
                 padding: 4px 10px 6px 10px;
                 display: flex;
@@ -1414,6 +1418,7 @@
                 max-width: calc(100vw - 24px) !important;
                 max-height: 60vh !important;
                 padding: 10px 14px !important;
+                overflow-y: auto !important;
             }
 
             .popup-img-wrap {
@@ -2636,13 +2641,32 @@
         function focusLocalidad(loc) {
             showLocalidadPopup(loc);
             showLocalidadCard(loc);
-            const h = map.getContainer().clientHeight;
+
+            const mapRect = map.getContainer().getBoundingClientRect();
+            const h = mapRect.height;
+            const isMobile = window.innerWidth <= 1024;
+
+            // Límite inferior visible: panel superpuesto más alto que cubre el fondo
+            // (timeline siempre; en móvil el panel narrativo es una banda inferior).
+            let bottomLimit = h;
             const strip = document.getElementById('timeline-strip');
-            const stripH = strip ? strip.offsetHeight : 0;
-            // El popup se ancla abajo (crece hacia arriba): bajamos el punto en pantalla
-            // hasta justo encima de la barra inferior para que la tarjeta quepa completa.
-            const offsetY = Math.max(0, (h - stripH - 50) - h / 2);
-            map.flyTo({ center: [loc.lng, loc.lat], zoom: 14, duration: 800, essential: true, offset: [0, offsetY] });
+            if (strip) bottomLimit = Math.min(bottomLimit, strip.getBoundingClientRect().top - mapRect.top);
+            if (isMobile) {
+                const narr = document.getElementById('narrative-panel');
+                if (narr && !narr.classList.contains('minimized')) {
+                    bottomLimit = Math.min(bottomLimit, narr.getBoundingClientRect().top - mapRect.top);
+                }
+            }
+
+            // Altura estimada de la tarjeta (en móvil está limitada a 60vh por CSS)
+            const popupH = isMobile ? Math.min(h * .6, 420) : 540;
+            const topSafe = 60; // header + margen
+
+            // Punto lo más abajo posible, pero dejando sitio arriba para la tarjeta completa
+            const targetY = Math.min(bottomLimit - 30, topSafe + popupH);
+            const offsetY = targetY - h / 2;
+            const zoom = isMobile ? 13 : 14;
+            map.flyTo({ center: [loc.lng, loc.lat], zoom, duration: 800, essential: true, offset: [0, offsetY] });
         }
 
         /** Muestra popup enriquecido con imagen y datos del censo */
@@ -2688,7 +2712,7 @@
                     <div class="popup-img-wrap">
                         <img src="${imgSrc}" alt="${loc.name}" loading="lazy">
                         <div class="popup-img-overlay"></div>
-                        <div class="popup-img-estrato" style="color:${color};">${estratoLabel} · ${catLabel}</div>
+                        <div class="popup-img-estrato" style="color:${color};">${catLabel}</div>
                     </div>
                     <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px;">
                         <div class="popup-name" style="border-left:2px solid ${color};padding-left:8px;margin-bottom:0;">${loc.name}</div>
@@ -2824,7 +2848,7 @@
                     <button onclick="closeClusterCard()" style="background:none;border:none;color:${dimColor};cursor:pointer;font-size:15px;line-height:1;padding:0;" title="Cerrar">×</button>
                 </div>
                 <div class="stat-row" style="margin-bottom:2px;">
-                    <span style="font-family:var(--mono);font-size:.6rem;font-weight:700;color:${estratoColor};letter-spacing:.07em;">ESTRATO ${domEstrato}${n > 1 ? ' (dom.)' : ''}</span>
+                    <span></span>
                     <span style="font-family:var(--mono);font-size:.58rem;font-weight:700;color:${dimColor};letter-spacing:.06em;">AÑO ${selectedYear}</span>
                 </div>
                 <div class="stat-row"><span class="stat-pct up">${Number(totalCensados).toLocaleString('es-CO')}</span><span class="stat-label">predios censados</span></div>
