@@ -475,6 +475,14 @@
             box-shadow: 0 0 12px rgba(29, 140, 248, .3), 0 0 12px rgba(226, 54, 112, .2);
         }
 
+        /* Chart.js legend labels */
+        .chartjs-legend li,
+        .chartjs-legend span,
+        canvas + .chartjs-legend li,
+        canvas + .chartjs-legend span {
+            color: #ffffff !important;
+        }
+
         /* ── Puntos de Leyenda de Cluster ── */
         .legend-clusters {
             display: flex;
@@ -567,33 +575,293 @@
             top: 5px;
             left: 40px;
             display: flex;
-            gap: 5px;
+            align-items: center;
+            gap: 4px;
             z-index: 10;
+            flex-wrap: wrap;
         }
 
         .chart-pill {
-            padding: 2px 9px;
-            border: 1px solid rgba(255, 255, 255, .12);
+            padding: 4px 10px;
+            border: 1px solid rgba(255, 255, 255, .25);
             background: transparent;
-            color: rgba(255, 255, 255, .35);
+            color: #ffffff;
             font-family: var(--mono);
-            font-size: .52rem;
-            font-weight: 400;
-            letter-spacing: .1em;
+            font-size: 0.6rem;
+            font-weight: 500;
+            letter-spacing: 0.04em;
             text-transform: uppercase;
+            cursor: pointer;
+            transition: all .2s;
+            line-height: 1;
+            white-space: nowrap;
+        }
+
+        .chart-pill:hover {
+            border-color: rgba(255, 255, 255, .5);
+            color: #ffffff;
+        }
+
+        .chart-pill.active {
+            border-color: #FEB400;
+            color: #FEB400;
+            background: rgba(254, 180, 0, .12);
+        }
+
+        .locality-filter-container {
+            display: flex;
+            align-items: center;
+            gap: 3px;
+            padding: 2px 6px;
+            margin: 0;
+            background: rgba(254, 180, 0, .12);
+            border: 1px solid rgba(254, 180, 0, .6);
+            border-radius: 3px;
+            box-shadow: none;
+        }
+
+        .usos-suelo-filter-container {
+            display: flex;
+            align-items: center;
+            gap: 3px;
+            padding: 2px 6px;
+            margin: 0;
+            background: rgba(254, 180, 0, .12);
+            border: 1px solid rgba(254, 180, 0, .6);
+            border-radius: 3px;
+            box-shadow: none;
+        }
+
+        .area-filter-container {
+            display: flex;
+            align-items: center;
+            gap: 3px;
+            padding: 2px 6px;
+            margin: 0;
+            background: rgba(254, 180, 0, .12);
+            border: 1px solid rgba(254, 180, 0, .6);
+            border-radius: 3px;
+            box-shadow: none;
+        }
+
+        .locality-selector {
+            padding: 2px 6px;
+            border: 1px solid rgba(254, 180, 0, .5);
+            background: rgba(254, 180, 0, .08);
+            color: rgba(0, 0, 0, .85);
+            font-family: var(--mono);
+            font-size: 0.55rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all .2s;
+            min-width: 120px;
+            border-radius: 2px;
+            line-height: 1.2;
+        }
+
+        .locality-selector:hover {
+            border-color: rgba(254, 180, 0, .8);
+            background: rgba(254, 180, 0, .15);
+            color: rgba(0, 0, 0, 1);
+        }
+
+        .locality-selector:focus {
+            outline: none;
+            border-color: rgba(254, 180, 0, 1);
+            background: rgba(254, 180, 0, .2);
+            color: rgba(0, 0, 0, 1);
+        }
+
+        body:not(.light-mode) .locality-selector {
+            color: #000;
+            background-color: #fff;
+        }
+
+        body:not(.light-mode) .locality-selector:hover {
+            color: #000;
+        }
+
+        body:not(.light-mode) .locality-selector:focus {
+            color: #000;
+        }
+
+        body:not(.light-mode) .locality-selector option {
+            color: #000;
+            background-color: #fff;
+        }
+
+        body:not(.light-mode) .filter-label {
+            color: #fff !important;
+        }
+
+        .chart-info-btn {
+            position: absolute;
+            top: 6px;
+            right: 330px;
+            width: 28px;
+            height: 28px;
+            border-radius: 3px;
+            border: 1.5px solid rgba(0, 0, 0, .4);
+            background: rgba(0, 0, 0, .08);
+            color: #000;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all .2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+        }
+
+        .chart-info-btn:hover {
+            background: rgba(0, 0, 0, .15);
+            border-color: rgba(0, 0, 0, .6);
+            color: #000;
+        }
+
+        .chart-info-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, .5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            animation: fadeIn .2s;
+        }
+
+        .chart-info-modal-content {
+            background: white;
+            border-radius: 8px;
+            max-width: 700px;
+            max-height: 80vh;
+            overflow-y: auto;
+            padding: 24px;
+            position: relative;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, .2);
+        }
+
+        .chart-info-close {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: none;
+            border: none;
+            font-size: 28px;
+            cursor: pointer;
+            color: rgba(0, 0, 0, .6);
+            transition: color .2s;
+        }
+
+        .chart-info-close:hover {
+            color: rgba(0, 0, 0, .9);
+        }
+
+        .chart-info-modal-content h2 {
+            margin: 0 0 20px 0;
+            font-size: 1.5rem;
+            color: rgba(0, 0, 0, .9);
+        }
+
+        .chart-info-tab {
+            display: none;
+        }
+
+        .chart-info-tab.active {
+            display: block;
+        }
+
+        .chart-info-tab h3 {
+            margin: 0 0 12px 0;
+            font-size: 1.1rem;
+            color: rgba(0, 0, 0, .85);
+        }
+
+        .chart-info-tab p {
+            margin: 0 0 10px 0;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            color: rgba(0, 0, 0, .75);
+        }
+
+        .chart-info-tab p strong {
+            color: rgba(0, 0, 0, .9);
+        }
+
+        .chart-info-tabs-nav {
+            display: flex;
+            gap: 8px;
+            margin-top: 20px;
+            padding-top: 16px;
+            border-top: 1px solid rgba(0, 0, 0, .1);
+            flex-wrap: wrap;
+        }
+
+        .chart-info-tab-btn {
+            padding: 8px 12px;
+            border: 1px solid rgba(0, 0, 0, .2);
+            background: rgba(0, 0, 0, .04);
+            color: rgba(0, 0, 0, .6);
+            font-size: 0.85rem;
+            font-weight: 500;
+            border-radius: 4px;
             cursor: pointer;
             transition: all .2s;
         }
 
-        .chart-pill:hover {
-            border-color: rgba(255, 255, 255, .4);
-            color: rgba(255, 255, 255, .75);
+        .chart-info-tab-btn:hover {
+            background: rgba(0, 0, 0, .08);
+            border-color: rgba(0, 0, 0, .4);
         }
 
-        .chart-pill.active {
-            border-color: var(--cyan);
-            color: var(--cyan);
-            background: rgba(0, 229, 255, .06);
+        .chart-info-tab-btn.active {
+            background: rgba(29, 140, 248, .15);
+            border-color: rgba(29, 140, 248, .5);
+            color: rgba(29, 140, 248, 1);
+        }
+
+        .locality-info {
+            padding: 16px 18px;
+            border-top: 2px solid rgba(254, 180, 0, .3);
+            background: linear-gradient(135deg, rgba(254, 180, 0, .05) 0%, rgba(227, 25, 47, .03) 100%);
+            overflow-y: auto;
+            max-height: 200px;
+            scrollbar-width: thin;
+        }
+
+        .locality-info table {
+            width: 100%;
+            font-family: var(--mono);
+            font-size: 0.75rem;
+            border-collapse: collapse;
+        }
+
+        .locality-info th, .locality-info td {
+            padding: 6px 8px;
+            text-align: right;
+            border-bottom: 1px solid rgba(255, 255, 255, .08);
+        }
+
+        .locality-info th {
+            text-align: left;
+            color: rgba(254, 180, 0, .85);
+            font-weight: 700;
+            background: rgba(254, 180, 0, .08);
+            padding: 8px;
+        }
+
+        .locality-info td:first-child {
+            text-align: left;
+            color: rgba(255, 255, 255, .9);
+            font-weight: 500;
+        }
+
+        .locality-info td {
+            color: rgba(255, 255, 255, .75);
         }
 
         .stat-row {
@@ -763,7 +1031,22 @@
             font-family: var(--mono);
             font-size: .78rem;
             font-weight: 700;
-            color: #111;
+        }
+
+        .popup-uso-label-res {
+            color: #FEB400 !important;
+        }
+
+        .popup-uso-label-com {
+            color: #E3192F !important;
+        }
+
+        .popup-uso-label-ind {
+            color: #888888 !important;
+        }
+
+        .popup-uso-label-dot {
+            color: #0077aa !important;
         }
 
         /* ── Marcadores de localidad ── */
@@ -868,7 +1151,7 @@
             display: flex;
             align-items: center;
             justify-content: flex-start;
-            background-color: rgb(161, 255, 20);
+            background: linear-gradient(135deg, #E3192F 0%, #FEB400 100%);
             border-radius: 30px;
             color: rgb(19, 19, 19);
             font-weight: 600;
@@ -878,7 +1161,7 @@
             padding-left: 8px;
             overflow: hidden;
             white-space: nowrap;
-            transition: width .5s, background-color .5s, bottom .3s ease;
+            transition: width .5s, background .5s, bottom .3s ease;
         }
         .center-map-btn .svgIcon {
             height: 25px;
@@ -893,7 +1176,7 @@
         }
         .center-map-btn:hover {
             width: 110px;
-            background-color: rgb(192, 255, 20);
+            background: linear-gradient(135deg, #ff2d78 0%, #FEB400 100%);
         }
         .center-map-btn:hover .btn-text {
             opacity: 1;
@@ -922,27 +1205,60 @@
         }
 
         .info-modal-content {
-            max-width: 420px;
-            padding: 36px;
-            border: 1px solid var(--border);
-            background: var(--modal-bg);
+            width: 340px;
+            background: #1a1a1a;
+            border-radius: 10px;
+            padding: 28px;
             position: relative;
+            box-shadow: inset 0 -3em 3em rgba(0,0,0,0.3),
+                        0 0 0 2px rgb(80, 80, 80),
+                        0.3em 0.3em 1em rgba(0,0,0,0.5);
+            transition: border-radius 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
         .info-modal-content h2 {
             font-family: var(--sans);
-            font-size: 1.5rem;
+            font-size: 1.3rem;
             margin-bottom: 14px;
-            font-weight: 400;
+            font-weight: 600;
+            color: #fff;
         }
 
         .info-modal-content p {
             font-family: var(--sans);
             font-size: .75rem;
-            font-weight: 300;
-            line-height: 1.7;
-            color: var(--dim);
+            font-weight: 400;
+            line-height: 1.6;
+            color: #ccc;
             margin-bottom: 8px;
+        }
+
+        body.light-mode .info-modal-content {
+            background: white;
+            box-shadow: inset 0 -3em 3em rgba(0,0,0,0.1),
+                        0 0 0 2px rgb(190, 190, 190),
+                        0.3em 0.3em 1em rgba(0,0,0,0.3);
+        }
+
+        body.light-mode .info-modal-content h2 {
+            color: #000;
+        }
+
+        body.light-mode .info-modal-content p {
+            color: #333;
+        }
+
+        .info-modal-content .card__border,
+        .info-modal-content .card_title__container,
+        .info-modal-content .card_title,
+        .info-modal-content .card_paragraph,
+        .info-modal-content .line,
+        .info-modal-content .card__list,
+        .info-modal-content .card__list_item,
+        .info-modal-content .check,
+        .info-modal-content .check_svg,
+        .info-modal-content .list_text {
+            display: none;
         }
 
         .info-tech {
@@ -1684,8 +2000,14 @@
         body:not(.light-mode) .legend-label,
         body:not(.light-mode) .stat-pct,
         body:not(.light-mode) .stat-label,
-        body:not(.light-mode) .info-modal-content h2,
-        body:not(.light-mode) .info-modal-content p,
+        body:not(.light-mode) .info-modal-content h2 {
+            color: #fff !important;
+        }
+
+        body:not(.light-mode) .info-modal-content p {
+            color: #ccc !important;
+        }
+
         body:not(.light-mode) .info-tech {
             color: #ffffff !important;
         }
@@ -1737,7 +2059,7 @@
         }
 
         body.light-mode .popup-uso-label {
-            color: #111 !important;
+            color: inherit;
         }
 
         body.light-mode .popup-name {
@@ -1765,19 +2087,34 @@
         }
 
         body.light-mode .chart-pill {
-            color: rgba(0, 0, 0, .4) !important;
-            border-color: rgba(0, 0, 0, .15) !important;
+            color: #333 !important;
+            border-color: rgba(0, 0, 0, .2) !important;
         }
 
         body.light-mode .chart-pill:hover {
-            color: rgba(0, 0, 0, .75) !important;
-            border-color: rgba(0, 0, 0, .4) !important;
+            color: #000 !important;
+            border-color: rgba(0, 0, 0, .5) !important;
         }
 
         body.light-mode .chart-pill.active {
-            color: var(--cyan) !important;
-            border-color: var(--cyan) !important;
+            color: #0077aa !important;
+            border-color: #0077aa !important;
             background: rgba(0, 119, 170, .07) !important;
+        }
+
+        body:not(.light-mode) .chart-pill {
+            color: rgba(255, 255, 255, .55) !important;
+            border-color: rgba(255, 255, 255, .15) !important;
+        }
+
+        body:not(.light-mode) .chart-pill:hover {
+            color: rgba(255, 255, 255, .75) !important;
+            border-color: rgba(255, 255, 255, .4) !important;
+        }
+
+        body:not(.light-mode) .chart-pill.active {
+            color: #FEB400 !important;
+            border-color: #FEB400 !important;
         }
 
         body.light-mode .ghost-btn {
@@ -1900,7 +2237,7 @@
                 title="Minimizar panel">−</button>
             <div class="narrative-content" id="narrative-content">
                 <p class="narrative-text" id="narrative-text">
-                    El censo inmobiliario de Bogotá registra <strong>2,966 mill.</strong> de predios
+                    El censo inmobiliario de Bogotá registra <strong>2,929 mill.</strong> de predios
                     en las 20 localidades. El avalúo catastral total para 2026 alcanza los
                     <strong class="magenta">$945 billones de pesos</strong> — evidenciando la revalorización
                     acelerada del suelo bogotano en la última década.
@@ -1989,19 +2326,78 @@
         <div class="timeline-strip" id="timeline-strip">
             <button class="narrative-min-btn timeline-min-btn" id="timeline-min-btn" onclick="toggleTimelinePanel()"
                 title="Minimizar panel">−</button>
+            <button id="chart-info-btn" class="chart-info-btn" title="Información sobre las gráficas">ℹ</button>
             <div class="timeline-handle" id="timeline-handle">
                 <div class="handle-bar"></div>
             </div>
             <div class="timeline-chart-container">
                 <div class="chart-controls" id="chart-controls">
-                    <button class="chart-pill active" data-metric="historico">Histórico</button>
-                    <button class="chart-pill" data-metric="avaluo">Avalúo</button>
+                    <button class="chart-pill active" data-metric="historico">Predios</button>
+                    <button class="chart-pill" data-metric="avaluo">Valor catastral</button>
                     <button class="chart-pill" data-metric="area">Área</button>
                     <button class="chart-pill" data-metric="uso">Uso suelo</button>
                     <div class="year-selector" id="year-selector" style="display:none;">
                         <input type="range" id="year-range" min="2016" max="2026" value="2026" step="1"
                             class="year-range">
                         <span class="year-label" id="year-label">2026</span>
+                    </div>
+                    <div class="locality-filter-container" style="display:none;">
+                        <label for="locality-selector" style="color: rgba(0, 0, 0, .85); font-size: 0.65rem; font-family: var(--mono); margin-right: 6px; font-weight: 700;" class="filter-label">FILTRAR:</label>
+                        <select id="locality-selector" class="locality-selector">
+                            <option value="">Bogotá...</option>
+                        </select>
+                    </div>
+                    <div class="usos-suelo-filter-container" style="display:none;">
+                        <label for="usos-suelo-selector" style="color: rgba(0, 0, 0, .85); font-size: 0.65rem; font-family: var(--mono); margin-right: 6px; font-weight: 700;" class="filter-label">LOCALIDAD:</label>
+                        <select id="usos-suelo-selector" class="locality-selector">
+                            <option value="Bogotá">Bogotá</option>
+                            <option value="Usaquén">Usaquén</option>
+                            <option value="Chapinero">Chapinero</option>
+                            <option value="Santa Fe">Santa Fe</option>
+                            <option value="San Cristóbal">San Cristóbal</option>
+                            <option value="Usme">Usme</option>
+                            <option value="Tunjuelito">Tunjuelito</option>
+                            <option value="Bosa">Bosa</option>
+                            <option value="Kennedy">Kennedy</option>
+                            <option value="Fontibón">Fontibón</option>
+                            <option value="Engativá">Engativá</option>
+                            <option value="Suba">Suba</option>
+                            <option value="Barrios Unidos">Barrios Unidos</option>
+                            <option value="Teusaquillo">Teusaquillo</option>
+                            <option value="Los Mártires">Los Mártires</option>
+                            <option value="Antonio Nariño">Antonio Nariño</option>
+                            <option value="Puente Aranda">Puente Aranda</option>
+                            <option value="La Candelaria">La Candelaria</option>
+                            <option value="Rafael Uribe Uribe">Rafael Uribe Uribe</option>
+                            <option value="Ciudad Bolívar">Ciudad Bolívar</option>
+                            <option value="Sumapaz">Sumapaz</option>
+                        </select>
+                    </div>
+                    <div class="area-filter-container" style="display:none;">
+                        <label for="area-selector" style="color: rgba(0, 0, 0, .85); font-size: 0.65rem; font-family: var(--mono); margin-right: 6px; font-weight: 700;" class="filter-label">LOCALIDAD:</label>
+                        <select id="area-selector" class="locality-selector">
+                            <option value="Bogotá">Bogotá (Total)</option>
+                            <option value="Usaquén">Usaquén</option>
+                            <option value="Chapinero">Chapinero</option>
+                            <option value="Santa Fe">Santa Fe</option>
+                            <option value="San Cristóbal">San Cristóbal</option>
+                            <option value="Usme">Usme</option>
+                            <option value="Tunjuelito">Tunjuelito</option>
+                            <option value="Bosa">Bosa</option>
+                            <option value="Kennedy">Kennedy</option>
+                            <option value="Fontibón">Fontibón</option>
+                            <option value="Engativá">Engativá</option>
+                            <option value="Suba">Suba</option>
+                            <option value="Barrios Unidos">Barrios Unidos</option>
+                            <option value="Teusaquillo">Teusaquillo</option>
+                            <option value="Los Mártires">Los Mártires</option>
+                            <option value="Antonio Nariño">Antonio Nariño</option>
+                            <option value="Puente Aranda">Puente Aranda</option>
+                            <option value="La Candelaria">La Candelaria</option>
+                            <option value="Rafael Uribe Uribe">Rafael Uribe Uribe</option>
+                            <option value="Ciudad Bolívar">Ciudad Bolívar</option>
+                            <option value="Sumapaz">Sumapaz</option>
+                        </select>
                     </div>
                 </div>
                 <canvas id="timelineChart"></canvas>
@@ -2013,31 +2409,67 @@
 
     </div>
 
+    <!-- Modal de información de gráficas -->
+    <div class="chart-info-modal" id="chart-info-modal" style="display:none;">
+        <div class="chart-info-modal-content">
+            <button class="chart-info-close" id="chart-info-close">&times;</button>
+            <h2>Explicación de gráficas</h2>
+            <div class="chart-info-tabs">
+                <div class="chart-info-tab active" data-tab="predios">
+                    <h3>📊 PREDIOS</h3>
+                    <p><strong>Representa:</strong> El número total de propiedades (casas, apartamentos, locales, terrenos) registradas en el catastro de cada localidad de Bogotá en 2026.</p>
+                    <p><strong>Qué ves:</strong> Barras verticales ordenadas de mayor a menor. Cada barra = una localidad. La altura de la barra = cantidad de predios.</p>
+                    <p><strong>Para qué sirve:</strong> Identificar cuáles localidades tienen más densidad de propiedades registradas. Ayuda a entender el tamaño y desarrollo inmobiliario de cada zona.</p>
+                    <p><strong>Ejemplo:</strong> Si Suba tiene 310.000 predios y Sumapaz tiene pocos miles, significa que Suba es mucho más urbanizada y desarrollada.</p>
+                </div>
+                <div class="chart-info-tab" data-tab="avaluo">
+                    <h3>💰 AVALÚO CATASTRAL</h3>
+                    <p><strong>Representa:</strong> El cambio porcentual año a año del valor total de los predios en cada localidad, desde 2016 hasta 2026. Muestra si los valores catastrales suben o bajan.</p>
+                    <p><strong>Qué ves:</strong> Una línea con puntos que sube y baja. Si sube = los predios ganaron valor ese año. Si baja = los predios perdieron valor.</p>
+                    <p><strong>Para qué sirve:</strong> Entender la valorización inmobiliaria de cada zona a lo largo del tiempo. Líneas hacia arriba = revalorización (buenos para inversores). Líneas hacia abajo = devalorización.</p>
+                    <p><strong>Ejemplo:</strong> Si Usaquén muestra +5% en 2016, los predios en esa localidad se revalorizaron 5% ese año. Si muestra -3% en otro año, bajaron 3%.</p>
+                    <p><strong>Período:</strong> 2016-2026 (10 años de historia catastral).</p>
+                </div>
+                <div class="chart-info-tab" data-tab="area">
+                    <h3>📐 ÁREA CONSTRUIDA</h3>
+                    <p><strong>Representa:</strong> El total de metros cuadrados (m²) de construcción en cada localidad en 2026. Suma todo lo construido: casas, edificios, locales, fábricas, etc.</p>
+                    <p><strong>Qué ves:</strong> Barras verticales ordenadas de mayor a menor. Cada barra = una localidad. La altura = cantidad total de m² construidos.</p>
+                    <p><strong>Para qué sirve:</strong> Medir el nivel de urbanización y desarrollo de cada zona. Más construcción = más desarrollada. Menos construcción = más rural o menos poblada.</p>
+                    <p><strong>Ejemplo:</strong> Si Suba muestra 28 millones de m² y Sumapaz solo algunos miles, significa que Suba es mucho más urbanizada con más edificios y viviendas.</p>
+                </div>
+                <div class="chart-info-tab" data-tab="uso">
+                    <h3>🏘️ USO DEL SUELO</h3>
+                    <p><strong>Representa:</strong> Cómo están clasificados los predios de una localidad según su función principal: vivienda, comercio, industria, servicios públicos, etc.</p>
+                    <p><strong>Qué ves:</strong> Barras horizontales apiladas en colores. Cada color = un tipo de uso (Residencial amarillo, Comercial rojo, Industrial gris, Dotacional azul).</p>
+                    <p><strong>Para qué sirve:</strong> Entender la función de cada localidad. Dónde predomina la vivienda, dónde el comercio, dónde la industria. Útil para inversores y planificadores urbanos.</p>
+                    <p><strong>Ejemplo:</strong> Chapinero es principalmente residencial (barra amarilla larga). La Candelaria tiene más comercio (barra roja larga). Diferentes localidades, diferentes funciones.</p>
+                    <p><strong>Cómo usarlo:</strong> Selecciona una localidad en el filtro para ver su distribución específica de usos.</p>
+                </div>
+            </div>
+            <div class="chart-info-tabs-nav">
+                <button class="chart-info-tab-btn active" data-tab="predios">Predios</button>
+                <button class="chart-info-tab-btn" data-tab="avaluo">Valor catastral</button>
+                <button class="chart-info-tab-btn" data-tab="area">Área</button>
+                <button class="chart-info-tab-btn" data-tab="uso">Uso Suelo</button>
+            </div>
+        </div>
+    </div>
+
     <!-- Modal de información -->
     <div class="info-modal" id="info-modal">
         <div class="info-modal-content">
             <button class="info-close" id="info-close">&times;</button>
             <h2>Sobre este proyecto</h2>
-            <p>Visualización interactiva del catastro inmobiliario de Bogotá D.C., construida con datos oficiales del
-                Catastro Bogotá. Cubre <strong>10 años de historia catastral</strong> (2016–2026), con registros de
-                predios, avalúos, áreas construidas y usos del suelo en las <strong>20 localidades</strong> de la
-                ciudad.
-            </p>
+            <p>Visualización interactiva del catastro inmobiliario de Bogotá D.C., construida con datos oficiales del Catastro Bogotá. Cubre <strong>10 años de historia catastral</strong> (2016–2026), con registros de predios, avalúos, áreas construidas y usos del suelo en las <strong>20 localidades</strong> de la ciudad.</p>
             <hr style="border-color:var(--border);margin:14px 0;">
-            <p style="font-size:0.78rem;line-height:1.7;color:var(--dim);">
-                <strong style="color:var(--text);display:block;margin-bottom:6px;">Datos en cifras (2026)</strong>
-                <span style="display:flex;justify-content:space-between;margin-bottom:3px;"><span>Predios
-                        registrados</span><strong style="color:var(--cyan);">2.966.000</strong></span>
-                <span style="display:flex;justify-content:space-between;margin-bottom:3px;"><span>Avalúo catastral
-                        total</span><strong style="color:var(--cyan);">$945,2 billones COP</strong></span>
-                <span style="display:flex;justify-content:space-between;margin-bottom:3px;"><span>Área construida
-                        total</span><strong style="color:var(--cyan);">312,9 mill m²</strong></span>
-                <span style="display:flex;justify-content:space-between;margin-bottom:3px;"><span>Crecimiento predios
-                        2016–2026</span><strong style="color:var(--mag);">+19,5 %</strong></span>
-                <span style="display:flex;justify-content:space-between;margin-bottom:3px;"><span>Usos del suelo
-                        clasificados</span><strong style="color:var(--text);">10</strong></span>
-                <span style="display:flex;justify-content:space-between;"><span>Fuente</span><strong
-                        style="color:var(--text);">Catastro Distrital de Bogotá</strong></span>
+            <p style="font-size:0.78rem;line-height:1.7;color:#ccc;">
+                <strong style="color:#fff;display:block;margin-bottom:6px;font-weight:700;">Datos en cifras (2026)</strong>
+                <span style="display:flex;justify-content:space-between;margin-bottom:3px;color:#ccc;"><span>Predios registrados</span><strong style="color:#4dd0e1;font-weight:600;">2.929.879</strong></span>
+                <span style="display:flex;justify-content:space-between;margin-bottom:3px;color:#ccc;"><span>Avalúo catastral total</span><strong style="color:#4dd0e1;font-weight:600;">$945,2 billones COP</strong></span>
+                <span style="display:flex;justify-content:space-between;margin-bottom:3px;color:#ccc;"><span>Área construida total</span><strong style="color:#4dd0e1;font-weight:600;">312,9 mill m²</strong></span>
+                <span style="display:flex;justify-content:space-between;margin-bottom:3px;color:#ccc;"><span>Crecimiento predios 2016–2026</span><strong style="color:#ff69b4;font-weight:600;">+19,5 %</strong></span>
+                <span style="display:flex;justify-content:space-between;margin-bottom:3px;color:#ccc;"><span>Usos del suelo clasificados</span><strong style="color:#fff;font-weight:600;">10</strong></span>
+                <span style="display:flex;justify-content:space-between;color:#ccc;"><span>Fuente</span><strong style="color:#fff;font-weight:600;">Catastro Distrital de Bogotá</strong></span>
             </p>
             <p class="info-tech">Arcgis · Chart.js · Datos 2016–2026</p>
         </div>
@@ -2292,6 +2724,60 @@
 
         let selectedYear = 2026;
 
+        // Localidades con desglose urbano/rural por año
+        let LOCALIDADES_URBANO_RURAL = {};
+
+        // Calcula totales de Urbano/Rural sumando todas las localidades
+        function calcularTotalesUrbanoRural() {
+            const HIST_YEARS = [2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025, 2026];
+            const totales = { urbano: {}, rural: {} };
+
+            HIST_YEARS.forEach(y => {
+                totales.urbano[y] = 0;
+                totales.rural[y] = 0;
+            });
+
+            Object.values(LOCALIDADES_URBANO_RURAL).forEach(loc => {
+                HIST_YEARS.forEach(y => {
+                    totales.urbano[y] += loc.urbano[y] || 0;
+                    totales.rural[y] += loc.rural[y] || 0;
+                });
+            });
+
+            return totales;
+        }
+
+        function mostrarInfoLocalidad(nombre) {
+            const HIST_YEARS = [2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025, 2026];
+
+            if (!nombre) {
+                renderChart('historico', activeClusterLeaves);
+                return;
+            }
+
+            const loc = LOCALIDADES_URBANO_RURAL[nombre];
+            if (!loc) {
+                renderChart('historico', activeClusterLeaves);
+                return;
+            }
+
+            // Actualizar gráfico con datos de la localidad seleccionada
+            const urbanoData = HIST_YEARS.map(y => loc.urbano[y] ? loc.urbano[y] / 1000 : null);
+            const ruralData = HIST_YEARS.map(y => loc.rural[y] ? loc.rural[y] / 1000 : null);
+
+            if (timelineChartInstance) {
+                timelineChartInstance.data.datasets[0].data = urbanoData;
+                timelineChartInstance.data.datasets[1].data = ruralData;
+                timelineChartInstance.options.plugins.title.text = `${nombre.toUpperCase()} · 2016 – 2026`;
+                timelineChartInstance.update();
+            }
+        }
+
+        function agregarLocalidadUrbanoRural(nombre, urbano, rural) {
+            LOCALIDADES_URBANO_RURAL[nombre] = { urbano, rural };
+            renderChart('historico', activeClusterLeaves);
+        }
+
         function updateLocDataForYear(year) {
             if (!DATA_LOADED) return;
             const byLoc = DATA_BY_YEAR[year] || {};
@@ -2512,8 +2998,6 @@
             });
         }
 
-        const localidadMarkers = [];
-
         function centerMap() {
             if (!map) return;
             const v = STATES[0].view;
@@ -2570,42 +3054,6 @@
             5: '#FEB400', 6: '#FEB400',
         };
 
-        /** Crea el elemento DOM para el marcador de una localidad con imagen */
-        function createLocalidadMarkerEl(loc) {
-            const color = ESTRATO_COLORS_MAP[loc.estrato] || '#1d8cf8';
-            const imgSrc = LOC_IMG[loc.name] ?? 'Localidades/Usaquen.png';
-            const shortLabel = loc.name.split(' ')[0];
-
-            const el = document.createElement('div');
-            el.className = 'loc-marker';
-
-            const dot = document.createElement('div');
-            dot.className = 'loc-marker-dot';
-            dot.style.borderColor = color;
-            dot.style.boxShadow = `0 0 10px ${color}99, 0 0 20px ${color}44`;
-
-            const img = document.createElement('img');
-            img.className = 'loc-marker-img';
-            img.src = imgSrc;
-            img.alt = loc.name;
-            img.loading = 'lazy';
-            dot.appendChild(img);
-
-            const label = document.createElement('div');
-            label.className = 'loc-marker-label';
-            label.textContent = shortLabel;
-
-            el.appendChild(dot);
-            el.appendChild(label);
-
-            el.addEventListener('click', (e) => {
-                e.stopPropagation();
-                focusLocalidad(loc);
-            });
-
-            return el;
-        }
-
         /** Imágenes reales de cada localidad */
         const LOC_IMG = {
             'Usaquén': 'Localidades/Usaquen.png',
@@ -2637,10 +3085,48 @@
             return '$' + Number(v).toLocaleString('es-CO');
         }
 
+        function showUsoDelSueloInfo() {
+            const isLight = document.body.classList.contains('light-mode');
+            const modal = document.createElement('div');
+            modal.style.cssText = `position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.6);display:flex;align-items:center;justify-content:center;z-index:9999;`;
+            modal.innerHTML = `
+                <div style="background:${isLight ? '#fff' : '#000'};border:1px solid rgba(29,140,248,0.35);border-radius:4px;padding:20px;max-width:400px;max-height:80vh;overflow-y:auto;box-shadow:0 4px 12px rgba(0,0,0,0.5);">
+                    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
+                        <h3 style="margin:0;color:${isLight ? '#000' : '#fff'};font-size:0.9rem;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;">Clasificación de usos del suelo</h3>
+                        <button onclick="this.closest('div').parentElement.parentElement.remove()" style="background:transparent;border:none;color:${isLight ? '#666' : '#999'};font-size:1.4rem;cursor:pointer;padding:0;width:24px;height:24px;display:flex;align-items:center;justify-content:center;">&times;</button>
+                    </div>
+                    <hr style="border:none;border-top:1px solid rgba(255,255,255,0.1);margin:10px 0;">
+                    <div style="color:${isLight ? '#333' : '#ccc'};font-size:0.8rem;line-height:1.8;">
+                        <div style="margin-bottom:10px;">
+                            <span style="color:#FEB400;font-weight:700;">Res.</span> Residencial — vivienda unifamiliar y multifamiliar
+                        </div>
+                        <div style="margin-bottom:10px;">
+                            <span style="color:#E3192F;font-weight:700;">Com.</span> Comercial — retail, oficinas, servicios y negocios
+                        </div>
+                        <div style="margin-bottom:10px;">
+                            <span style="color:#888888;font-weight:700;">Ind.</span> Industrial — manufactura, almacenes y logística
+                        </div>
+                        <div>
+                            <span style="color:#0077aa;font-weight:700;">Dot.</span> Dotacional — educación, salud, administración pública y equipamientos
+                        </div>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(modal);
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) modal.remove();
+            });
+        }
+
         /** Abre popup + tarjeta y vuela dejando espacio para que la tarjeta quede visible */
         function focusLocalidad(loc) {
             showLocalidadPopup(loc);
             showLocalidadCard(loc);
+
+            // Actualizar gráficas para mostrar datos de esta localidad
+            activeClusterLeaves = [{ properties: loc }];
+            renderChart(chartMetric, activeClusterLeaves);
+            clusterCardActive = true;
 
             const mapRect = map.getContainer().getBoundingClientRect();
             const h = mapRect.height;
@@ -2693,17 +3179,17 @@
             const yearLabel = `Datos ${selectedYear}`;
 
             const usoBars = [
-                { label: `Res. ${loc.residencial}%`, pct: loc.residencial, color: '#FEB400' },
-                { label: `Com. ${loc.comercial}%`, pct: loc.comercial, color: '#E3192F' },
-                { label: `Ind. ${loc.industrial}%`, pct: loc.industrial, color: '#F8A000' },
-                { label: `Dot. ${loc.dotacional}%`, pct: loc.dotacional, color: '#F04020' },
+                { label: `Res. ${loc.residencial}%`, pct: loc.residencial, color: '#FEB400', cls: 'res' },
+                { label: `Com. ${loc.comercial}%`, pct: loc.comercial, color: '#E3192F', cls: 'com' },
+                { label: `Ind. ${loc.industrial}%`, pct: loc.industrial, color: '#888888', cls: 'ind' },
+                { label: `Dot. ${loc.dotacional}%`, pct: loc.dotacional, color: '#0077aa', cls: 'dot' },
             ];
 
             const usoBarHTML = usoBars.map(u =>
                 `<div style="width:${Math.max(u.pct, 0.5)}%;background:${u.color};height:100%;"></div>`
             ).join('');
             const usoLabelHTML = usoBars.map(u =>
-                `<span class="popup-uso-label" style="color:#111;opacity:${u.pct > 0 ? 1 : 0.3};">${u.label}</span>`
+                `<span class="popup-uso-label popup-uso-label-${u.cls}" style="color:${u.color} !important;opacity:${u.pct > 0 ? 1 : 0.3};">${u.label}</span>`
             ).join('');
 
             activePopup = new maplibregl.Popup({ offset: 18, closeButton: true, maxWidth: '310px', anchor: 'bottom' })
@@ -2728,7 +3214,12 @@
                     <hr class="popup-divider">
 
                     <div style="margin-top:7px;">
-                        <div style="font-family:var(--mono);font-size:.78rem;font-weight:700;color:${dimColor};letter-spacing:.08em;margin-bottom:4px;text-transform:uppercase;">Distribución de uso del suelo</div>
+                        <div style="display:flex;align-items:center;gap:6px;margin-bottom:4px;">
+                            <div style="font-family:var(--mono);font-size:.78rem;font-weight:700;color:${dimColor};letter-spacing:.08em;text-transform:uppercase;">Distribución de uso del suelo</div>
+                            <div style="position:relative;display:inline-block;">
+                                <button style="width:16px;height:16px;border-radius:50%;border:1px solid ${dimColor};background:transparent;color:${dimColor};font-family:var(--mono);font-size:.7rem;font-weight:700;cursor:pointer;padding:0;line-height:1;" onclick="showUsoDelSueloInfo()">i</button>
+                            </div>
+                        </div>
                         <div class="popup-uso-bar" style="height:5px;border-radius:2px;">${usoBarHTML}</div>
                         <div class="popup-uso-labels" style="flex-wrap:wrap;gap:3px 6px;margin-top:5px;">${usoLabelHTML}</div>
                     </div>
@@ -2917,13 +3408,7 @@
         }
 
         // ────────────────────────────────────────────────────────────
-        // 8. MODOS DE COLOR DE PUNTOS (sin capa de puntos — no-op)
-        // ────────────────────────────────────────────────────────────
-
-        function updatePointColors(mode) { /* puntos de fondo eliminados */ }
-
-        // ────────────────────────────────────────────────────────────
-        // 9. VUELO DEL MAPA
+        // 8. VUELO DEL MAPA
         // ────────────────────────────────────────────────────────────
 
         function flyTo() {
@@ -2937,8 +3422,6 @@
                 duration: 2000,
                 essential: true,
             });
-
-            updatePointColors(s.pointColor);
         }
 
         // ────────────────────────────────────────────────────────────
@@ -3066,8 +3549,21 @@
             const pill = e.target.closest('.chart-pill');
             if (!pill) return;
             const metric = pill.dataset.metric;
-            document.getElementById('year-selector').style.display = metric === 'historico' ? 'none' : 'flex';
+            document.getElementById('year-selector').style.display = 'none';
+            document.querySelector('.locality-filter-container').style.display = metric === 'historico' ? 'flex' : 'none';
+            document.querySelector('.usos-suelo-filter-container').style.display = metric === 'avaluo' ? 'flex' : 'none';
+            document.querySelector('.area-filter-container').style.display = metric === 'area' ? 'flex' : 'none';
             renderChart(metric, activeClusterLeaves);
+        });
+
+        // Selector de localidades para Valor Catastral
+        document.getElementById('usos-suelo-selector').addEventListener('change', () => {
+            renderChart('avaluo', activeClusterLeaves);
+        });
+
+        // Selector de localidades para Área Construida
+        document.getElementById('area-selector').addEventListener('change', () => {
+            renderChart('area', activeClusterLeaves);
         });
 
         // Modal de información
@@ -3079,6 +3575,29 @@
         );
         document.getElementById('info-modal').addEventListener('click', e => {
             if (e.target === e.currentTarget) e.currentTarget.classList.remove('active');
+        });
+
+        // Chart info modal
+        document.getElementById('chart-info-btn').addEventListener('click', () => {
+            document.getElementById('chart-info-modal').style.display = 'flex';
+        });
+
+        document.getElementById('chart-info-close').addEventListener('click', () => {
+            document.getElementById('chart-info-modal').style.display = 'none';
+        });
+
+        document.getElementById('chart-info-modal').addEventListener('click', e => {
+            if (e.target === e.currentTarget) e.currentTarget.style.display = 'none';
+        });
+
+        document.querySelectorAll('.chart-info-tab-btn').forEach(btn => {
+            btn.addEventListener('click', e => {
+                const tab = e.target.dataset.tab;
+                document.querySelectorAll('.chart-info-tab').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.chart-info-tab-btn').forEach(t => t.classList.remove('active'));
+                document.querySelector(`.chart-info-tab[data-tab="${tab}"]`).classList.add('active');
+                e.target.classList.add('active');
+            });
         });
 
         // ────────────────────────────────────────────────────────────
@@ -3185,73 +3704,65 @@
             };
             const ESTRATO_COLOR = { 1: 'rgba(227,25,47,.7)', 2: 'rgba(235,80,20,.7)', 3: 'rgba(243,130,0,.7)', 4: 'rgba(248,158,0,.7)', 5: 'rgba(254,180,0,.75)', 6: 'rgba(254,180,0,.95)' };
 
-            // ── Histórico (serie temporal) ────────────────────────────
+            // ── Urbano y Rural de Bogotá ────────────────────────────────
             if (metric === 'historico') {
                 const HIST_YEARS = [2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025, 2026];
                 const labelsH = HIST_YEARS.map(String);
-                const locName = leaves && leaves.length === 1 ? leaves[0].properties.name : null;
 
-                let prediosT, avaluoT, histTitle;
-                if (DATA_LOADED && locName) {
-                    // Serie temporal de una localidad específica
-                    prediosT = HIST_YEARS.map(y => {
-                        const d = (DATA_BY_YEAR[y] || {})[locName];
-                        return d && d.predios > 0 ? Math.round(d.predios / 1000) : null;
-                    });
-                    avaluoT = HIST_YEARS.map(y => {
-                        const d = (DATA_BY_YEAR[y] || {})[locName];
-                        return d && d.areaCons > 0 ? Math.round(d.avaluoTotal / d.areaCons / 1000) : null;
-                    });
-                    histTitle = 'HISTÓRICO · ' + locName.toUpperCase();
-                } else if (DATA_LOADED) {
-                    // Serie temporal total ciudad
-                    prediosT = HIST_YEARS.map(y => {
-                        const byLoc = DATA_BY_YEAR[y] || {};
-                        const tot = Object.values(byLoc).reduce((s, d) => s + d.predios, 0);
-                        return tot > 0 ? Math.round(tot / 1000) : null;
-                    });
-                    avaluoT = HIST_YEARS.map(y => {
-                        const byLoc = DATA_BY_YEAR[y] || {};
-                        let av = 0, ac = 0;
-                        Object.values(byLoc).forEach(d => { av += d.avaluoTotal; ac += d.areaCons; });
-                        return ac > 0 ? Math.round(av / ac / 1000) : null;
-                    });
-                    histTitle = 'HISTÓRICO BOGOTÁ · 2016 – 2026 · 20 localidades';
-                } else {
-                    // 11 valores estimados 2016–2026 (miles de predios · avalúo $/m²·miles)
-                    prediosT = [2482, 2530, 2580, 2630, 2680, 2730, 2770, 2815, 2860, 2900, 2930];
-                    avaluoT = [22, 24, 27, 29, 31, 34, 37, 40, 43, 47, 51];
-                    histTitle = 'CARGANDO DATOS…';
-                }
+                const totales = calcularTotalesUrbanoRural();
+                const urbanoData = HIST_YEARS.map(y => totales.urbano[y] ? Math.round(totales.urbano[y] / 1000) : null);
+                const ruralData = HIST_YEARS.map(y => totales.rural[y] ? Math.round(totales.rural[y] / 1000) : null);
 
-                const selIdx = HIST_YEARS.indexOf(selectedYear);
-                const pRadP = HIST_YEARS.map((_, i) => i === selIdx ? 5 : 2);
-                const pRadA = HIST_YEARS.map((_, i) => i === selIdx ? 5 : 2);
+                const locCount = Object.keys(LOCALIDADES_URBANO_RURAL).length;
+                const titleText = locCount === 0
+                    ? 'PREDIOS BOGOTÁ · 2016 – 2026'
+                    : 'SELECCIONA UNA LOCALIDAD';
 
                 timelineChartInstance = new Chart(ctx, {
-                    type: 'line',
+                    type: 'bar',
                     data: {
                         labels: labelsH,
                         datasets: [
-                            { label: 'Predios (miles)', data: prediosT, borderColor: 'rgba(254,180,0,.75)', backgroundColor: 'rgba(254,180,0,.05)', borderWidth: 1.5, pointRadius: pRadP, pointHoverRadius: 6, tension: .35, fill: true, yAxisID: 'y', spanGaps: true },
-                            { label: 'Avalúo prom. ($/m² · miles)', data: avaluoT, borderColor: 'rgba(227,25,47,.75)', backgroundColor: 'rgba(227,25,47,.05)', borderWidth: 1.5, pointRadius: pRadA, pointHoverRadius: 6, tension: .35, fill: true, yAxisID: 'y1', spanGaps: true },
+                            { label: 'Urbano', data: urbanoData, backgroundColor: 'rgba(254, 180, 0, .85)', yAxisID: 'y' },
+                            { label: 'Rural', data: ruralData, backgroundColor: 'rgba(255, 0, 50, .95)', yAxisID: 'y' },
                         ],
                     },
                     options: {
                         responsive: true, maintainAspectRatio: false,
                         interaction: { mode: 'index', intersect: false },
                         plugins: {
-                            legend: { display: false },
-                            title: titleCfg(histTitle),
-                            tooltip: tooltipCfg,
+                            legend: { display: true, position: 'top', align: 'end', labels: { color: isLight ? '#000' : '#ffffff', font: { ...font, size: 12 }, boxWidth: 14, boxHeight: 14, padding: 8 } },
+                            title: titleCfg(titleText),
+                            tooltip: { ...tooltipCfg, callbacks: { label: c => ` ${c.dataset.label}: ${c.raw}M predios` } },
                         },
                         scales: {
-                            x: { ticks: { color: isLight ? '#111' : '#fff', font: { ...font, size: isMobile ? 8 : 10, weight: '700' }, maxRotation: isMobile ? 45 : 0, autoSkip: isMobile, maxTicksLimit: isMobile ? 6 : 11 }, grid: { color: gridClr, drawBorder: false } },
-                            y: { position: 'right', title: { display: !isMobile, text: 'Predios', color: isLight ? '#111' : '#fff', font: { ...font, size: isMobile ? 8 : 13, weight: '700' } }, ticks: { color: isLight ? '#111' : '#fff', font: { ...font, size: isMobile ? 9 : 10, weight: '700' }, maxTicksLimit: isMobile ? 3 : 4, callback: v => v + ' M' }, grid: { color: gridClr, drawBorder: false } },
-                            y1: { position: 'left', title: { display: !isMobile, text: 'Avalúo $/m²', color: isLight ? '#111' : '#fff', font: { ...font, size: isMobile ? 8 : 13, weight: '700' } }, ticks: { color: isLight ? '#111' : '#fff', font: { ...font, size: isMobile ? 9 : 10, weight: '700' }, maxTicksLimit: isMobile ? 3 : 4, callback: v => '$' + v + ' M' }, grid: { drawOnChartArea: false, drawBorder: false } },
+                            x: { stacked: true, ticks: { color: isLight ? '#111' : '#fff', font: { ...font, size: isMobile ? 8 : 10, weight: '700' }, maxRotation: isMobile ? 45 : 0, autoSkip: isMobile, maxTicksLimit: isMobile ? 6 : 11 }, grid: { color: gridClr, drawBorder: false } },
+                            y: { stacked: true, position: 'left', title: { display: !isMobile, text: 'Predios (miles)', color: isLight ? '#111' : '#fff', font: { ...font, size: isMobile ? 8 : 13, weight: '700' } }, ticks: { color: isLight ? '#111' : '#fff', font: { ...font, size: isMobile ? 9 : 10, weight: '700' }, callback: v => v + 'M' }, grid: { color: gridClr, drawBorder: false } },
                         },
                     },
                 });
+
+                // Poblar dropdown de localidades
+                const selector = document.getElementById('locality-selector');
+                const filterContainer = document.querySelector('.locality-filter-container');
+                const localityCodesMap = {
+                    'Usaquén': 1, 'Chapinero': 2, 'Santa Fe': 3, 'San Cristóbal': 4, 'Usme': 5,
+                    'Tunjuelito': 6, 'Bosa': 7, 'Kennedy': 8, 'Fontibón': 9, 'Engativá': 10,
+                    'Suba': 11, 'Barrios Unidos': 12, 'Teusaquillo': 13, 'Los Mártires': 14,
+                    'Antonio Nariño': 15, 'Puente Aranda': 16, 'La Candelaria': 17,
+                    'Rafael Uribe Uribe': 18, 'Ciudad Bolívar': 19, 'Sumapaz': 20
+                };
+                const locNames = Object.keys(LOCALIDADES_URBANO_RURAL).sort((a, b) => (localityCodesMap[a] || 999) - (localityCodesMap[b] || 999));
+                selector.innerHTML = '<option value="">Selecciona una localidad...</option>';
+                locNames.forEach(name => {
+                    const option = document.createElement('option');
+                    option.value = name;
+                    option.textContent = name;
+                    selector.appendChild(option);
+                });
+                filterContainer.style.display = 'flex';
+                selector.onchange = (e) => mostrarInfoLocalidad(e.target.value);
+
                 return;
             }
 
@@ -3265,37 +3776,154 @@
                 flyToLocalidad(sorted[elements[0].index].name);
             };
 
-            // ── Avalúo catastral ──────────────────────────────────────
+            // ── Valor catastral 2014-2023 ────────────────────────────
             if (metric === 'avaluo') {
-                const sorted = [...locs].sort((a, b) => b.avaluo - a.avaluo);
-                const labels = sorted.map(l => isMobile ? tinyName(l.name) : shortName(l.name));
-                const avaluos = sorted.map(l => Math.round(l.avaluo / 1000));
-                const predios = sorted.map(l => Math.round(l.predios / 1000));
-                const colors = sorted.map(l => ESTRATO_COLOR[l.estrato] || 'rgba(255,255,255,.4)');
-                const borders = colors.map(c => c.replace(/[\d.]+\)$/, '1)'));
+                const VALOR_CATASTRAL = {
+                    'Bogotá': {
+                        years: ['2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023', '2024', '2025'],
+                        valores: [540807, 567739, 540807, 567739, 590424, 623421, 680001, 686039, 728289, 759281],
+                        variaciones: [4.98, -4.74, 4.98, 3.99, 5.58, 9.08, 0.89, 6.16, 4.26]
+                    },
+                    'Usaquén': {
+                        years: ['2014', '2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023'],
+                        valores: [84801, 88818, 84801, 88818, 97286, 101970, 107299, 108207, 111581, 117919],
+                        variaciones: [4.74, -4.52, 4.74, 9.51, 4.84, 5.23, 0.85, 3.10, 5.70]
+                    },
+                    'Chapinero': {
+                        years: ['2014', '2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023'],
+                        valores: [56621, 62106, 56621, 62106, 66962, 69874, 74536, 75256, 76967, 81238],
+                        variaciones: [9.69, -8.83, 9.69, 7.82, 4.35, 6.67, 0.97, 2.27, 5.55]
+                    },
+                    'Santa Fe': {
+                        years: ['2014', '2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023'],
+                        valores: [11568, 12590, 11568, 12590, 13626, 14475, 17057, 17257, 18500, 19735],
+                        variaciones: [8.83, -8.11, 8.83, 8.23, 6.23, 17.84, 1.17, 7.20, 6.67]
+                    },
+                    'San Cristóbal': {
+                        years: ['2014', '2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023'],
+                        valores: [7737, 8560, 7737, 8560, 9619, 10411, 11545, 11667, 12611, 13667],
+                        variaciones: [10.63, -8.61, 10.63, 12.38, 8.23, 10.88, 1.06, 8.09, 8.38]
+                    },
+                    'Usme': {
+                        years: ['2014', '2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023'],
+                        valores: [5627, 6228, 5627, 6228, 7237, 8101, 8783, 8914, 9849, 10768],
+                        variaciones: [10.68, -8.65, 10.68, 16.20, 11.93, 8.43, 1.49, 10.49, 9.32]
+                    },
+                    'Tunjuelito': {
+                        years: ['2014', '2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023'],
+                        valores: [6530, 7238, 6530, 7238, 8347, 8845, 9800, 9874, 10370, 11192],
+                        variaciones: [10.85, -8.79, 10.85, 15.32, 3.56, 13.36, 0.76, 5.02, 7.92]
+                    },
+                    'Bosa': {
+                        years: ['2014', '2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023'],
+                        valores: [15135, 16715, 15135, 16715, 19322, 20748, 22769, 23033, 24624, 27189],
+                        variaciones: [10.44, -9.45, 10.44, 15.59, 7.38, 9.74, 1.16, 6.91, 10.42]
+                    },
+                    'Kennedy': {
+                        years: ['2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023', '2024', '2025'],
+                        valores: [38215, 41958, 38215, 41958, 49056, 50889, 55645, 56305, 60197, 65248],
+                        variaciones: [9.79, -8.92, 9.79, 15.92, 3.74, 9.35, 1.19, 6.91, 8.39]
+                    },
+                    'Fontibón': {
+                        years: ['2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023', '2024', '2025'],
+                        valores: [40439, 44253, 40439, 44253, 47948, 51024, 54650, 54957, 59588, 63398],
+                        variaciones: [9.43, -8.62, 9.43, 8.35, 6.41, 6.91, 0.75, 8.43, 6.39]
+                    },
+                    'Engativá': {
+                        years: ['2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023', '2024', '2025'],
+                        valores: [42769, 44326, 42769, 44326, 49854, 51943, 60603, 61200, 65894, 69772],
+                        variaciones: [3.64, -3.51, 3.64, 12.47, 4.19, 16.67, 0.99, 7.67, 5.89]
+                    },
+                    'Suba': {
+                        years: ['2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023', '2024', '2025'],
+                        valores: [76633, 84549, 76633, 84549, 94330, 99490, 105860, 106686, 113091, 122111],
+                        variaciones: [10.33, -9.36, 10.33, 11.57, 5.47, 6.40, 0.78, 6.00, 7.98]
+                    },
+                    'Barrios Unidos': {
+                        years: ['2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023', '2024', '2025'],
+                        valores: [16370, 17793, 16370, 17793, 19813, 21231, 23462, 23730, 25021, 26713],
+                        variaciones: [8.69, -7.99, 8.69, 11.36, 7.15, 10.51, 1.14, 5.44, 6.76]
+                    },
+                    'Teusaquillo': {
+                        years: ['2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023', '2024', '2025'],
+                        valores: [25101, 27242, 25101, 27242, 31046, 32653, 36042, 36346, 39840, 42029],
+                        variaciones: [8.53, -7.86, 8.53, 13.96, 5.18, 10.38, 0.84, 9.61, 5.50]
+                    },
+                    'Los Mártires': {
+                        years: ['2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023', '2024', '2025'],
+                        valores: [9178, 10079, 9178, 10079, 11344, 12258, 13691, 13810, 14776, 16282],
+                        variaciones: [9.83, -8.95, 9.83, 12.55, 8.05, 11.69, 0.87, 6.99, 10.19]
+                    },
+                    'Antonio Nariño': {
+                        years: ['2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023', '2024', '2025'],
+                        valores: [5917, 6585, 5917, 6585, 7746, 8350, 8958, 9037, 9678, 10469],
+                        variaciones: [11.30, -10.13, 11.30, 17.62, 7.80, 7.28, 0.88, 7.09, 8.18]
+                    },
+                    'Puente Aranda': {
+                        years: ['2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023', '2024', '2025'],
+                        valores: [20550, 22812, 20550, 22812, 26606, 28278, 31440, 31673, 34561, 36149],
+                        variaciones: [11.01, -9.92, 11.01, 16.63, 6.28, 11.18, 0.74, 9.12, 4.60]
+                    },
+                    'La Candelaria': {
+                        years: ['2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023', '2024', '2025'],
+                        valores: [3525, 4033, 3525, 4033, 4412, 4776, 5782, 5817, 6245, 6522],
+                        variaciones: [14.40, -12.56, 14.40, 9.42, 8.24, 21.07, 0.60, 7.35, 4.44]
+                    },
+                    'Rafael Uribe Uribe': {
+                        years: ['2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023', '2024', '2025'],
+                        valores: [8191, 9452, 8191, 9452, 11230, 12430, 13632, 13796, 14878, 16041],
+                        variaciones: [15.40, -9.39, 15.40, 18.81, 10.68, 9.67, 1.20, 7.84, 7.82]
+                    },
+                    'Ciudad Bolívar': {
+                        years: ['2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023', '2024', '2025'],
+                        valores: [10810, 13035, 10810, 13035, 14699, 16254, 18809, 18889, 20810, 22331],
+                        variaciones: [20.58, -17.06, 20.58, 12.77, 10.58, 15.72, 0.42, 10.17, 7.31]
+                    },
+                    'Sumapaz': {
+                        years: ['2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023', '2024', '2025'],
+                        valores: [159, 87, 159, 87, 90, 88, 86, 88, 287, 297],
+                        variaciones: [-45.41, 83.17, -45.41, 3.66, -2.74, -2.25, 3.07, 225.25, 3.62]
+                    }
+                };
+                const selectedLocName = document.getElementById('usos-suelo-selector')?.value || 'Usaquén';
+                const data = VALOR_CATASTRAL[selectedLocName];
+                const yearPairs = [];
+                for (let i = 0; i < data.years.length - 1; i++) {
+                    yearPairs.push(data.years[i + 1]);
+                }
 
                 timelineChartInstance = new Chart(ctx, {
-                    type: 'bar',
+                    type: 'line',
                     data: {
-                        labels,
+                        labels: yearPairs,
                         datasets: [
-                            { label: 'Avalúo (mil/m²)', data: avaluos, backgroundColor: colors, borderColor: borders, borderWidth: 1, yAxisID: 'y' },
-                            { label: 'Predios (miles)', data: predios, borderColor: wLine, backgroundColor: 'transparent', borderWidth: 1, type: 'line', pointRadius: 2, pointHoverRadius: 4, tension: 0, yAxisID: 'y1' },
+                            {
+                                label: 'Variaciones anuales en el valor catastral (%)',
+                                data: data.variaciones,
+                                borderColor: 'rgba(29, 140, 248, 1)',
+                                backgroundColor: 'rgba(29, 140, 248, 0.05)',
+                                borderWidth: 2,
+                                fill: false,
+                                pointRadius: 4,
+                                pointBackgroundColor: 'rgba(29, 140, 248, 1)',
+                                pointBorderColor: '#fff',
+                                pointBorderWidth: 2,
+                                tension: 0.3
+                            },
                         ],
                     },
                     options: {
                         responsive: true, maintainAspectRatio: false, animation: { duration: 400 },
                         interaction: { mode: 'index', intersect: false },
-                        onClick: clickBar(sorted), onHover: hoverCursor,
+                        onHover: hoverCursor,
                         plugins: {
-                            legend: { display: false },
-                            title: titleCfg(clusterLabel || `AVALÚO CATASTRAL · 20 localidades${yrTag} — clic para ver en mapa`),
-                            tooltip: tooltipCfg,
+                            legend: { display: true, position: 'bottom', align: 'center', labels: { color: isLight ? 'rgba(0,0,0,.55)' : 'rgba(255,255,255,.45)', font: { ...font, size: 9 }, boxWidth: 8, boxHeight: 8, padding: 10 } },
+                            title: titleCfg(`${selectedLocName.toUpperCase()} · VALOR CATASTRAL 2016 - 2026 (EN MILES DE MILLONES DE PESOS CORRIENTES)`),
+                            tooltip: { ...tooltipCfg, callbacks: { label: c => ` ${c.raw?.toFixed(2)}%` } },
                         },
                         scales: {
-                            x: { ...xScale, ticks: { ...xScale.ticks, color: isLight ? '#000' : 'rgba(255,255,255,.9)', font: { ...font, size: isMobile ? 6 : 11, weight: '700' }, maxRotation: isMobile ? 90 : 35, minRotation: isMobile ? 90 : 0 } },
-                            y: { position: 'right', ticks: { color: isLight ? '#000' : 'rgba(255,255,255,.9)', font: { ...font, size: isMobile ? 7 : 11, weight: '700' }, maxTicksLimit: 3, callback: v => '$' + v + 'k' }, grid: { color: gridClr } },
-                            y1: { position: 'left', ticks: { color: isLight ? '#000' : 'rgba(255,255,255,.9)', font: { ...font, size: isMobile ? 7 : 11, weight: '700' }, maxTicksLimit: 3, callback: v => v + 'k' }, grid: { drawOnChartArea: false } },
+                            x: { ticks: { color: isLight ? '#000' : 'rgba(255,255,255,.9)', font: { ...font, size: isMobile ? 7 : 9, weight: '500' } }, grid: { color: gridClr } },
+                            y: { ticks: { color: isLight ? '#000' : 'rgba(255,255,255,.9)', font: { ...font, size: isMobile ? 7 : 10, weight: '600' }, callback: v => v + '%' }, grid: { color: gridClr } },
                         },
                     },
                 });
@@ -3303,33 +3931,160 @@
 
             // ── Área construida ───────────────────────────────────────
             else if (metric === 'area') {
-                const sorted = [...locs].sort((a, b) => b.areaCons - a.areaCons);
-                const labels = sorted.map(l => isMobile ? tinyName(l.name) : shortName(l.name));
-                const areas = sorted.map(l => l.areaCons);
+                const AREA_CONSTRUIDA = {
+                    'Bogotá': {
+                        years: ['2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023', '2024', '2025', '2026'],
+                        valores: [4083108, 4413821, 5153487, 4758754, 5177831, 6326629, 5138513, 3666733, 3768798, 3760854, 5046636]
+                    },
+                    'Usaquén': {
+                        years: ['2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023', '2024', '2025', '2026'],
+                        valores: [380723, 347231, 826319, 665525, 403543, 528833, 198591, 292927, 254748, 190822, 252551]
+                    },
+                    'Chapinero': {
+                        years: ['2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023', '2024', '2025', '2026'],
+                        valores: [180757, -9112, 393950, 308519, 403535, 401729, 20371, 648, 35754, 4363, 124814]
+                    },
+                    'Santa Fe': {
+                        years: ['2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023', '2024', '2025', '2026'],
+                        valores: [152220, -37441, 75790, 60586, 107691, 172727, 48625, 29179, -6383, 60285, 125380]
+                    },
+                    'San Cristóbal': {
+                        years: ['2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023', '2024', '2025', '2026'],
+                        valores: [77806, 142967, 89883, 105095, 191593, 214845, 344779, 31175, 179521, 267962, 347682]
+                    },
+                    'Usme': {
+                        years: ['2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023', '2024', '2025', '2026'],
+                        valores: [183442, 259774, 110557, 116886, 206154, 167106, 281625, 155366, 287378, 61817, 289675]
+                    },
+                    'Tunjuelito': {
+                        years: ['2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023', '2024', '2025', '2026'],
+                        valores: [16417, 32423, 21560, 22963, 72629, 74048, 25664, 69605, 83464, 28164, 114352]
+                    },
+                    'Bosa': {
+                        years: ['2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023', '2024', '2025', '2026'],
+                        valores: [388394, 306815, 388428, 421889, 210579, 266163, 411909, 255531, 229843, 243740, 309590]
+                    },
+                    'Kennedy': {
+                        years: ['2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023', '2024', '2025', '2026'],
+                        valores: [699487, 380734, 433513, 367079, 536670, 791052, 403549, 531599, 371419, 306742, 485199]
+                    },
+                    'Fontibón': {
+                        years: ['2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023', '2024', '2025', '2026'],
+                        valores: [253004, 342047, 260464, 185678, 287656, 314548, 244784, 333246, 264243, 276425, 410139]
+                    },
+                    'Engativá': {
+                        years: ['2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023', '2024', '2025', '2026'],
+                        valores: [264667, 261834, 403782, 399213, 329050, 456617, 392950, 336340, 284314, 505997, 367979]
+                    },
+                    'Suba': {
+                        years: ['2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023', '2024', '2025', '2026'],
+                        valores: [514785, 1241384, 402862, 224240, 557395, 533695, 784572, 306511, 343815, 393767, 677938]
+                    },
+                    'Barrios Unidos': {
+                        years: ['2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023', '2024', '2025', '2026'],
+                        valores: [26752, 53633, 144812, 142564, 156882, 137457, 40403, 7825, 50229, 122259, 248492]
+                    },
+                    'Teusaquillo': {
+                        years: ['2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023', '2024', '2025', '2026'],
+                        valores: [2595, 87888, 61598, 154070, 161182, 145292, 89329, 11468, 10970, 38406, 79087]
+                    },
+                    'Los Mártires': {
+                        years: ['2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023', '2024', '2025', '2026'],
+                        valores: [16039, 55949, 38425, 24074, 26710, 151716, 14094, 42867, 39289, 111422, 205920]
+                    },
+                    'Antonio Nariño': {
+                        years: ['2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023', '2024', '2025', '2026'],
+                        valores: [11323, 44482, 39259, -18671, 63168, 74297, 25511, 40061, 6831, 73143, 71833]
+                    },
+                    'Puente Aranda': {
+                        years: ['2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023', '2024', '2025', '2026'],
+                        valores: [116970, 221054, 143446, 155390, 307982, 357324, 103456, -16582, 77005, 259149, 250599]
+                    },
+                    'La Candelaria': {
+                        years: ['2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023', '2024', '2025', '2026'],
+                        valores: [31272, 79473, 3302, 10425, 25774, 43962, 14632, 5680, 3399, 16208, 20067]
+                    },
+                    'Rafael Uribe Uribe': {
+                        years: ['2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023', '2024', '2025', '2026'],
+                        valores: [114411, 95194, 85277, 91816, 194985, 265244, 253261, 58470, 299361, 226699, 183457]
+                    },
+                    'Ciudad Bolívar': {
+                        years: ['2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023', '2024', '2025', '2026'],
+                        valores: [272444, 248223, 504866, 502360, 381724, 404724, 583826, 158716, 387043, 229125, 358288]
+                    },
+                    'Sumapaz': {
+                        years: ['2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023', '2024', '2025', '2026'],
+                        valores: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+                    }
+                };
 
-                timelineChartInstance = new Chart(ctx, {
-                    type: 'bar',
-                    data: {
-                        labels,
-                        datasets: [
-                            { label: 'Área construida (m²)', data: areas, backgroundColor: 'rgba(254,180,0,.6)', borderColor: 'rgba(254,180,0,1)', borderWidth: 1 },
-                        ],
-                    },
-                    options: {
-                        responsive: true, maintainAspectRatio: false, animation: { duration: 400 },
-                        interaction: { mode: 'index', intersect: false },
-                        onClick: clickBar(sorted), onHover: hoverCursor,
-                        plugins: {
-                            legend: { display: false },
-                            title: titleCfg(clusterLabel || `ÁREA CONSTRUIDA · 20 localidades${yrTag} — clic para ver en mapa`),
-                            tooltip: tooltipCfg,
+                const selectedLocName = document.getElementById('area-selector')?.value;
+                if (selectedLocName && AREA_CONSTRUIDA[selectedLocName]) {
+                    const data = AREA_CONSTRUIDA[selectedLocName];
+                    timelineChartInstance = new Chart(ctx, {
+                        type: 'line',
+                        data: {
+                            labels: data.years,
+                            datasets: [
+                                {
+                                    label: 'Área construida neta (m²)',
+                                    data: data.valores,
+                                    borderColor: 'rgba(254, 180, 0, 1)',
+                                    backgroundColor: 'rgba(254, 180, 0, 0.05)',
+                                    borderWidth: 2,
+                                    fill: false,
+                                    pointRadius: 4,
+                                    pointBackgroundColor: 'rgba(254, 180, 0, 1)',
+                                    pointBorderColor: '#fff',
+                                    pointBorderWidth: 2,
+                                    tension: 0.3
+                                },
+                            ],
                         },
-                        scales: {
-                            x: { ...xScale, ticks: { ...xScale.ticks, color: isLight ? '#000' : 'rgba(255,255,255,.9)', font: { ...font, size: isMobile ? 6 : 11, weight: '700' }, maxRotation: isMobile ? 90 : 35, minRotation: isMobile ? 90 : 0 } },
-                            y: { position: 'right', ticks: { color: isLight ? '#000' : 'rgba(255,255,255,.9)', font: { ...font, size: isMobile ? 7 : 11, weight: '700' }, maxTicksLimit: 3, callback: v => Number(v).toLocaleString('es-CO') + ' m²' }, grid: { color: gridClr } },
+                        options: {
+                            responsive: true, maintainAspectRatio: false, animation: { duration: 400 },
+                            interaction: { mode: 'index', intersect: false },
+                            onHover: hoverCursor,
+                            plugins: {
+                                legend: { display: true, position: 'bottom', align: 'center', labels: { color: isLight ? 'rgba(0,0,0,.55)' : 'rgba(255,255,255,.45)', font: { ...font, size: 9 }, boxWidth: 8, boxHeight: 8, padding: 10 } },
+                                title: titleCfg(`${selectedLocName.toUpperCase()} · ÁREA CONSTRUIDA NETA 2016 - 2026 (METROS CUADRADOS)`),
+                                tooltip: { ...tooltipCfg, callbacks: { label: c => ` ${Number(c.raw).toLocaleString('es-CO')} m²` } },
+                            },
+                            scales: {
+                                x: { ticks: { color: isLight ? '#000' : 'rgba(255,255,255,.9)', font: { ...font, size: isMobile ? 7 : 9, weight: '500' } }, grid: { color: gridClr } },
+                                y: { ticks: { color: isLight ? '#000' : 'rgba(255,255,255,.9)', font: { ...font, size: isMobile ? 7 : 10, weight: '600' }, callback: v => Number(v).toLocaleString('es-CO') + ' m²' }, grid: { color: gridClr } },
+                            },
                         },
-                    },
-                });
+                    });
+                } else {
+                    const sorted = [...locs].sort((a, b) => b.areaCons - a.areaCons);
+                    const labels = sorted.map(l => isMobile ? tinyName(l.name) : shortName(l.name));
+                    const areas = sorted.map(l => l.areaCons);
+
+                    timelineChartInstance = new Chart(ctx, {
+                        type: 'bar',
+                        data: {
+                            labels,
+                            datasets: [
+                                { label: 'Área construida (m²)', data: areas, backgroundColor: 'rgba(254,180,0,.6)', borderColor: 'rgba(254,180,0,1)', borderWidth: 1 },
+                            ],
+                        },
+                        options: {
+                            responsive: true, maintainAspectRatio: false, animation: { duration: 400 },
+                            interaction: { mode: 'index', intersect: false },
+                            onClick: clickBar(sorted), onHover: hoverCursor,
+                            plugins: {
+                                legend: { display: false },
+                                title: titleCfg(clusterLabel || `ÁREA CONSTRUIDA · 20 localidades${yrTag} — clic para ver en mapa`),
+                                tooltip: tooltipCfg,
+                            },
+                            scales: {
+                                x: { ...xScale, ticks: { ...xScale.ticks, color: isLight ? '#000' : 'rgba(255,255,255,.9)', font: { ...font, size: isMobile ? 6 : 11, weight: '700' }, maxRotation: isMobile ? 90 : 35, minRotation: isMobile ? 90 : 0 } },
+                                y: { position: 'left', ticks: { color: isLight ? '#000' : 'rgba(255,255,255,.9)', font: { ...font, size: isMobile ? 7 : 11, weight: '700' }, maxTicksLimit: 3, callback: v => Number(v).toLocaleString('es-CO') + ' m²' }, grid: { color: gridClr } },
+                            },
+                        },
+                    });
+                }
             }
 
             // ── Uso del suelo (barras apiladas) ───────────────────────
@@ -3342,10 +4097,10 @@
                     data: {
                         labels,
                         datasets: [
-                            { label: 'Residencial', data: sorted.map(l => l.residencial), backgroundColor: 'rgba(254,180,0,.55)', stack: 'uso' },
-                            { label: 'Comercial', data: sorted.map(l => l.comercial), backgroundColor: 'rgba(227,25,47,.6)', stack: 'uso' },
-                            { label: 'Industrial', data: sorted.map(l => l.industrial), backgroundColor: 'rgba(29,140,248,.65)', stack: 'uso' },
-                            { label: 'Dotacional', data: sorted.map(l => l.dotacional), backgroundColor: 'rgba(109,93,252,.65)', stack: 'uso' },
+                            { label: 'Residencial', data: sorted.map(l => l.residencial), backgroundColor: 'rgba(254,180,0,1)', stack: 'uso' },
+                            { label: 'Comercial', data: sorted.map(l => l.comercial), backgroundColor: 'rgba(227,25,47,1)', stack: 'uso' },
+                            { label: 'Industrial', data: sorted.map(l => l.industrial), backgroundColor: 'rgba(136,136,136,1)', stack: 'uso' },
+                            { label: 'Dotacional', data: sorted.map(l => l.dotacional), backgroundColor: 'rgba(0,119,170,1)', stack: 'uso' },
                         ],
                     },
                     options: {
@@ -3355,7 +4110,7 @@
                         plugins: {
                             legend: {
                                 display: true, position: 'top', align: 'end',
-                                labels: { color: isLight ? 'rgba(0,0,0,.55)' : 'rgba(255,255,255,.45)', font: { ...font, size: 7 }, boxWidth: 8, boxHeight: 8, padding: 6 },
+                                labels: { color: isLight ? '#000' : 'rgba(255,255,255,.45)', font: { ...font, size: 12 }, boxWidth: 14, boxHeight: 14, padding: 8 },
                             },
                             title: titleCfg(clusterLabel || `USO DEL SUELO · 20 localidades${yrTag} — clic para ver en mapa`),
                             tooltip: { ...tooltipCfg, callbacks: { label: c => ` ${c.dataset.label}: ${c.raw}%` } },
@@ -3441,6 +4196,86 @@
             // Carga asíncrona de los 15 JSON — re-renderiza la gráfica activa al terminar
             loadAllData().then(() => {
                 updateLocDataForYear(selectedYear);
+                agregarLocalidadUrbanoRural('San Cristóbal',
+                    { 2016: 82519, 2017: 83916, 2018: 85789, 2019: 87158, 2020: 88287, 2021: 89056, 2022: 89511, 2023: 91659, 2024: 91986, 2025: 92749, 2026: 93877 },
+                    { 2016: 2085, 2017: 2090, 2018: 823, 2019: 2027, 2020: 2027, 2021: 2026, 2022: 2029, 2023: 2034, 2024: 2033, 2025: 1844, 2026: 1824 }
+                );
+                agregarLocalidadUrbanoRural('Usme',
+                    { 2016: 81341, 2017: 84364, 2018: 85320, 2019: 87434, 2020: 88325, 2021: 89660, 2022: 89971, 2023: 90307, 2024: 91077, 2025: 93332, 2026: 94441 },
+                    { 2016: 3756, 2017: 3782, 2018: 4299, 2019: 4425, 2020: 4405, 2021: 4435, 2022: 4500, 2023: 4523, 2024: 4575, 2025: 4654, 2026: 4708 }
+                );
+                agregarLocalidadUrbanoRural('Tunjuelito',
+                    { 2016: 33232, 2017: 33427, 2018: 33550, 2019: 33660, 2020: 33735, 2021: 33735, 2022: 33883, 2023: 33938, 2024: 34036, 2025: 34164, 2026: 34384 },
+                    { 2016: 0, 2017: 0, 2018: 0, 2019: 0, 2020: 0, 2021: 0, 2022: 0, 2023: 0, 2024: 0, 2025: 0, 2026: 0 }
+                );
+                agregarLocalidadUrbanoRural('Bosa',
+                    { 2016: 139143, 2017: 141716, 2018: 144593, 2019: 142881, 2020: 144276, 2021: 145532, 2022: 146394, 2023: 147132, 2024: 150015, 2025: 152908, 2026: 154545 },
+                    { 2016: 7872, 2017: 10401, 2018: 11982, 2019: 22996, 2020: 23157, 2021: 23702, 2022: 23714, 2023: 23756, 2024: 23732, 2025: 23791, 2026: 23826 }
+                );
+                agregarLocalidadUrbanoRural('Kennedy',
+                    { 2016: 269581, 2017: 273330, 2018: 277345, 2019: 272381, 2020: 275390, 2021: 279061, 2022: 282775, 2023: 285492, 2024: 287794, 2025: 292460, 2026: 299836 },
+                    { 2016: 4066, 2017: 4102, 2018: 4035, 2019: 11755, 2020: 11755, 2021: 11754, 2022: 11754, 2023: 11754, 2024: 11751, 2025: 11734, 2026: 11732 }
+                );
+                agregarLocalidadUrbanoRural('Fontibón',
+                    { 2016: 145011, 2017: 148198, 2018: 150856, 2019: 154126, 2020: 157730, 2021: 159221, 2022: 164717, 2023: 169044, 2024: 177500, 2025: 186094, 2026: 196501 },
+                    { 2016: 154, 2017: 175, 2018: 223, 2019: 267, 2020: 276, 2021: 282, 2022: 286, 2023: 288, 2024: 290, 2025: 294, 2026: 307 }
+                );
+                agregarLocalidadUrbanoRural('Engativá',
+                    { 2016: 206307, 2017: 210626, 2018: 216691, 2019: 219909, 2020: 223262, 2021: 225140, 2022: 229896, 2023: 234375, 2024: 237175, 2025: 239221, 2026: 241829 },
+                    { 2016: 7, 2017: 8, 2018: 6, 2019: 12, 2020: 12, 2021: 12, 2022: 12, 2023: 13, 2024: 13, 2025: 13, 2026: 13 }
+                );
+                agregarLocalidadUrbanoRural('Suba',
+                    { 2016: 447594, 2017: 462319, 2018: 470348, 2019: 486279, 2020: 492143, 2021: 495448, 2022: 499379, 2023: 506247, 2024: 510200, 2025: 518957, 2026: 526737 },
+                    { 2016: 2616, 2017: 2626, 2018: 2654, 2019: 2686, 2020: 2782, 2021: 2784, 2022: 2787, 2023: 2806, 2024: 2814, 2025: 2787, 2026: 2751 }
+                );
+                agregarLocalidadUrbanoRural('Barrios Unidos',
+                    { 2016: 55229, 2017: 56107, 2018: 56428, 2019: 56869, 2020: 58049, 2021: 59852, 2022: 60114, 2023: 60751, 2024: 61434, 2025: 62485, 2026: 64048 },
+                    { 2016: 0, 2017: 0, 2018: 0, 2019: 0, 2020: 0, 2021: 0, 2022: 0, 2023: 0, 2024: 0, 2025: 0, 2026: 0 }
+                );
+                agregarLocalidadUrbanoRural('Teusaquillo',
+                    { 2016: 82313, 2017: 83637, 2018: 84476, 2019: 85820, 2020: 86970, 2021: 87710, 2022: 89417, 2023: 90306, 2024: 91269, 2025: 93023, 2026: 94604 },
+                    { 2016: 0, 2017: 0, 2018: 0, 2019: 0, 2020: 0, 2021: 0, 2022: 0, 2023: 0, 2024: 0, 2025: 0, 2026: 0 }
+                );
+                agregarLocalidadUrbanoRural('Los Mártires',
+                    { 2016: 33847, 2017: 34298, 2018: 34846, 2019: 35604, 2020: 37094, 2021: 37215, 2022: 37374, 2023: 38006, 2024: 39201, 2025: 43160, 2026: 45082 },
+                    { 2016: 0, 2017: 0, 2018: 0, 2019: 0, 2020: 0, 2021: 0, 2022: 0, 2023: 0, 2024: 0, 2025: 0, 2026: 0 }
+                );
+                agregarLocalidadUrbanoRural('Antonio Nariño',
+                    { 2016: 21686, 2017: 21885, 2018: 22580, 2019: 22640, 2020: 23084, 2021: 23389, 2022: 23890, 2023: 24246, 2024: 24711, 2025: 25331, 2026: 26177 },
+                    { 2016: 0, 2017: 0, 2018: 0, 2019: 0, 2020: 0, 2021: 0, 2022: 0, 2023: 0, 2024: 0, 2025: 0, 2026: 0 }
+                );
+                agregarLocalidadUrbanoRural('Puente Aranda',
+                    { 2016: 67380, 2017: 68934, 2018: 69455, 2019: 70889, 2020: 71881, 2021: 72123, 2022: 73280, 2023: 73652, 2024: 75085, 2025: 80694, 2026: 83703 },
+                    { 2016: 0, 2017: 0, 2018: 0, 2019: 0, 2020: 0, 2021: 0, 2022: 0, 2023: 0, 2024: 0, 2025: 0, 2026: 0 }
+                );
+                agregarLocalidadUrbanoRural('La Candelaria',
+                    { 2016: 14066, 2017: 14304, 2018: 14323, 2019: 14399, 2020: 14451, 2021: 14482, 2022: 15079, 2023: 15269, 2024: 15265, 2025: 15329, 2026: 15610 },
+                    { 2016: 0, 2017: 0, 2018: 0, 2019: 0, 2020: 0, 2021: 0, 2022: 0, 2023: 0, 2024: 0, 2025: 0, 2026: 0 }
+                );
+                agregarLocalidadUrbanoRural('Rafael Uribe Uribe',
+                    { 2016: 75722, 2017: 76376, 2018: 77072, 2019: 77705, 2020: 80063, 2021: 80636, 2022: 81301, 2023: 82109, 2024: 83503, 2025: 87674, 2026: 88570 },
+                    { 2016: 0, 2017: 0, 2018: 0, 2019: 0, 2020: 0, 2021: 0, 2022: 0, 2023: 0, 2024: 0, 2025: 0, 2026: 0 }
+                );
+                agregarLocalidadUrbanoRural('Ciudad Bolívar',
+                    { 2016: 135994, 2017: 138920, 2018: 141387, 2019: 142813, 2020: 144995, 2021: 145444, 2022: 148715, 2023: 149713, 2024: 151312, 2025: 154052, 2026: 158282 },
+                    { 2016: 3647, 2017: 5046, 2018: 5083, 2019: 5261, 2020: 5459, 2021: 5507, 2022: 5535, 2023: 5620, 2024: 5827, 2025: 5976, 2026: 6111 }
+                );
+                agregarLocalidadUrbanoRural('Usaquén',
+                    { 2016: 334042, 2017: 344491, 2018: 351401, 2019: 358834, 2020: 364634, 2021: 366752, 2022: 371734, 2023: 375301, 2024: 381014, 2025: 386040, 2026: 389841 },
+                    { 2016: 2017, 2017: 2012, 2018: 2152, 2019: 2278, 2020: 2355, 2021: 2352, 2022: 2375, 2023: 2388, 2024: 2428, 2025: 2374, 2026: 2316 }
+                );
+                agregarLocalidadUrbanoRural('Chapinero',
+                    { 2016: 166912, 2017: 170451, 2018: 169804, 2019: 171699, 2020: 173631, 2021: 175541, 2022: 177748, 2023: 178998, 2024: 181875, 2025: 183909, 2026: 187193 },
+                    { 2016: 1131, 2017: 1132, 2018: 3611, 2019: 3659, 2020: 3684, 2021: 3692, 2022: 3707, 2023: 3723, 2024: 3727, 2025: 3736, 2026: 3714 }
+                );
+                agregarLocalidadUrbanoRural('Santa Fe',
+                    { 2016: 59908, 2017: 62139, 2018: 63615, 2019: 64626, 2020: 65403, 2021: 67197, 2022: 67883, 2023: 69228, 2024: 70397, 2025: 72215, 2026: 74635 },
+                    { 2016: 781, 2017: 781, 2018: 777, 2019: 872, 2020: 869, 2021: 870, 2022: 871, 2023: 876, 2024: 869, 2025: 874, 2026: 879 }
+                );
+                agregarLocalidadUrbanoRural('Sumapaz',
+                    { 2016: 0, 2017: 0, 2018: 0, 2019: 0, 2020: 0, 2021: 0, 2022: 0, 2023: 0, 2024: 0, 2025: 0, 2026: 0 },
+                    { 2016: 1747, 2017: 1697, 2018: 1702, 2019: 1702, 2020: 1702, 2021: 1703, 2022: 1757, 2023: 1808, 2024: 1807, 2025: 1806, 2026: 1803 }
+                );
                 renderChart(chartMetric, activeClusterLeaves);
             });
         });
