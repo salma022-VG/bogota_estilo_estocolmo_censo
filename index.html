@@ -530,7 +530,8 @@
 
         .timeline-min-btn {
             top: 6px;
-            right: 300px;
+            left: 8px;
+            right: auto;
         }
 
         .timeline-strip.minimized {
@@ -573,7 +574,7 @@
         .chart-controls {
             position: absolute;
             top: 5px;
-            left: 40px;
+            left: 45px;
             display: flex;
             align-items: center;
             gap: 4px;
@@ -696,8 +697,8 @@
 
         .chart-info-btn {
             position: absolute;
-            top: 6px;
-            right: 330px;
+            top: 28px;
+            left: 45px;
             width: 28px;
             height: 28px;
             border-radius: 3px;
@@ -1934,6 +1935,64 @@
                 padding: 16px 18px 28px;
             }
 
+            /* ── Botón minimizado responsive ── */
+            .timeline-min-btn {
+                left: 8px;
+            }
+
+            /* ── Botón info gráficas responsivo ── */
+            .chart-info-btn {
+                left: 50px;
+                top: 28px;
+                width: 32px;
+                height: 32px;
+                font-size: 1.1rem;
+            }
+
+            /* ── Controles de gráficas en responsive ── */
+            .chart-controls {
+                top: 8px;
+                left: 90px;
+                gap: 6px;
+                flex-direction: row;
+                justify-content: flex-start;
+            }
+
+            .chart-pill {
+                padding: 5px 11px;
+                font-size: 0.7rem;
+            }
+
+            .locality-filter-container,
+            .usos-suelo-filter-container,
+            .area-filter-container {
+                padding: 3px 7px;
+                gap: 4px;
+            }
+
+            .locality-selector {
+                padding: 3px 7px;
+                font-size: 0.65rem;
+            }
+
+            .year-selector {
+                padding: 4px 8px;
+                gap: 6px;
+            }
+
+            .year-label {
+                font-size: 0.7rem;
+            }
+
+            /* ── Aumentar altura de timeline en responsive ── */
+            .timeline-strip {
+                height: 280px;
+            }
+
+            .timeline-chart-container {
+                padding-top: 8px;
+            }
+
         }
 
         /* ── Orientación horizontal en móvil ── */
@@ -1977,6 +2036,16 @@
             .intro-title {
                 top: 12px;
                 font-size: 0.44rem;
+            }
+
+            /* ── Botón minimizado y info en landscape ── */
+            .timeline-min-btn {
+                left: 8px;
+            }
+
+            .chart-info-btn {
+                left: 50px;
+                top: 28px;
             }
         }
 
@@ -2088,18 +2157,20 @@
 
         body.light-mode .chart-pill {
             color: #333 !important;
-            border-color: rgba(0, 0, 0, .2) !important;
+            border-color: rgba(0, 0, 0, .25) !important;
+            background: rgba(255, 255, 255, .6) !important;
         }
 
         body.light-mode .chart-pill:hover {
             color: #000 !important;
             border-color: rgba(0, 0, 0, .5) !important;
+            background: rgba(255, 255, 255, .9) !important;
         }
 
         body.light-mode .chart-pill.active {
             color: #0077aa !important;
             border-color: #0077aa !important;
-            background: rgba(0, 119, 170, .07) !important;
+            background: rgba(0, 119, 170, .12) !important;
         }
 
         body:not(.light-mode) .chart-pill {
@@ -2172,6 +2243,25 @@
 
         body.light-mode .timeline-stats {
             border-left-color: rgba(0, 0, 0, .1) !important;
+        }
+
+        body.light-mode .locality-filter-container,
+        body.light-mode .usos-suelo-filter-container,
+        body.light-mode .area-filter-container {
+            background: rgba(0, 119, 170, .08) !important;
+            border-color: rgba(0, 119, 170, .3) !important;
+        }
+
+        body.light-mode .locality-selector,
+        body.light-mode .usos-suelo-selector,
+        body.light-mode .area-selector {
+            background: rgba(255, 255, 255, .7) !important;
+            border-color: rgba(0, 119, 170, .4) !important;
+            color: #000 !important;
+        }
+
+        body.light-mode .filter-label {
+            color: #000 !important;
         }
 
         body.light-mode .legend-dot-label {
