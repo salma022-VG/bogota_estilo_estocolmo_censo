@@ -1332,6 +1332,26 @@
             object-position: center center;
         }
 
+        #intro-campin-animation {
+            width: 100%;
+            height: 100%;
+            display: none;
+            position: absolute;
+            inset: 0;
+        }
+
+        #intro-campin-animation img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            display: block;
+        }
+
+        #intro-campin-animation.active {
+            display: block;
+        }
+
         .intro-controls {
             position: absolute;
             bottom: 40px;
@@ -2286,6 +2306,9 @@
     <div id="intro-overlay">
         <div class="intro-title">Bogotá — Censo Inmobiliario</div>
         <video id="intro-video" src="video/Intro.mp4" muted playsinline preload="auto"></video>
+        <div id="intro-campin-animation">
+            <img id="intro-campin-img" src="" alt="">
+        </div>
         <div class="intro-controls">
             <div class="intro-progress-bar">
                 <div class="intro-progress-fill" id="intro-progress-fill"></div>
@@ -4221,24 +4244,77 @@
         function initIntroAnimation() {
             const introOverlay = document.getElementById('intro-overlay');
             const introVideo   = document.getElementById('intro-video');
+            const introCampin  = document.getElementById('intro-campin-animation');
             const progressFill = document.getElementById('intro-progress-fill');
             const skipBtn      = document.getElementById('intro-skip-btn');
 
+            const lastWasVideo = localStorage.getItem('lastIntroWasVideo') === 'true';
+            const useVideo = !lastWasVideo;
+            localStorage.setItem('lastIntroWasVideo', String(useVideo));
+
             function endIntro() {
-                introVideo.pause();
+                if (useVideo) {
+                    introVideo.pause();
+                } else {
+                    introCampin.classList.remove('active');
+                }
                 introOverlay.classList.add('fade-out');
                 setTimeout(() => { introOverlay.style.display = 'none'; }, 1300);
             }
 
-            introVideo.addEventListener('timeupdate', () => {
-                if (introVideo.duration > 0) {
-                    progressFill.style.width = `${(introVideo.currentTime / introVideo.duration) * 100}%`;
-                }
-            });
+            skipBtn.addEventListener('click', endIntro, { once: true });
 
-            introVideo.addEventListener('ended', endIntro);
-            skipBtn.addEventListener('click', endIntro);
-            introVideo.play().catch(() => { /* autoplay bloqueado — el usuario puede presionar skip */ });
+            if (useVideo) {
+                introCampin.classList.remove('active');
+                introVideo.style.display = 'block';
+
+                introVideo.addEventListener('timeupdate', () => {
+                    if (introVideo.duration > 0) {
+                        progressFill.style.width = `${(introVideo.currentTime / introVideo.duration) * 100}%`;
+                    }
+                });
+
+                introVideo.addEventListener('ended', endIntro);
+                introVideo.play().catch(() => { });
+            } else {
+                introVideo.style.display = 'none';
+                introCampin.classList.add('active');
+
+                const campinImg = document.getElementById('intro-campin-img');
+                const totalFrames = 148;
+                let currentFrame = 0;
+                const frameDuration = 65;
+                let startTime = Date.now();
+                let isRunning = true;
+                let lastFrameDisplayed = -1;
+
+                function animateFrame() {
+                    if (!isRunning) return;
+
+                    const elapsed = Date.now() - startTime;
+                    currentFrame = Math.floor(elapsed / frameDuration);
+
+                    if (currentFrame >= totalFrames) {
+                        currentFrame = totalFrames - 1;
+                        isRunning = false;
+                        setTimeout(endIntro, 300);
+                    }
+
+                    if (currentFrame !== lastFrameDisplayed) {
+                        const frameNum = String(currentFrame).padStart(3, '0');
+                        campinImg.src = `animacion-campin_${frameNum}.jpeg`;
+                        lastFrameDisplayed = currentFrame;
+                    }
+
+                    progressFill.style.width = `${(currentFrame / totalFrames) * 100}%`;
+
+                    if (isRunning) {
+                        requestAnimationFrame(animateFrame);
+                    }
+                }
+
+                animateFrame();
+            }
         }
 
         // ────────────────────────────────────────────────────────────
