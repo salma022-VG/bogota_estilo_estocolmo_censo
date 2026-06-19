@@ -42,21 +42,44 @@
             --serif: 'Roboto', 'Arial', sans-serif;
             --sans: 'Roboto', 'Arial', sans-serif;
             --mono: 'Roboto', 'Arial', sans-serif;
-            --bg: #000;
-            --text: #fff;
-            --dim: rgba(255, 255, 255, .45);
-            --border: rgba(255, 255, 255, .18);
-            --cyan: #00e5ff;
-            --cyan-g: rgba(0, 229, 255, .5);
-            --mag: #ff2d78;
-            --mag-g: rgba(255, 45, 120, .5);
-            --blue: #1d8cf8;
-            --purple: #6d5dfc;
-            --panel-bg: rgba(0, 0, 0, .50);
-            --timeline-bg: rgba(0, 0, 0, .82);
-            --popup-bg: rgba(0, 0, 0, .95);
-            --modal-bg: rgba(5, 5, 5, .97);
-            --modal-overlay: rgba(0, 0, 0, .85);
+            --color-red: #A8DDEA;
+            --color-red-dark: #76D7E1;
+            --color-red-light: #C5E8F0;
+            --color-yellow: #F9C235;
+            --color-yellow-light: #FDD572;
+            --bg-light: #f4f4f4;
+            --bg-white: #ffffff;
+            --text-dark: #1a1a1a;
+            --text-secondary: #555;
+            --text-muted: #888;
+            --shadow-card: 0 4px 24px rgba(0, 0, 0, 0.08);
+            --shadow-card-hover: 0 12px 40px rgba(196, 30, 30, 0.18);
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+            --transition-fast: 0.25s ease;
+            --transition-smooth: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-bounce: 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+            --panel-bg: rgba(255, 255, 255, .95);
+            --popup-bg: rgba(255, 255, 255, .98);
+            --modal-bg: rgba(255, 255, 255, .99);
+            --modal-overlay: rgba(0, 0, 0, .30);
+            --border: rgba(26, 26, 26, .12);
+            --cyan-g: rgba(168, 221, 234, .3);
+            --mag-g: rgba(249, 194, 53, .3);
+        }
+
+        /* ── Tema oscuro ── */
+        body:not(.light-mode) {
+            --bg: #1a1a1a;
+            --text: #e0e0e0;
+            --dim: rgba(255, 255, 255, .55);
+            --border: rgba(255, 255, 255, .12);
+            --panel-bg: rgba(30, 30, 30, .95);
+            --timeline-bg: rgba(30, 30, 30, .95);
+            --popup-bg: rgba(30, 30, 30, .98);
+            --modal-bg: rgba(30, 30, 30, .99);
+            --modal-overlay: rgba(0, 0, 0, .55);
         }
 
         /* ── Tema claro ── */
@@ -83,8 +106,8 @@
             width: 100%;
             height: 100%;
             overflow: hidden;
-            background: var(--bg);
-            color: var(--text);
+            background: var(--bg-white);
+            color: var(--text-dark);
             font-family: var(--serif);
         }
 
@@ -114,7 +137,7 @@
         }
 
         .header-dash {
-            color: var(--cyan);
+            color: var(--color-red);
             margin: 0 2px;
         }
 
@@ -128,7 +151,7 @@
             font-family: var(--mono);
             font-size: .6rem;
             font-weight: 300;
-            color: var(--dim);
+            color: var(--text-secondary);
             letter-spacing: .04em;
             text-transform: uppercase;
         }
@@ -144,7 +167,7 @@
             border-radius: 50%;
             border: 1px solid var(--border);
             background: transparent;
-            color: var(--dim);
+            color: var(--text-secondary);
             font-family: var(--serif);
             font-size: .85rem;
             cursor: pointer;
@@ -156,8 +179,8 @@
         }
 
         .info-btn:hover {
-            border-color: var(--text);
-            color: var(--text);
+            border-color: var(--text-dark);
+            color: var(--text-dark);
         }
 
         /* ── Aplicación ── */
@@ -166,7 +189,7 @@
             width: 100%;
             height: 100vh;
             overflow: hidden;
-            background: var(--bg);
+            background: var(--bg-white);
         }
 
         /* ── Mapa ── */
@@ -234,7 +257,7 @@
             background: none;
             border: 1px solid var(--border);
             border-radius: 6px;
-            color: var(--dim);
+            color: var(--text-secondary);
             font-size: 15px;
             line-height: 1;
             cursor: pointer;
@@ -242,7 +265,7 @@
         }
 
         .narrative-min-btn:hover {
-            color: var(--text);
+            color: var(--text-dark);
             background: rgba(128, 128, 128, .18);
         }
 
@@ -278,25 +301,25 @@
         }
 
         .narrative-text strong {
-            color: #FEB400;
+            color: #A8DDEA;
             font-weight: 400;
-            text-shadow: 0 0 16px rgba(254, 180, 0, .5);
+            text-shadow: #A8DDEA 0px 0px 12px;
         }
 
         .narrative-text .magenta {
-            color: #E3192F;
+            color: #B89DC9;
             font-weight: 400;
-            text-shadow: 0 0 16px rgba(227, 25, 47, .5);
+            text-shadow: 0 0 16px rgba(184, 157, 201, .5);
         }
 
         .narrative-text .blue {
-            color: #F8A000;
+            color: #A8DDEA;
             font-weight: 400;
-            text-shadow: 0 0 16px rgba(248, 160, 0, .5);
+            text-shadow: 0 0 16px rgba(168, 221, 234, .5);
         }
 
         .narrative-text .purple {
-            color: #F04020;
+            color: #C5E8F0;
             font-weight: 400;
             text-shadow: 0 0 16px rgba(240, 64, 32, .5);
         }
@@ -311,8 +334,8 @@
             border: none;
             padding: 0px 15px;
             border-radius: 5px;
-            background-color: rgba(254, 180, 0, .15);
-            border: 1px solid rgba(254, 180, 0, .4);
+            background-color: rgba(249, 194, 53, .15);
+            border: 1px solid rgba(249, 194, 53, .4);
             gap: 10px;
             cursor: pointer;
             transition: all 0.3s;
@@ -355,7 +378,7 @@
         }
 
         .Documents-btn .text {
-            color: #FEB400;
+            color: #F9C235;
             font-size: 12px;
             font-weight: 600;
             letter-spacing: 0.5px;
@@ -368,8 +391,8 @@
         }
 
         .Documents-btn:hover {
-            background-color: rgba(254, 180, 0, .25);
-            border-color: #FEB400;
+            background-color: rgba(249, 194, 53, .25);
+            border-color: #F9C235;
         }
 
         .Documents-btn:active {
@@ -391,7 +414,7 @@
             padding: 10px 32px;
             border: 1px solid var(--border);
             background: transparent;
-            color: var(--text);
+            color: var(--text-dark);
             font-family: var(--mono);
             font-size: .7rem;
             font-weight: 400;
@@ -402,7 +425,7 @@
         }
 
         .ghost-btn:hover {
-            border-color: var(--text);
+            border-color: var(--text-dark);
             background: rgba(255, 255, 255, .05);
         }
 
@@ -445,7 +468,7 @@
             font-family: var(--mono);
             font-size: .55rem;
             font-weight: 300;
-            color: var(--dim);
+            color: var(--text-secondary);
             letter-spacing: .08em;
         }
 
@@ -456,22 +479,22 @@
         }
 
         .legend-gradient.cyan {
-            background: linear-gradient(to right, rgba(0, 229, 255, .08), #00e5ff);
-            box-shadow: 0 0 12px rgba(0, 229, 255, .3);
+            background: linear-gradient(to right, rgba(168, 221, 234, .08), #A8DDEA);
+            box-shadow: 0 0 12px rgba(168, 221, 234, .3);
         }
 
         .legend-gradient.magenta {
-            background: linear-gradient(to right, rgba(255, 45, 120, .08), #ff2d78);
+            background: linear-gradient(to right, rgba(255, 45, 120, .08), #76D7E1);
             box-shadow: 0 0 12px rgba(255, 45, 120, .3);
         }
 
         .legend-gradient.dual {
-            background: linear-gradient(to right, #00e5ff, #ff2d78);
-            box-shadow: 0 0 12px rgba(0, 229, 255, .2), 0 0 12px rgba(255, 45, 120, .2);
+            background: linear-gradient(to right, #A8DDEA, #76D7E1);
+            box-shadow: 0 0 12px rgba(168, 221, 234, .2), 0 0 12px rgba(255, 45, 120, .2);
         }
 
         .legend-gradient.cluster {
-            background: linear-gradient(to right, #E3192F, #F04020, #F8A000, #FEB400);
+            background: linear-gradient(to right, #76D7E1, #C5E8F0, #F9C235, #F9C235);
             box-shadow: 0 0 12px rgba(29, 140, 248, .3), 0 0 12px rgba(226, 54, 112, .2);
         }
 
@@ -509,7 +532,7 @@
             font-family: var(--mono);
             font-size: .5rem;
             font-weight: 300;
-            color: var(--dim);
+            color: var(--text-secondary);
             letter-spacing: .06em;
         }
 
@@ -604,9 +627,9 @@
         }
 
         .chart-pill.active {
-            border-color: #FEB400;
-            color: #FEB400;
-            background: rgba(254, 180, 0, .12);
+            border-color: #F9C235;
+            color: #F9C235;
+            background: rgba(249, 194, 53, .12);
         }
 
         .locality-filter-container {
@@ -615,8 +638,8 @@
             gap: 3px;
             padding: 2px 6px;
             margin: 0;
-            background: rgba(254, 180, 0, .12);
-            border: 1px solid rgba(254, 180, 0, .6);
+            background: rgba(249, 194, 53, .12);
+            border: 1px solid rgba(249, 194, 53, .6);
             border-radius: 3px;
             box-shadow: none;
         }
@@ -627,8 +650,8 @@
             gap: 3px;
             padding: 2px 6px;
             margin: 0;
-            background: rgba(254, 180, 0, .12);
-            border: 1px solid rgba(254, 180, 0, .6);
+            background: rgba(249, 194, 53, .12);
+            border: 1px solid rgba(249, 194, 53, .6);
             border-radius: 3px;
             box-shadow: none;
         }
@@ -639,16 +662,16 @@
             gap: 3px;
             padding: 2px 6px;
             margin: 0;
-            background: rgba(254, 180, 0, .12);
-            border: 1px solid rgba(254, 180, 0, .6);
+            background: rgba(249, 194, 53, .12);
+            border: 1px solid rgba(249, 194, 53, .6);
             border-radius: 3px;
             box-shadow: none;
         }
 
         .locality-selector {
             padding: 2px 6px;
-            border: 1px solid rgba(254, 180, 0, .5);
-            background: rgba(254, 180, 0, .08);
+            border: 1px solid rgba(249, 194, 53, .5);
+            background: rgba(249, 194, 53, .08);
             color: rgba(0, 0, 0, .85);
             font-family: var(--mono);
             font-size: 0.55rem;
@@ -661,15 +684,15 @@
         }
 
         .locality-selector:hover {
-            border-color: rgba(254, 180, 0, .8);
-            background: rgba(254, 180, 0, .15);
+            border-color: rgba(249, 194, 53, .8);
+            background: rgba(249, 194, 53, .15);
             color: rgba(0, 0, 0, 1);
         }
 
         .locality-selector:focus {
             outline: none;
-            border-color: rgba(254, 180, 0, 1);
-            background: rgba(254, 180, 0, .2);
+            border-color: rgba(249, 194, 53, 1);
+            background: rgba(249, 194, 53, .2);
             color: rgba(0, 0, 0, 1);
         }
 
@@ -827,8 +850,8 @@
 
         .locality-info {
             padding: 16px 18px;
-            border-top: 2px solid rgba(254, 180, 0, .3);
-            background: linear-gradient(135deg, rgba(254, 180, 0, .05) 0%, rgba(227, 25, 47, .03) 100%);
+            border-top: 2px solid rgba(249, 194, 53, .3);
+            background: linear-gradient(135deg, rgba(249, 194, 53, .05) 0%, rgba(118, 215, 225, .03) 100%);
             overflow-y: auto;
             max-height: 200px;
             scrollbar-width: thin;
@@ -849,9 +872,9 @@
 
         .locality-info th {
             text-align: left;
-            color: rgba(254, 180, 0, .85);
+            color: rgba(249, 194, 53, .85);
             font-weight: 700;
-            background: rgba(254, 180, 0, .08);
+            background: rgba(249, 194, 53, .08);
             padding: 8px;
         }
 
@@ -881,18 +904,18 @@
         }
 
         .stat-pct.up {
-            color: var(--cyan);
+            color: var(--color-red);
         }
 
         .stat-pct.down {
-            color: var(--mag);
+            color: var(--color-yellow);
         }
 
         .stat-label {
             font-family: var(--mono);
             font-size: .72rem;
             font-weight: 700;
-            color: var(--dim);
+            color: var(--text-secondary);
             text-align: right;
             flex: 1;
         }
@@ -911,13 +934,13 @@
         }
 
         .stat-row.clickable:hover .stat-loc-name {
-            color: var(--cyan);
+            color: var(--color-red);
         }
 
         .stat-loc-name {
             font-size: .68rem;
             font-weight: 700;
-            color: var(--text);
+            color: var(--text-dark);
             transition: color .15s;
         }
 
@@ -945,7 +968,7 @@
             border: 1px solid rgba(29, 140, 248, .35) !important;
             border-radius: 0 !important;
             padding: 14px 18px !important;
-            color: var(--text) !important;
+            color: var(--text-dark) !important;
             font-family: var(--sans) !important;
             box-shadow: 0 0 30px rgba(29, 140, 248, .15), 0 4px 20px rgba(0, 0, 0, .6) !important;
             max-width: 300px !important;
@@ -955,7 +978,7 @@
         }
 
         .maplibregl-popup-close-button {
-            color: var(--dim) !important;
+            color: var(--text-secondary) !important;
             font-size: 18px !important;
             padding: 4px 8px !important;
             right: 2px !important;
@@ -964,7 +987,7 @@
         }
 
         .maplibregl-popup-close-button:hover {
-            color: var(--text) !important;
+            color: var(--text-dark) !important;
             background: transparent !important;
         }
 
@@ -1035,15 +1058,15 @@
         }
 
         .popup-uso-label-res {
-            color: #FEB400 !important;
+            color: #F9C235 !important;
         }
 
         .popup-uso-label-com {
-            color: #E3192F !important;
+            color: #76D7E1 !important;
         }
 
         .popup-uso-label-ind {
-            color: #888888 !important;
+            color: #B89DC9 !important;
         }
 
         .popup-uso-label-dot {
@@ -1104,7 +1127,7 @@
             font-family: var(--serif);
             font-size: 1.1rem;
             font-weight: 400;
-            color: var(--blue);
+            color: var(--color-red-dark);
             margin-bottom: 8px;
             text-shadow: 0 0 12px rgba(29, 140, 248, .3);
         }
@@ -1118,7 +1141,7 @@
         }
 
         .popup-label {
-            color: var(--dim);
+            color: var(--text-secondary);
             font-weight: 700;
         }
 
@@ -1128,11 +1151,11 @@
         }
 
         .popup-value.cyan {
-            color: var(--cyan);
+            color: var(--color-red);
         }
 
         .popup-value.magenta {
-            color: var(--mag);
+            color: var(--color-yellow);
         }
 
         .popup-divider {
@@ -1152,7 +1175,7 @@
             display: flex;
             align-items: center;
             justify-content: flex-start;
-            background: linear-gradient(135deg, #E3192F 0%, #FEB400 100%);
+            background: linear-gradient(135deg, #76D7E1 0%, #F9C235 100%);
             border-radius: 30px;
             color: rgb(19, 19, 19);
             font-weight: 600;
@@ -1177,7 +1200,7 @@
         }
         .center-map-btn:hover {
             width: 110px;
-            background: linear-gradient(135deg, #ff2d78 0%, #FEB400 100%);
+            background: linear-gradient(135deg, #76D7E1 0%, #F9C235 100%);
         }
         .center-map-btn:hover .btn-text {
             opacity: 1;
@@ -1188,6 +1211,120 @@
         .center-map-btn:hover .svgIcon {
             transform: rotate(250deg);
             transition-duration: 1.5s;
+        }
+
+        /* ── Botón cambiar mapas ── */
+        .basemap-btn {
+            position: fixed;
+            bottom: 60px;
+            right: 11px;
+            z-index: 800;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #76D7E1 0%, #F9C235 100%);
+            border-radius: 50%;
+            color: rgb(19, 19, 19);
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.116);
+            padding: 0;
+            overflow: hidden;
+            white-space: nowrap;
+            transition: width .5s, background .5s, bottom .3s ease;
+        }
+        .basemap-btn img,
+        .basemap-btn .svgIcon {
+            height: 18px;
+            width: 18px;
+            flex-shrink: 0;
+            fill: rgb(19, 19, 19);
+        }
+        .basemap-btn .btn-text {
+            opacity: 0;
+            margin-left: 10px;
+            transition: opacity .4s;
+        }
+        .basemap-btn:active {
+            transform: scale(0.97);
+        }
+
+        /* ── Modal de Mapas Base ── */
+        .basemap-modal {
+            position: fixed;
+            bottom: 110px;
+            right: 11px;
+            z-index: 799;
+            background: rgba(255, 255, 255, 0.98);
+            border-radius: 12px;
+            padding: 16px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            display: none;
+            max-height: 500px;
+            overflow-y: auto;
+        }
+
+        .basemap-modal.active {
+            display: block;
+        }
+
+        .basemap-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            min-width: 300px;
+        }
+
+        .basemap-option {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 8px;
+            transition: background 0.2s ease;
+        }
+
+        .basemap-option:hover {
+            background: rgba(0, 0, 0, 0.05);
+        }
+
+        .basemap-preview {
+            width: 80px;
+            height: 60px;
+            border-radius: 6px;
+            border: 2px solid #ddd;
+            transition: transform 0.2s ease;
+        }
+
+        .basemap-option:hover .basemap-preview {
+            transform: scale(1.05);
+        }
+
+        .basemap-option span {
+            font-size: 0.75rem;
+            font-weight: 500;
+            text-align: center;
+            color: var(--text-dark);
+        }
+
+        /* ── Crédito IDECA ── */
+        .ideca-credit {
+            position: fixed;
+            bottom: 11px;
+            right: 11px;
+            right: 60px;
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            z-index: 750;
+            line-height: 1.3;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 4px 8px;
+            border-radius: 4px;
         }
 
         /* ── Modal de Información ── */
@@ -1275,13 +1412,13 @@
             right: 14px;
             background: none;
             border: none;
-            color: var(--dim);
+            color: var(--text-secondary);
             font-size: 1.4rem;
             cursor: pointer;
         }
 
         .info-close:hover {
-            color: var(--text);
+            color: var(--text-dark);
         }
 
         /* ── Animaciones ── */
@@ -1376,11 +1513,11 @@
 
         .intro-progress-fill {
             height: 100%;
-            background: linear-gradient(90deg, #00e5ff, #ff2d78);
+            background: linear-gradient(90deg, #A8DDEA, #76D7E1);
             border-radius: 2px;
             width: 0%;
             transition: width 0.03s linear;
-            box-shadow: 0 0 8px rgba(0, 229, 255, 0.4);
+            box-shadow: 0 0 8px rgba(168, 221, 234, 0.4);
         }
 
         .intro-bottom-row {
@@ -1439,7 +1576,7 @@
             font-family: var(--mono);
             font-size: .62rem;
             font-weight: 600;
-            color: var(--cyan);
+            color: var(--color-red);
             letter-spacing: .06em;
             min-width: 28px;
         }
@@ -1460,7 +1597,7 @@
             width: 11px;
             height: 11px;
             border-radius: 50%;
-            background: var(--cyan);
+            background: var(--color-red);
             cursor: pointer;
             box-shadow: 0 0 6px var(--cyan-g);
         }
@@ -1469,7 +1606,7 @@
             width: 11px;
             height: 11px;
             border-radius: 50%;
-            background: var(--cyan);
+            background: var(--color-red);
             border: none;
             cursor: pointer;
         }
@@ -1833,14 +1970,14 @@
                 width: 7px;
                 height: 7px;
                 border-radius: 50%;
-                background: var(--dim);
+                background: var(--text-secondary);
                 transition: background 0.3s, transform 0.25s;
                 cursor: pointer;
                 touch-action: manipulation;
             }
 
             .step-dot.active {
-                background: var(--cyan);
+                background: var(--color-red);
                 transform: scale(1.45);
             }
 
@@ -1859,12 +1996,12 @@
                 width: 38px;
                 height: 4px;
                 border-radius: 2px;
-                background: var(--dim);
+                background: var(--text-secondary);
                 transition: background 0.2s;
             }
 
             .timeline-handle:active .handle-bar {
-                background: var(--cyan);
+                background: var(--color-red);
             }
 
             /* Timeline colapsado */
@@ -1902,7 +2039,7 @@
                 opacity: 0.35;
                 font-size: 0.7rem;
                 letter-spacing: .04em;
-                color: var(--dim);
+                color: var(--text-secondary);
                 margin-top: 4px;
             }
         }
@@ -2132,11 +2269,11 @@
         }
 
         body.light-mode .popup-value.cyan {
-            color: var(--cyan) !important;
+            color: var(--color-red) !important;
         }
 
         body.light-mode .popup-value.magenta {
-            color: var(--mag) !important;
+            color: var(--color-yellow) !important;
         }
 
         body.light-mode .popup-label {
@@ -2152,7 +2289,7 @@
         }
 
         body.light-mode .popup-name {
-            color: var(--blue) !important;
+            color: var(--color-red-dark) !important;
         }
 
         body.light-mode .maplibregl-popup-close-button {
@@ -2204,8 +2341,8 @@
         }
 
         body:not(.light-mode) .chart-pill.active {
-            color: #FEB400 !important;
-            border-color: #FEB400 !important;
+            color: #F9C235 !important;
+            border-color: #F9C235 !important;
         }
 
         body.light-mode .ghost-btn {
@@ -2344,6 +2481,47 @@
             <span class="btn-text">Centrar</span>
         </button>
 
+        <button class="basemap-btn" id="basemap-btn" onclick="toggleBasemapModal()" title="Cambiar mapa base">
+            <img src="Icono/logo_black.png" alt="Mapas">
+        </button>
+
+        <div class="basemap-modal" id="basemap-modal">
+            <div class="basemap-grid">
+                <div class="basemap-option" onclick="changeBasemap('mapa_base_oscuro_3857', 'Oscuro')">
+                    <div class="basemap-preview" style="background: url('Imagenes_mapas/Mapa-Base-Azul.png') center/cover no-repeat;"></div>
+                    <span>Oscuro</span>
+                </div>
+                <div class="basemap-option" onclick="changeBasemap('mapa_base_3857', 'Vector')">
+                    <div class="basemap-preview" style="background: url('Imagenes_mapas/Mapa-Base-Gris.jpg') center/cover no-repeat;"></div>
+                    <span>Vector</span>
+                </div>
+                <div class="basemap-option" onclick="changeBasemap('mapa_base_oscuro_3857', 'Azul')">
+                    <div class="basemap-preview" style="background: url('Imagenes_mapas/Mapa-Base-Azul.png') center/cover no-repeat;"></div>
+                    <span>Azul</span>
+                </div>
+                <div class="basemap-option" onclick="changeBasemap('mapabasemunicipioscundinamarca', 'Topográfico')">
+                    <div class="basemap-preview" style="background: url('Imagenes_mapas/Mapa-Base-Gris.jpg') center/cover no-repeat;"></div>
+                    <span>Topográfico</span>
+                </div>
+                <div class="basemap-option" onclick="changeBasemap('mapa_base_gris', 'Gris')">
+                    <div class="basemap-preview" style="background: url('Imagenes_mapas/Mapa-Base-Gris.jpg') center/cover no-repeat;"></div>
+                    <span>Gris</span>
+                </div>
+                <div class="basemap-option" onclick="changeBasemap('mapa_hibrido', 'Híbrido')">
+                    <div class="basemap-preview" style="background: url('Imagenes_mapas/Mapa-Base-Hibrido.jpg') center/cover no-repeat;"></div>
+                    <span>Híbrido</span>
+                </div>
+                <div class="basemap-option" onclick="changeBasemap('mapa_base_toner', 'Tóner')">
+                    <div class="basemap-preview" style="background: url('Imagenes_mapas/Mapa-Base-Toner.jpg') center/cover no-repeat;"></div>
+                    <span>Tóner</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="ideca-credit">
+            IDECA La IDE de Bogotá D.C. | Contribuidor IDECA www.ideca.gov.co, @ IDECA La IDE de Bogotá, Condiciones de uso
+        </div>
+
         <!-- Panel narrativo (lado izquierdo) -->
         <div class="narrative-panel" id="narrative-panel">
             <button class="narrative-min-btn" id="narrative-min-btn" onclick="toggleNarrativePanel()"
@@ -2372,7 +2550,7 @@
                         <defs>
                             <linearGradient id="paint0_linear_117_4" x1="0" y1="0" x2="72.93" y2="95.4804"
                                 gradientUnits="userSpaceOnUse">
-                                <stop stop-color="#FEB400"></stop>
+                                <stop stop-color="#F9C235"></stop>
                                 <stop offset="1" stop-color="#C88000"></stop>
                             </linearGradient>
                         </defs>
@@ -2397,7 +2575,7 @@
                             <linearGradient id="paint0_linear_117_5" x1="38.7619" y1="8.71323" x2="66.9106" y2="82.8317"
                                 gradientUnits="userSpaceOnUse">
                                 <stop stop-color="#FFD966"></stop>
-                                <stop offset="1" stop-color="#E3192F"></stop>
+                                <stop offset="1" stop-color="#76D7E1"></stop>
                             </linearGradient>
                         </defs>
                     </svg>
@@ -2418,19 +2596,19 @@
             <div class="legend-clusters" id="legend-clusters">
                 <div class="legend-cluster-row">
                     <span class="legend-dot-label">Avalúo alto</span>
-                    <div class="legend-dot" style="background:#FEB400;box-shadow:0 0 6px #FEB400;"></div>
+                    <div class="legend-dot" style="background:#F9C235;box-shadow:0 0 6px #F9C235;"></div>
                 </div>
                 <div class="legend-cluster-row">
                     <span class="legend-dot-label">Avalúo medio-alto</span>
-                    <div class="legend-dot" style="background:#F8A000;box-shadow:0 0 6px #F8A000;"></div>
+                    <div class="legend-dot" style="background:#F9C235;box-shadow:0 0 6px #F9C235;"></div>
                 </div>
                 <div class="legend-cluster-row">
                     <span class="legend-dot-label">Avalúo medio</span>
-                    <div class="legend-dot" style="background:#F04020;box-shadow:0 0 6px #F04020;"></div>
+                    <div class="legend-dot" style="background:#C5E8F0;box-shadow:0 0 6px #C5E8F0;"></div>
                 </div>
                 <div class="legend-cluster-row">
                     <span class="legend-dot-label">Avalúo bajo</span>
-                    <div class="legend-dot" style="background:#E3192F;box-shadow:0 0 6px #E3192F;"></div>
+                    <div class="legend-dot" style="background:#76D7E1;box-shadow:0 0 6px #76D7E1;"></div>
                 </div>
             </div>
         </div>
@@ -3078,10 +3256,82 @@
                     tileSize: 256,
                     attribution: '© Catastro Bogotá',
                 },
+                'mapa_base_3857': {
+                    type: 'raster',
+                    tiles: [
+                        'https://serviciosgis.catastrobogota.gov.co/arcgis/rest/services/Mapa_Referencia/mapa_base_3857/MapServer/tile/{z}/{y}/{x}',
+                    ],
+                    tileSize: 256,
+                    attribution: '© Catastro Bogotá',
+                },
+                'mapa_base_4686': {
+                    type: 'raster',
+                    tiles: [
+                        'https://serviciosgis.catastrobogota.gov.co/arcgis/rest/services/Mapa_Referencia/mapa_base_4686/MapServer/tile/{z}/{y}/{x}',
+                    ],
+                    tileSize: 256,
+                    attribution: '© Catastro Bogotá',
+                },
+                'mapa_base_gris': {
+                    type: 'raster',
+                    tiles: [
+                        'https://serviciosgis.catastrobogota.gov.co/arcgis/rest/services/Mapa_Referencia/mapa_base_gris/MapServer/tile/{z}/{y}/{x}',
+                    ],
+                    tileSize: 256,
+                    attribution: '© Catastro Bogotá',
+                },
+                'mapa_base_oscuro_3857': {
+                    type: 'raster',
+                    tiles: [
+                        'https://serviciosgis.catastrobogota.gov.co/arcgis/rest/services/Mapa_Referencia/mapa_base_oscuro_3857/MapServer/tile/{z}/{y}/{x}',
+                    ],
+                    tileSize: 256,
+                    attribution: '© Catastro Bogotá',
+                },
+                'mapa_base_toner': {
+                    type: 'raster',
+                    tiles: [
+                        'https://serviciosgis.catastrobogota.gov.co/arcgis/rest/services/Mapa_Referencia/mapa_base_toner/MapServer/tile/{z}/{y}/{x}',
+                    ],
+                    tileSize: 256,
+                    attribution: '© Catastro Bogotá',
+                },
+                'mapa_hibrido': {
+                    type: 'raster',
+                    tiles: [
+                        'https://serviciosgis.catastrobogota.gov.co/arcgis/rest/services/Mapa_Referencia/mapa_hibrido/MapServer/tile/{z}/{y}/{x}',
+                    ],
+                    tileSize: 256,
+                    attribution: '© Catastro Bogotá',
+                },
+                'Mapa_Referencia': {
+                    type: 'raster',
+                    tiles: [
+                        'https://serviciosgis.catastrobogota.gov.co/arcgis/rest/services/Mapa_Referencia/Mapa_Referencia/MapServer/tile/{z}/{y}/{x}',
+                    ],
+                    tileSize: 256,
+                    attribution: '© Catastro Bogotá',
+                },
+                'mapabasemunicipioscundinamarca': {
+                    type: 'raster',
+                    tiles: [
+                        'https://serviciosgis.catastrobogota.gov.co/arcgis/rest/services/Mapa_Referencia/mapabasemunicipioscundinamarca/MapServer/tile/{z}/{y}/{x}',
+                    ],
+                    tileSize: 256,
+                    attribution: '© Catastro Bogotá',
+                },
             },
             layers: [
                 { id: 'basemap-dark', type: 'raster', source: 'carto-dark', layout: { visibility: 'none' } },
-                { id: 'basemap-light', type: 'raster', source: 'carto-light', layout: { visibility: 'visible' } },
+                { id: 'basemap-light', type: 'raster', source: 'carto-light', layout: { visibility: 'none' } },
+                { id: 'basemap-mapa_base_3857', type: 'raster', source: 'mapa_base_3857', layout: { visibility: 'none' } },
+                { id: 'basemap-mapa_base_4686', type: 'raster', source: 'mapa_base_4686', layout: { visibility: 'none' } },
+                { id: 'basemap-mapa_base_gris', type: 'raster', source: 'mapa_base_gris', layout: { visibility: 'visible' } },
+                { id: 'basemap-mapa_base_oscuro_3857', type: 'raster', source: 'mapa_base_oscuro_3857', layout: { visibility: 'none' } },
+                { id: 'basemap-mapa_base_toner', type: 'raster', source: 'mapa_base_toner', layout: { visibility: 'none' } },
+                { id: 'basemap-mapa_hibrido', type: 'raster', source: 'mapa_hibrido', layout: { visibility: 'none' } },
+                { id: 'basemap-Mapa_Referencia', type: 'raster', source: 'Mapa_Referencia', layout: { visibility: 'none' } },
+                { id: 'basemap-mapabasemunicipioscundinamarca', type: 'raster', source: 'mapabasemunicipioscundinamarca', layout: { visibility: 'none' } },
             ],
         };
 
@@ -3115,6 +3365,39 @@
             if (!map) return;
             const v = STATES[0].view;
             map.flyTo({ center: [v.lng, v.lat], zoom: v.zoom, pitch: v.pitch, bearing: v.bearing, duration: 900, essential: true });
+        }
+
+        function toggleBasemapModal() {
+            const modal = document.getElementById('basemap-modal');
+            modal.classList.toggle('active');
+        }
+
+        // Cerrar modal al hacer clic fuera de ella
+        document.addEventListener('click', (e) => {
+            const modal = document.getElementById('basemap-modal');
+            const btn = document.getElementById('basemap-btn');
+            if (!modal.contains(e.target) && !btn.contains(e.target) && modal.classList.contains('active')) {
+                modal.classList.remove('active');
+            }
+        });
+
+        function changeBasemap(basemapKey, basemapName) {
+            if (!map) return;
+
+            // Ocultar todos los mapas base
+            const allLayers = ['basemap-dark', 'basemap-light', 'basemap-mapa_base_3857', 'basemap-mapa_base_4686', 'basemap-mapa_base_gris', 'basemap-mapa_base_oscuro_3857', 'basemap-mapa_base_toner', 'basemap-mapa_hibrido', 'basemap-Mapa_Referencia', 'basemap-mapabasemunicipioscundinamarca'];
+            allLayers.forEach(layerId => {
+                map.setLayoutProperty(layerId, 'visibility', 'none');
+            });
+
+            // Mostrar el mapa base seleccionado
+            map.setLayoutProperty('basemap-' + basemapKey, 'visibility', 'visible');
+
+            // Guardar el mapa actual en localStorage
+            localStorage.setItem('currentBasemap', basemapKey);
+
+            // Cerrar la modal
+            document.getElementById('basemap-modal').classList.remove('active');
         }
 
         function toggleNarrativePanel() {
@@ -3161,10 +3444,10 @@
         // ────────────────────────────────────────────────────────────
 
         const ESTRATO_COLORS_MAP = {
-            1: '#E3192F', 2: '#E3192F',
-            3: '#F04020',
-            4: '#F8A000',
-            5: '#FEB400', 6: '#FEB400',
+            1: '#76D7E1', 2: '#76D7E1',
+            3: '#C5E8F0',
+            4: '#F9C235',
+            5: '#F9C235', 6: '#F9C235',
         };
 
         /** Imágenes reales de cada localidad */
@@ -3211,13 +3494,13 @@
                     <hr style="border:none;border-top:1px solid rgba(255,255,255,0.1);margin:10px 0;">
                     <div style="color:${isLight ? '#333' : '#ccc'};font-size:0.8rem;line-height:1.8;">
                         <div style="margin-bottom:10px;">
-                            <span style="color:#FEB400;font-weight:700;">Res.</span> Residencial — vivienda unifamiliar y multifamiliar
+                            <span style="color:#F9C235;font-weight:700;">Res.</span> Residencial — vivienda unifamiliar y multifamiliar
                         </div>
                         <div style="margin-bottom:10px;">
-                            <span style="color:#E3192F;font-weight:700;">Com.</span> Comercial — retail, oficinas, servicios y negocios
+                            <span style="color:#76D7E1;font-weight:700;">Com.</span> Comercial — retail, oficinas, servicios y negocios
                         </div>
                         <div style="margin-bottom:10px;">
-                            <span style="color:#888888;font-weight:700;">Ind.</span> Industrial — manufactura, almacenes y logística
+                            <span style="color:#B89DC9;font-weight:700;">Ind.</span> Industrial — manufactura, almacenes y logística
                         </div>
                         <div>
                             <span style="color:#0077aa;font-weight:700;">Dot.</span> Dotacional — educación, salud, administración pública y equipamientos
@@ -3253,9 +3536,9 @@
         /** Muestra popup enriquecido con imagen y datos del censo */
         function showLocalidadPopup(loc) {
             if (activePopup) activePopup.remove();
-            const dimColor = document.body.classList.contains('light-mode') ? '#111' : 'var(--dim)';
+            const dimColor = document.body.classList.contains('light-mode') ? '#111' : 'var(--text-secondary)';
 
-            const color = ESTRATO_COLORS_MAP[loc.estrato] || '#1d8cf8';
+            const color = ESTRATO_COLORS_MAP[loc.estrato] || '#76D7E1';
             const imgSrc = LOC_IMG[loc.name] ?? 'Localidades/Usaquen.png';
 
             // Etiqueta de uso predominante + estrato
@@ -3274,9 +3557,9 @@
             const yearLabel = `Datos ${selectedYear}`;
 
             const usoBars = [
-                { label: `Res. ${loc.residencial}%`, pct: loc.residencial, color: '#FEB400', cls: 'res' },
-                { label: `Com. ${loc.comercial}%`, pct: loc.comercial, color: '#E3192F', cls: 'com' },
-                { label: `Ind. ${loc.industrial}%`, pct: loc.industrial, color: '#888888', cls: 'ind' },
+                { label: `Res. ${loc.residencial}%`, pct: loc.residencial, color: '#F9C235', cls: 'res' },
+                { label: `Com. ${loc.comercial}%`, pct: loc.comercial, color: '#76D7E1', cls: 'com' },
+                { label: `Ind. ${loc.industrial}%`, pct: loc.industrial, color: '#B89DC9', cls: 'ind' },
                 { label: `Dot. ${loc.dotacional}%`, pct: loc.dotacional, color: '#0077aa', cls: 'dot' },
             ];
 
@@ -3300,11 +3583,9 @@
                         <span style="font-family:var(--mono);font-size:.55rem;font-weight:700;color:${dimColor};letter-spacing:.08em;">${yearLabel}</span>
                     </div>
                     <div class="popup-row"><span class="popup-label">Predios censados</span><span class="popup-value cyan">${Number(loc.prediosCensados || loc.predios).toLocaleString('es-CO')}</span></div>
-                    <div class="popup-row"><span class="popup-label">Participación en Bogotá</span><span class="popup-value">${loc.participacion != null ? loc.participacion.toFixed(1) + '%' : '–'}</span></div>
                     <div class="popup-row"><span class="popup-label">· Predios rurales</span><span class="popup-value">${loc.prediosRural != null ? Number(loc.prediosRural).toLocaleString('es-CO') : '–'}</span></div>
                     <hr class="popup-divider">
                     <div class="popup-row"><span class="popup-label">Avalúo catastral total</span><span class="popup-value cyan">${fmtAvaluoCatastral(loc.avaluoCatastral)}</span></div>
-                    <div class="popup-row"><span class="popup-label">Ranking avalúo ciudad</span><span class="popup-value" style="color:${color};">${rankLabel}</span></div>
                     <div class="popup-row"><span class="popup-label">Área construida</span><span class="popup-value magenta">${Number(Math.round(loc.areaCons * 10000)).toLocaleString('es-CO')} m²</span></div>
                     <hr class="popup-divider">
 
@@ -3339,7 +3620,7 @@
             const IMG_PX = 56;
             Promise.all(LOCALIDADES.map(async loc => {
                 const src = LOC_IMG[loc.name] ?? 'Localidades/Usaquen.png';
-                const borderCol = ESTRATO_COLORS_MAP[loc.estrato] || '#FEB400';
+                const borderCol = ESTRATO_COLORS_MAP[loc.estrato] || '#F9C235';
                 const imgData = await loadRoundImage(src, IMG_PX, borderCol);
                 if (imgData) {
                     if (map.hasImage('loc-' + loc.name)) map.removeImage('loc-' + loc.name);
@@ -3376,7 +3657,7 @@
         // ────────────────────────────────────────────────────────────
 
         function showClusterCard(leaves) {
-            const dimColor = document.body.classList.contains('light-mode') ? '#111' : 'var(--dim)';
+            const dimColor = document.body.classList.contains('light-mode') ? '#111' : 'var(--text-secondary)';
             let totalPredios = 0, totalCensados = 0, totalArea = 0, weightedAvaluo = 0;
             let totalResid = 0, totalCom = 0, totalInd = 0, totalDot = 0;
             let totalParticipacion = 0, totalRural = 0, ruralKnown = false;
@@ -3419,10 +3700,10 @@
             const avaluoVsCityLabel = avaluoVsCity !== null
                 ? (avaluoVsCity >= 0 ? `+${avaluoVsCity}% vs prom. de Bogotá` : `${avaluoVsCity}% vs prom. de Bogotá`)
                 : '';
-            const avaluoVsCityColor = avaluoVsCity !== null && Number(avaluoVsCity) >= 0 ? 'var(--cyan)' : 'var(--mag)';
+            const avaluoVsCityColor = avaluoVsCity !== null && Number(avaluoVsCity) >= 0 ? 'var(--color-red)' : 'var(--color-yellow)';
 
             // Estrato dominante con color
-            const estratoColor = ESTRATO_COLORS_MAP[Number(domEstrato)] || 'var(--blue)';
+            const estratoColor = ESTRATO_COLORS_MAP[Number(domEstrato)] || 'var(--color-red-dark)';
 
             const headerTitle = n === 1
                 ? (leaves[0].properties.name || '1 localidad')
@@ -3430,7 +3711,7 @@
             const statsEl = document.getElementById('timeline-stats');
             statsEl.innerHTML = `
                 <div class="stat-row" style="width:100%;border-bottom:1px solid var(--border);padding-bottom:3px;margin-bottom:4px;">
-                    <span style="font-family:var(--mono);font-size:.68rem;font-weight:700;color:var(--cyan);letter-spacing:.1em;text-transform:uppercase;">${headerTitle}</span>
+                    <span style="font-family:var(--mono);font-size:.68rem;font-weight:700;color:var(--color-red);letter-spacing:.1em;text-transform:uppercase;">${headerTitle}</span>
                     <button onclick="closeClusterCard()" style="background:none;border:none;color:${dimColor};cursor:pointer;font-size:15px;line-height:1;padding:0;" title="Cerrar">×</button>
                 </div>
                 <div class="stat-row" style="margin-bottom:2px;">
@@ -3442,28 +3723,28 @@
                 <div class="stat-row"><span class="stat-pct up">${ruralKnown ? Number(totalRural).toLocaleString('es-CO') : '–'}</span><span class="stat-label">· predios rurales</span></div>
                 <div class="stat-row"><span class="stat-pct up">${Number(Math.round(totalArea * 10000)).toLocaleString('es-CO')} m²</span><span class="stat-label">área construida total</span></div>
                 <div style="width:100%;margin:4px 0 2px;font-family:var(--mono);font-size:.56rem;font-weight:700;color:${dimColor};letter-spacing:.07em;text-transform:uppercase;">Uso del suelo</div>
-                <div class="stat-row"><span class="stat-pct" style="color:var(--cyan);">${avgResid}%</span><span class="stat-label">residencial</span></div>
+                <div class="stat-row"><span class="stat-pct" style="color:var(--color-red);">${avgResid}%</span><span class="stat-label">residencial</span></div>
                 <div class="stat-row"><span class="stat-pct down">${avgCom}%</span><span class="stat-label">comercial</span></div>
-                <div class="stat-row"><span class="stat-pct" style="color:var(--blue)">${avgInd}%</span><span class="stat-label">industrial</span></div>
-                <div class="stat-row"><span class="stat-pct" style="color:var(--purple)">${avgDot}%</span><span class="stat-label">dotacional / institucional</span></div>
+                <div class="stat-row"><span class="stat-pct" style="color:var(--color-red-dark)">${avgInd}%</span><span class="stat-label">industrial</span></div>
+                <div class="stat-row"><span class="stat-pct" style="color:var(--color-red-light)">${avgDot}%</span><span class="stat-label">dotacional / institucional</span></div>
             `;
         }
 
         function renderOverviewStats() {
-            const dimColor = document.body.classList.contains('light-mode') ? '#111' : 'var(--dim)';
+            const dimColor = document.body.classList.contains('light-mode') ? '#111' : 'var(--text-secondary)';
             const sorted = [...LOCALIDADES].sort((a, b) => b.predios - a.predios);
             const maxPredios = sorted[0].predios;
             const statsEl = document.getElementById('timeline-stats');
             statsEl.innerHTML = `
                 <div class="stat-row" style="width:100%;border-bottom:1px solid var(--border);padding-bottom:3px;margin-bottom:4px;">
-                    <span style="font-size:.65rem;font-weight:700;color:#FEB400;letter-spacing:.1em;text-transform:uppercase;">20 localidades · ${selectedYear} · clic para explorar</span>
+                    <span style="font-size:.65rem;font-weight:700;color:#F9C235;letter-spacing:.1em;text-transform:uppercase;">20 localidades · ${selectedYear} · clic para explorar</span>
                 </div>
                 ${sorted.map((loc, idx) => {
                 const pct = Math.round((loc.predios / maxPredios) * 100);
-                const avaluoColor = loc.avaluo > 60000 ? '#FEB400'
-                    : loc.avaluo > 30000 ? '#F8A000'
-                        : loc.avaluo > 15000 ? '#F04020'
-                            : '#E3192F';
+                const avaluoColor = loc.avaluo > 60000 ? '#F9C235'
+                    : loc.avaluo > 30000 ? '#F9C235'
+                        : loc.avaluo > 15000 ? '#C5E8F0'
+                            : '#76D7E1';
                 const avaluoK = loc.avaluo >= 1000 ? `$${(loc.avaluo / 1000).toFixed(0)}k` : `$${loc.avaluo}`;
                 return `
                         <div class="stat-row clickable" data-loc="${loc.name}" style="flex-direction:column;align-items:flex-start;gap:0;">
@@ -3496,7 +3777,7 @@
             } else {
                 const statsEl = document.getElementById('timeline-stats');
                 statsEl.innerHTML = s.stats
-                    ? `${s.statsTitle ? `<div style="width:100%;margin-bottom:6px;padding-bottom:4px;border-bottom:1px solid var(--border);font-family:var(--mono);font-size:.52rem;font-weight:600;color:var(--cyan);letter-spacing:.09em;text-transform:uppercase;">${s.statsTitle}</div>` : ''}${s.stats.map(r => `<div class="stat-row"><span class="stat-pct ${r.up ? 'up' : 'down'}">${r.pct}</span><span class="stat-label">${r.label}</span></div>`).join('')}`
+                    ? `${s.statsTitle ? `<div style="width:100%;margin-bottom:6px;padding-bottom:4px;border-bottom:1px solid var(--border);font-family:var(--mono);font-size:.52rem;font-weight:600;color:var(--color-red);letter-spacing:.09em;text-transform:uppercase;">${s.statsTitle}</div>` : ''}${s.stats.map(r => `<div class="stat-row"><span class="stat-pct ${r.up ? 'up' : 'down'}">${r.pct}</span><span class="stat-label">${r.label}</span></div>`).join('')}`
                     : '';
             }
             renderChart('historico');
@@ -3573,7 +3854,7 @@
                 renderOverviewStats();
             } else {
                 statsEl.innerHTML = s.stats
-                    ? `${s.statsTitle ? `<div style="width:100%;margin-bottom:6px;padding-bottom:4px;border-bottom:1px solid var(--border);font-family:var(--mono);font-size:.52rem;font-weight:600;color:var(--cyan);letter-spacing:.09em;text-transform:uppercase;">${s.statsTitle}</div>` : ''}${s.stats.map(r => `<div class="stat-row"><span class="stat-pct ${r.up ? 'up' : 'down'}">${r.pct}</span><span class="stat-label">${r.label}</span></div>`).join('')}`
+                    ? `${s.statsTitle ? `<div style="width:100%;margin-bottom:6px;padding-bottom:4px;border-bottom:1px solid var(--border);font-family:var(--mono);font-size:.52rem;font-weight:600;color:var(--color-red);letter-spacing:.09em;text-transform:uppercase;">${s.statsTitle}</div>` : ''}${s.stats.map(r => `<div class="stat-row"><span class="stat-pct ${r.up ? 'up' : 'down'}">${r.pct}</span><span class="stat-label">${r.label}</span></div>`).join('')}`
                     : '';
             }
 
@@ -3818,7 +4099,7 @@
                     data: {
                         labels: labelsH,
                         datasets: [
-                            { label: 'Urbano', data: urbanoData, backgroundColor: 'rgba(254, 180, 0, .85)', yAxisID: 'y' },
+                            { label: 'Urbano', data: urbanoData, backgroundColor: 'rgba(249, 194, 53, .85)', yAxisID: 'y' },
                             { label: 'Rural', data: ruralData, backgroundColor: 'rgba(255, 0, 50, .95)', yAxisID: 'y' },
                         ],
                     },
@@ -4124,12 +4405,12 @@
                                 {
                                     label: 'Área construida neta (m²)',
                                     data: data.valores,
-                                    borderColor: 'rgba(254, 180, 0, 1)',
-                                    backgroundColor: 'rgba(254, 180, 0, 0.05)',
+                                    borderColor: 'rgba(249, 194, 53, 1)',
+                                    backgroundColor: 'rgba(249, 194, 53, 0.05)',
                                     borderWidth: 2,
                                     fill: false,
                                     pointRadius: 4,
-                                    pointBackgroundColor: 'rgba(254, 180, 0, 1)',
+                                    pointBackgroundColor: 'rgba(249, 194, 53, 1)',
                                     pointBorderColor: '#fff',
                                     pointBorderWidth: 2,
                                     tension: 0.3
@@ -4302,7 +4583,9 @@
                 const isLight = themeToggle.checked;
                 document.body.classList.toggle('light-mode', isLight);
                 map.setLayoutProperty('basemap-dark', 'visibility', isLight ? 'none' : 'visible');
-                map.setLayoutProperty('basemap-light', 'visibility', isLight ? 'visible' : 'none');
+                map.setLayoutProperty('basemap-light', 'visibility', 'none');
+                map.setLayoutProperty('basemap-mapa_base_gris', 'visibility', isLight ? 'visible' : 'none');
+                map.setLayoutProperty('basemap-mapa_base_oscuro_3857', 'visibility', isLight ? 'none' : 'visible');
                 renderChart(chartMetric, activeClusterLeaves);
             });
 
