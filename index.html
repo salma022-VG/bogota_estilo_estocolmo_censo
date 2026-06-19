@@ -946,7 +946,7 @@
             border-radius: 0 !important;
             padding: 14px 18px !important;
             color: var(--text) !important;
-            font-family: var(--mono) !important;
+            font-family: var(--sans) !important;
             box-shadow: 0 0 30px rgba(29, 140, 248, .15), 0 4px 20px rgba(0, 0, 0, .6) !important;
             max-width: 300px !important;
             max-height: 80vh !important;
@@ -3242,30 +3242,12 @@
             clusterCardActive = true;
 
             const mapRect = map.getContainer().getBoundingClientRect();
+            const w = mapRect.width;
             const h = mapRect.height;
             const isMobile = window.innerWidth <= 1024;
 
-            // Límite inferior visible: panel superpuesto más alto que cubre el fondo
-            // (timeline siempre; en móvil el panel narrativo es una banda inferior).
-            let bottomLimit = h;
-            const strip = document.getElementById('timeline-strip');
-            if (strip) bottomLimit = Math.min(bottomLimit, strip.getBoundingClientRect().top - mapRect.top);
-            if (isMobile) {
-                const narr = document.getElementById('narrative-panel');
-                if (narr && !narr.classList.contains('minimized')) {
-                    bottomLimit = Math.min(bottomLimit, narr.getBoundingClientRect().top - mapRect.top);
-                }
-            }
-
-            // Altura estimada de la tarjeta (en móvil está limitada a 60vh por CSS)
-            const popupH = isMobile ? Math.min(h * .6, 420) : 540;
-            const topSafe = 60; // header + margen
-
-            // Punto lo más abajo posible, pero dejando sitio arriba para la tarjeta completa
-            const targetY = Math.min(bottomLimit - 30, topSafe + popupH);
-            const offsetY = targetY - h / 2;
             const zoom = isMobile ? 13 : 14;
-            map.flyTo({ center: [loc.lng, loc.lat], zoom, duration: 800, essential: true, offset: [0, offsetY] });
+            map.flyTo({ center: [loc.lng, loc.lat], zoom, duration: 800, essential: true });
         }
 
         /** Muestra popup enriquecido con imagen y datos del censo */
