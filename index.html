@@ -199,7 +199,7 @@
             position: absolute;
             top: 50px;
             left: 0;
-            bottom: 240px;
+            bottom: 0;
             width: 36%;
             max-width: 440px;
             z-index: 500;
@@ -521,7 +521,7 @@
             right: 0;
             height: 240px;
             z-index: 600;
-            display: flex;
+            display: none;
             background: var(--timeline-bg);
             border-top: 1px solid var(--border);
             backdrop-filter: blur(3px);
@@ -1144,7 +1144,7 @@
         /* ── Botón centrar mapa ── */
         .center-map-btn {
             position: fixed;
-            bottom: 260px;
+            bottom: 11px;
             right: 11px;
             z-index: 800;
             width: 40px;
@@ -4248,9 +4248,7 @@
             const progressFill = document.getElementById('intro-progress-fill');
             const skipBtn      = document.getElementById('intro-skip-btn');
 
-            const lastWasVideo = localStorage.getItem('lastIntroWasVideo') === 'true';
-            const useVideo = !lastWasVideo;
-            localStorage.setItem('lastIntroWasVideo', String(useVideo));
+            const useVideo = true;
 
             function endIntro() {
                 if (useVideo) {
