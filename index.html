@@ -1600,7 +1600,7 @@
                 left: 0;
                 right: 0;
                 top: auto;
-                bottom: 220px;
+                bottom: 0;
                 width: 100%;
                 max-width: none;
                 max-height: 32vh;
@@ -1925,7 +1925,7 @@
 
             .narrative-panel {
                 max-height: 34vh;
-                bottom: 220px;
+                bottom: 0;
                 padding: 12px 16px 12px;
             }
 
@@ -2029,7 +2029,7 @@
 
             .narrative-panel {
                 max-height: 50vh;
-                bottom: 90px;
+                bottom: 0;
             }
 
             .timeline-strip {
@@ -4230,71 +4230,38 @@
             const progressFill = document.getElementById('intro-progress-fill');
             const skipBtn      = document.getElementById('intro-skip-btn');
 
-            const useVideo = true;
+            const lastWasIntro = localStorage.getItem('lastIntroWasIntro') !== 'false';
+            const useIntroVideo = !lastWasIntro;
+            localStorage.setItem('lastIntroWasIntro', String(useIntroVideo));
 
             function endIntro() {
-                if (useVideo) {
-                    introVideo.pause();
-                } else {
-                    introCampin.classList.remove('active');
-                }
+                introVideo.pause();
+                introCampin.classList.remove('active');
                 introOverlay.classList.add('fade-out');
                 setTimeout(() => { introOverlay.style.display = 'none'; }, 1300);
             }
 
             skipBtn.addEventListener('click', endIntro, { once: true });
 
-            if (useVideo) {
-                introCampin.classList.remove('active');
-                introVideo.style.display = 'block';
+            introCampin.classList.remove('active');
+            introVideo.style.display = 'block';
 
-                introVideo.addEventListener('timeupdate', () => {
-                    if (introVideo.duration > 0) {
-                        progressFill.style.width = `${(introVideo.currentTime / introVideo.duration) * 100}%`;
-                    }
-                });
-
-                introVideo.addEventListener('ended', endIntro);
-                introVideo.play().catch(() => { });
+            if (useIntroVideo) {
+                introVideo.src = 'video/Intro.mp4';
+                introVideo.playbackRate = 1;
             } else {
-                introVideo.style.display = 'none';
-                introCampin.classList.add('active');
-
-                const campinImg = document.getElementById('intro-campin-img');
-                const totalFrames = 148;
-                let currentFrame = 0;
-                const frameDuration = 65;
-                let startTime = Date.now();
-                let isRunning = true;
-                let lastFrameDisplayed = -1;
-
-                function animateFrame() {
-                    if (!isRunning) return;
-
-                    const elapsed = Date.now() - startTime;
-                    currentFrame = Math.floor(elapsed / frameDuration);
-
-                    if (currentFrame >= totalFrames) {
-                        currentFrame = totalFrames - 1;
-                        isRunning = false;
-                        setTimeout(endIntro, 300);
-                    }
-
-                    if (currentFrame !== lastFrameDisplayed) {
-                        const frameNum = String(currentFrame).padStart(3, '0');
-                        campinImg.src = `animacion-campin_${frameNum}.jpeg`;
-                        lastFrameDisplayed = currentFrame;
-                    }
-
-                    progressFill.style.width = `${(currentFrame / totalFrames) * 100}%`;
-
-                    if (isRunning) {
-                        requestAnimationFrame(animateFrame);
-                    }
-                }
-
-                animateFrame();
+                introVideo.src = 'video/animacion-campin.mp4';
+                introVideo.playbackRate = 2;
             }
+
+            introVideo.addEventListener('timeupdate', () => {
+                if (introVideo.duration > 0) {
+                    progressFill.style.width = `${(introVideo.currentTime / introVideo.duration) * 100}%`;
+                }
+            });
+
+            introVideo.addEventListener('ended', endIntro);
+            introVideo.play().catch(() => { });
         }
 
         // ────────────────────────────────────────────────────────────
