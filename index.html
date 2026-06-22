@@ -1141,21 +1141,21 @@
         }
 
         .popup-label {
-            color: var(--text-secondary);
+            color: #000000;
             font-weight: 700;
         }
 
         .popup-value {
             font-weight: 600;
-            color: #fff;
+            color: #000000 !important;
         }
 
         .popup-value.cyan {
-            color: var(--color-red);
+            color: #000000 !important;
         }
 
         .popup-value.magenta {
-            color: var(--color-yellow);
+            color: #000000 !important;
         }
 
         .popup-divider {
@@ -1730,52 +1730,40 @@
             }
 
             /* ── Panel narrativo ──
-               Banda horizontal en la parte inferior,
-               encima del timeline; mapa visible arriba  */
+               Minimizado por defecto en mobile  */
             .narrative-panel {
-                position: absolute;
-                left: 0;
-                right: 0;
+                position: fixed;
+                left: auto;
+                right: 12px;
                 top: auto;
-                bottom: 0;
-                width: 100%;
-                max-width: none;
-                max-height: 32vh;
-                padding: 12px 18px 12px;
+                bottom: 100px;
+                width: 56px;
+                height: 56px;
+                max-width: 56px;
+                max-height: 56px;
+                padding: 0;
                 background: var(--panel-bg);
-                border-right: none;
-                border-top: 1px solid var(--border);
-                border-bottom: none;
+                border: 1px solid var(--border);
+                border-radius: 50%;
                 display: flex;
                 flex-direction: column;
                 justify-content: center;
                 align-items: center;
-                overflow-y: auto;
+                overflow: hidden;
                 animation: none;
+                z-index: 600;
             }
 
             .narrative-content {
-                width: 100%;
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                justify-content: center;
+                display: none;
             }
 
             .narrative-text {
-                font-size: 0.9rem;
-                line-height: 1.55;
-                max-width: none;
-                width: 100%;
-                text-align: center;
+                display: none;
             }
 
             .narrative-buttons {
-                width: 100%;
-                display: flex;
-                justify-content: center;
-                gap: 12px;
-                margin-top: 12px;
+                display: none;
             }
 
             .ghost-btn {
@@ -1785,6 +1773,15 @@
                 font-size: 0.6rem;
                 text-align: center;
                 letter-spacing: .12em;
+            }
+
+            /* ── Botón minimizar narrativo en mobile ── */
+            .narrative-min-btn {
+                top: 8px;
+                right: 8px;
+                width: 24px;
+                height: 24px;
+                font-size: 13px;
             }
 
             /* ── Leyenda ── esquina superior derecha en móvil */
@@ -1811,7 +1808,8 @@
 
             /* ── Timeline ── */
             .timeline-strip {
-                height: 220px;
+                height: 0;
+                display: none;
             }
 
             .timeline-stats {
@@ -1823,9 +1821,7 @@
             }
 
             .timeline-chart-container {
-                padding: 4px 10px 6px 10px;
-                display: flex;
-                flex-direction: column;
+                display: none;
             }
 
             .chart-controls {
@@ -2042,6 +2038,19 @@
                 color: var(--text-secondary);
                 margin-top: 4px;
             }
+
+            /* ── Crédito IDECA responsive ── */
+            .ideca-credit {
+                position: fixed;
+                bottom: 11px;
+                right: 11px;
+                left: auto;
+                font-size: 0.65rem;
+                max-width: 100px;
+                padding: 3px 6px;
+                line-height: 1.2;
+                word-break: break-word;
+            }
         }
 
         /* ── Teléfonos muy pequeños (≤ 390px) ── */
@@ -2148,6 +2157,15 @@
 
             .timeline-chart-container {
                 padding-top: 8px;
+            }
+
+            /* ── Crédito IDECA en pantallas muy pequeñas ── */
+            .ideca-credit {
+                font-size: 0.55rem;
+                max-width: 280px;
+                padding: 2px 4px;
+                bottom: 230px;
+                right: 4px;
             }
 
         }
@@ -2265,15 +2283,15 @@
 
         /* popup valores en tema claro */
         body.light-mode .popup-value {
-            color: #111 !important;
+            color: #000000 !important;
         }
 
         body.light-mode .popup-value.cyan {
-            color: var(--color-red) !important;
+            color: #000000 !important;
         }
 
         body.light-mode .popup-value.magenta {
-            color: var(--color-yellow) !important;
+            color: #000000 !important;
         }
 
         body.light-mode .popup-label {
@@ -2355,12 +2373,12 @@
         }
 
         body.light-mode .narrative-text strong {
-            color: #C88000 !important;
+            color: #A8DDEA !important;
             text-shadow: none;
         }
 
         body.light-mode .narrative-text .magenta {
-            color: #C0101F !important;
+            color: #B89DC9 !important;
             text-shadow: none;
         }
 
@@ -2495,10 +2513,6 @@
                     <div class="basemap-preview" style="background: url('Imagenes_mapas/Mapa-Base-Gris.jpg') center/cover no-repeat;"></div>
                     <span>Vector</span>
                 </div>
-                <div class="basemap-option" onclick="changeBasemap('mapa_base_oscuro_3857', 'Azul')">
-                    <div class="basemap-preview" style="background: url('Imagenes_mapas/Mapa-Base-Azul.png') center/cover no-repeat;"></div>
-                    <span>Azul</span>
-                </div>
                 <div class="basemap-option" onclick="changeBasemap('mapabasemunicipioscundinamarca', 'Topográfico')">
                     <div class="basemap-preview" style="background: url('Imagenes_mapas/Mapa-Base-Gris.jpg') center/cover no-repeat;"></div>
                     <span>Topográfico</span>
@@ -2529,7 +2543,7 @@
             <div class="narrative-content" id="narrative-content">
                 <p class="narrative-text" id="narrative-text">
                     El censo inmobiliario de Bogotá registra <strong>2,929 mill.</strong> de predios
-                    en las 20 localidades. El avalúo catastral total para 2026 alcanza los
+                    en las 20 localidades. El valor castral total para 2026 alcanza los
                     <strong class="magenta">$945 billones de pesos</strong> — evidenciando la revalorización
                     acelerada del suelo bogotano en la última década.
                 </p>
@@ -2750,16 +2764,13 @@
     <div class="info-modal" id="info-modal">
         <div class="info-modal-content">
             <button class="info-close" id="info-close">&times;</button>
-            <h2>Sobre este proyecto</h2>
-            <p>Visualización interactiva del catastro inmobiliario de Bogotá D.C., construida con datos oficiales del Catastro Bogotá. Cubre <strong>10 años de historia catastral</strong> (2016–2026), con registros de predios, avalúos, áreas construidas y usos del suelo en las <strong>20 localidades</strong> de la ciudad.</p>
-            <hr style="border-color:var(--border);margin:14px 0;">
+          
             <p style="font-size:0.78rem;line-height:1.7;color:#ccc;">
                 <strong style="color:#fff;display:block;margin-bottom:6px;font-weight:700;">Datos en cifras (2026)</strong>
                 <span style="display:flex;justify-content:space-between;margin-bottom:3px;color:#ccc;"><span>Predios registrados</span><strong style="color:#4dd0e1;font-weight:600;">2.929.879</strong></span>
                 <span style="display:flex;justify-content:space-between;margin-bottom:3px;color:#ccc;"><span>Avalúo catastral total</span><strong style="color:#4dd0e1;font-weight:600;">$945,2 billones COP</strong></span>
                 <span style="display:flex;justify-content:space-between;margin-bottom:3px;color:#ccc;"><span>Área construida total</span><strong style="color:#4dd0e1;font-weight:600;">312,9 mill m²</strong></span>
                 <span style="display:flex;justify-content:space-between;margin-bottom:3px;color:#ccc;"><span>Crecimiento predios 2016–2026</span><strong style="color:#ff69b4;font-weight:600;">+19,5 %</strong></span>
-                <span style="display:flex;justify-content:space-between;margin-bottom:3px;color:#ccc;"><span>Usos del suelo clasificados</span><strong style="color:#fff;font-weight:600;">10</strong></span>
                 <span style="display:flex;justify-content:space-between;color:#ccc;"><span>Fuente</span><strong style="color:#fff;font-weight:600;">Catastro Distrital de Bogotá</strong></span>
             </p>
             <p class="info-tech">Arcgis · Chart.js · Datos 2016–2026</p>
@@ -2775,26 +2786,26 @@
         // Campos: predios, avaluo (COP/m²), areaCons (ha), estrato, residencial%, comercial%,
         //         industrial%, dotacional%, unidades (unidades privadas)
         const LOCALIDADES = [
-            { name: 'Usaquén', lat: 4.7110, lng: -74.0315, predios: 185000, avaluo: 98500, areaCons: 18200, estrato: 5, residencial: 82, comercial: 14, industrial: 2, dotacional: 2, unidades: 195000 },
-            { name: 'Chapinero', lat: 4.6486, lng: -74.0628, predios: 78000, avaluo: 112000, areaCons: 8900, estrato: 5, residencial: 65, comercial: 28, industrial: 4, dotacional: 3, unidades: 95000 },
-            { name: 'Santa Fe', lat: 4.5964, lng: -74.0765, predios: 32000, avaluo: 42000, areaCons: 3400, estrato: 3, residencial: 55, comercial: 35, industrial: 5, dotacional: 12, unidades: 38000 },
-            { name: 'San Cristóbal', lat: 4.5656, lng: -74.0870, predios: 110000, avaluo: 15800, areaCons: 8200, estrato: 2, residencial: 91, comercial: 6, industrial: 2, dotacional: 1, unidades: 118000 },
-            { name: 'Usme', lat: 4.470972, lng: -74.125333, predios: 95000, avaluo: 11200, areaCons: 6100, estrato: 1, residencial: 93, comercial: 4, industrial: 1, dotacional: 1, unidades: 102000 },
-            { name: 'Tunjuelito', lat: 4.5790, lng: -74.1300, predios: 48000, avaluo: 18500, areaCons: 3900, estrato: 2, residencial: 85, comercial: 10, industrial: 4, dotacional: 1, unidades: 52000 },
-            { name: 'Bosa', lat: 4.6097, lng: -74.1850, predios: 165000, avaluo: 13200, areaCons: 11500, estrato: 2, residencial: 90, comercial: 7, industrial: 2, dotacional: 1, unidades: 175000 },
-            { name: 'Kennedy', lat: 4.6260, lng: -74.1520, predios: 250000, avaluo: 22500, areaCons: 19800, estrato: 3, residencial: 78, comercial: 16, industrial: 5, dotacional: 1, unidades: 268000 },
-            { name: 'Fontibón', lat: 4.6764, lng: -74.1410, predios: 95000, avaluo: 45000, areaCons: 12100, estrato: 3, residencial: 62, comercial: 25, industrial: 12, dotacional: 1, unidades: 105000 },
-            { name: 'Engativá', lat: 4.7033, lng: -74.1130, predios: 210000, avaluo: 28000, areaCons: 17500, estrato: 3, residencial: 80, comercial: 14, industrial: 5, dotacional: 1, unidades: 225000 },
-            { name: 'Suba', lat: 4.7433, lng: -74.0865, predios: 310000, avaluo: 38500, areaCons: 28000, estrato: 3, residencial: 79, comercial: 15, industrial: 4, dotacional: 2, unidades: 335000 },
-            { name: 'Barrios Unidos', lat: 4.6667, lng: -74.0750, predios: 65000, avaluo: 56000, areaCons: 6200, estrato: 4, residencial: 68, comercial: 24, industrial: 7, dotacional: 1, unidades: 72000 },
-            { name: 'Teusaquillo', lat: 4.6480, lng: -74.0920, predios: 55000, avaluo: 65000, areaCons: 5800, estrato: 4, residencial: 70, comercial: 22, industrial: 3, dotacional: 5, unidades: 62000 },
-            { name: 'Los Mártires', lat: 4.6080, lng: -74.0845, predios: 28000, avaluo: 32000, areaCons: 2600, estrato: 3, residencial: 50, comercial: 40, industrial: 8, dotacional: 2, unidades: 33000 },
-            { name: 'Antonio Nariño', lat: 4.5940, lng: -74.1025, predios: 30000, avaluo: 25000, areaCons: 2800, estrato: 3, residencial: 72, comercial: 20, industrial: 6, dotacional: 2, unidades: 35000 },
-            { name: 'Puente Aranda', lat: 4.6165, lng: -74.1080, predios: 70000, avaluo: 35000, areaCons: 8500, estrato: 3, residencial: 55, comercial: 30, industrial: 14, dotacional: 1, unidades: 78000 },
-            { name: 'La Candelaria', lat: 4.5981, lng: -74.0720, predios: 12000, avaluo: 48000, areaCons: 1100, estrato: 3, residencial: 45, comercial: 38, industrial: 5, dotacional: 15, unidades: 15000 },
-            { name: 'Rafael Uribe Uribe', lat: 4.5640, lng: -74.1120, predios: 105000, avaluo: 16500, areaCons: 7800, estrato: 2, residencial: 88, comercial: 8, industrial: 3, dotacional: 1, unidades: 112000 },
-            { name: 'Ciudad Bolívar', lat: 4.5310, lng: -74.1500, predios: 180000, avaluo: 9800, areaCons: 10200, estrato: 1, residencial: 92, comercial: 5, industrial: 2, dotacional: 1, unidades: 192000 },
-            { name: 'Sumapaz', lat: 4.40, lng: -74.15, predios: 3500, avaluo: 5200, areaCons: 180, estrato: 1, residencial: 95, comercial: 2, industrial: 0, dotacional: 2, unidades: 4000 },
+            { name: 'Usaquén', lat: 4.7110, lng: -74.0315, predios: 392157, prediosRural: 2316, areaCons: 2893, residencial: 82, comercial: 14, industrial: 2, dotacional: 2, unidades: 195000 },
+            { name: 'Chapinero', lat: 4.6486, lng: -74.0628, predios: 190907, prediosRural: 3714, areaCons: 1638, residencial: 65, comercial: 28, industrial: 4, dotacional: 3, unidades: 95000 },
+            { name: 'Santa Fe', lat: 4.5964, lng: -74.0765, predios: 75514, prediosRural: 879, areaCons: 3400,  residencial: 55, comercial: 35, industrial: 5, dotacional: 12, unidades: 38000 },
+            { name: 'San Cristóbal', lat: 4.5656, lng: -74.0870, predios: 95701, prediosRural: 1824, areaCons: 8200, residencial: 91, comercial: 6, industrial: 2, dotacional: 1, unidades: 118000 },
+            { name: 'Usme', lat: 4.470972, lng: -74.125333, predios: 99149, prediosRural: 4708, areaCons: 6100, residencial: 93, comercial: 4, industrial: 1, dotacional: 1, unidades: 102000 },
+            { name: 'Tunjuelito', lat: 4.5790, lng: -74.1300, predios: 34384, prediosRural: 0,areaCons: 3900,  residencial: 85, comercial: 10, industrial: 4, dotacional: 1, unidades: 52000 },
+            { name: 'Bosa', lat: 4.6097, lng: -74.1850, predios: 178371, prediosRural: 23826, areaCons: 11500,  residencial: 90, comercial: 7, industrial: 2, dotacional: 1, unidades: 175000 },
+            { name: 'Kennedy', lat: 4.6260, lng: -74.1520, predios: 311568, prediosRural: 11732, areaCons: 19800, residencial: 78, comercial: 16, industrial: 5, dotacional: 1, unidades: 268000 },
+            { name: 'Fontibón', lat: 4.6764, lng: -74.1410, predios: 196808, prediosRural: 307, areaCons: 12100, residencial: 62, comercial: 25, industrial: 12, dotacional: 1, unidades: 105000 },
+            { name: 'Engativá', lat: 4.7033, lng: -74.1130, predios: 241842, prediosRural: 13, areaCons: 17500, residencial: 80, comercial: 14, industrial: 5, dotacional: 1, unidades: 225000 },
+            { name: 'Suba', lat: 4.7433, lng: -74.0865, predios: 529488, prediosRural: 2751, areaCons: 28000, residencial: 79, comercial: 15, industrial: 4, dotacional: 2, unidades: 335000 },
+            { name: 'Barrios Unidos', lat: 4.6667, lng: -74.0750, predios: 64048, prediosRural: 0, areaCons: 6200, residencial: 68, comercial: 24, industrial: 7, dotacional: 1, unidades: 72000 },
+            { name: 'Teusaquillo', lat: 4.6480, lng: -74.0920, predios: 94604, prediosRural: 0, areaCons: 5800, residencial: 70, comercial: 22, industrial: 3, dotacional: 5, unidades: 62000 },
+            { name: 'Los Mártires', lat: 4.6080, lng: -74.0845, predios: 45082, prediosRural: 0, areaCons: 2600, residencial: 50, comercial: 40, industrial: 8, dotacional: 2, unidades: 33000 },
+            { name: 'Antonio Nariño', lat: 4.5940, lng: -74.1025, predios: 26177, prediosRural: 0, areaCons: 2800, residencial: 72, comercial: 20, industrial: 6, dotacional: 2, unidades: 35000 },
+            { name: 'Puente Aranda', lat: 4.6165, lng: -74.1080, predios: 83703, prediosRural: 0, areaCons: 8500, residencial: 55, comercial: 30, industrial: 14, dotacional: 1, unidades: 78000 },
+            { name: 'La Candelaria', lat: 4.5981, lng: -74.0720, predios: 15610, prediosRural: 0, areaCons: 1100, residencial: 45, comercial: 38, industrial: 5, dotacional: 15, unidades: 15000 },
+            { name: 'Rafael Uribe Uribe', lat: 4.5640, lng: -74.1120, predios: 88570, prediosRural: 0, areaCons: 7800, residencial: 88, comercial: 8, industrial: 3, dotacional: 1, unidades: 112000 },
+            { name: 'Ciudad Bolívar', lat: 4.5310, lng: -74.1500, predios: 164393, prediosRural: 6111, areaCons: 10200,  residencial: 92, comercial: 5, industrial: 2, dotacional: 1, unidades: 192000 },
+            { name: 'Sumapaz', lat: 4.40, lng: -74.15, predios: 1803, prediosRural: 1803, areaCons: 180, residencial: 95, comercial: 2, industrial: 0, dotacional: 2, unidades: 4000 },
         ];
 
         // Puntos exactos por localidad — usados para clic e interacción
@@ -3120,7 +3131,7 @@
                 // Avalúo/m² real (AVALUO_CATASTRAL_REAL ÷ área construida):
                 // Chapinero $5.842.257/m² · Teusaquillo $4.823.628/m² · Usaquén $4.723.127/m²
                 // Mínimo: Usme $1.285.636/m² · Brecha Chapinero–Usme: 4,5 veces
-                text: 'Los <strong class="blue">marcadores</strong> señalan cada localidad. El <strong>avalúo catastral por metro cuadrado</strong> varía drásticamente: <strong>Chapinero</strong> encabeza con $5,8 millones/m², más de <strong>4,5 veces</strong> el valor de Usme ($1,3 millones/m²). El corredor norte concentra los valores más altos de la ciudad.',
+                text: 'Los <strong class="blue">marcadores</strong> señalan cada localidad. La concentración de predios varía significativamente: <strong>Suba</strong> lidera con <strong>529.488 predios</strong>, seguida de <strong>Kennedy</strong> (311.568) y <strong>Usaquén</strong> (392.157). Las localidades periféricas tienen menor densidad de propiedades registradas.',
                 mode: 'avaluo',
                 legend: { title: 'Avalúo catastral/m²', type: 'cyan' },
                 view: { lng: -74.065, lat: 4.66, zoom: 12.2, pitch: 0, bearing: 0 },
@@ -3582,10 +3593,10 @@
                         <div class="popup-name" style="border-left:2px solid ${color};padding-left:8px;margin-bottom:0;">${loc.name}</div>
                         <span style="font-family:var(--mono);font-size:.55rem;font-weight:700;color:${dimColor};letter-spacing:.08em;">${yearLabel}</span>
                     </div>
-                    <div class="popup-row"><span class="popup-label">Predios censados</span><span class="popup-value cyan">${Number(loc.prediosCensados || loc.predios).toLocaleString('es-CO')}</span></div>
-                    <div class="popup-row"><span class="popup-label">· Predios rurales</span><span class="popup-value">${loc.prediosRural != null ? Number(loc.prediosRural).toLocaleString('es-CO') : '–'}</span></div>
+                    <div class="popup-row"><span class="popup-label">Predios urbanos</span><span class="popup-value cyan">${loc.prediosRural != null ? Number((loc.predios || 0) - (loc.prediosRural || 0)).toLocaleString('es-CO') : Number(loc.predios).toLocaleString('es-CO')}</span></div>
+                    <div class="popup-row"><span class="popup-label">Predios rurales</span><span class="popup-value">${loc.prediosRural != null ? Number(loc.prediosRural).toLocaleString('es-CO') : '–'}</span></div>
+                    <div class="popup-row"><span class="popup-label">Total predios</span><span class="popup-value cyan">${Number(loc.predios).toLocaleString('es-CO')}</span></div>
                     <hr class="popup-divider">
-                    <div class="popup-row"><span class="popup-label">Avalúo catastral total</span><span class="popup-value cyan">${fmtAvaluoCatastral(loc.avaluoCatastral)}</span></div>
                     <div class="popup-row"><span class="popup-label">Área construida</span><span class="popup-value magenta">${Number(Math.round(loc.areaCons * 10000)).toLocaleString('es-CO')} m²</span></div>
                     <hr class="popup-divider">
 
@@ -3718,9 +3729,9 @@
                     <span></span>
                     <span style="font-family:var(--mono);font-size:.58rem;font-weight:700;color:${dimColor};letter-spacing:.06em;">AÑO ${selectedYear}</span>
                 </div>
-                <div class="stat-row"><span class="stat-pct up">${Number(totalCensados).toLocaleString('es-CO')}</span><span class="stat-label">predios censados</span></div>
-                <div class="stat-row"><span class="stat-pct up">${totalParticipacion.toFixed(1)}%</span><span class="stat-label">participación en Bogotá</span></div>
-                <div class="stat-row"><span class="stat-pct up">${ruralKnown ? Number(totalRural).toLocaleString('es-CO') : '–'}</span><span class="stat-label">· predios rurales</span></div>
+                <div class="stat-row"><span class="stat-pct up">${ruralKnown ? Number(totalPredios - totalRural).toLocaleString('es-CO') : Number(totalPredios).toLocaleString('es-CO')}</span><span class="stat-label">predios urbanos</span></div>
+                <div class="stat-row"><span class="stat-pct up">${ruralKnown ? Number(totalRural).toLocaleString('es-CO') : '–'}</span><span class="stat-label">predios rurales</span></div>
+                <div class="stat-row"><span class="stat-pct up">${Number(totalPredios).toLocaleString('es-CO')}</span><span class="stat-label">total predios</span></div>
                 <div class="stat-row"><span class="stat-pct up">${Number(Math.round(totalArea * 10000)).toLocaleString('es-CO')} m²</span><span class="stat-label">área construida total</span></div>
                 <div style="width:100%;margin:4px 0 2px;font-family:var(--mono);font-size:.56rem;font-weight:700;color:${dimColor};letter-spacing:.07em;text-transform:uppercase;">Uso del suelo</div>
                 <div class="stat-row"><span class="stat-pct" style="color:var(--color-red);">${avgResid}%</span><span class="stat-label">residencial</span></div>
