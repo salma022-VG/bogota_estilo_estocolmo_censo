@@ -114,7 +114,7 @@
         /* ── Encabezado ── */
         #header {
             position: fixed;
-            top: 0;
+            top: 0;   
             left: 0;
             right: 0;
             z-index: 1000;
@@ -2769,7 +2769,7 @@
                 <strong style="color:#fff;display:block;margin-bottom:6px;font-weight:700;">Datos en cifras (2026)</strong>
                 <span style="display:flex;justify-content:space-between;margin-bottom:3px;color:#ccc;"><span>Predios registrados</span><strong style="color:#4dd0e1;font-weight:600;">2.929.879</strong></span>
                 <span style="display:flex;justify-content:space-between;margin-bottom:3px;color:#ccc;"><span>Avalúo catastral total</span><strong style="color:#4dd0e1;font-weight:600;">$945,2 billones COP</strong></span>
-                <span style="display:flex;justify-content:space-between;margin-bottom:3px;color:#ccc;"><span>Área construida total</span><strong style="color:#4dd0e1;font-weight:600;">312,9 mill m²</strong></span>
+                <span style="display:flex;justify-content:space-between;margin-bottom:3px;color:#ccc;"><span>Área construida total</span><strong style="color:#4dd0e1;font-weight:600;">379.9M m²</strong></span>
                 <span style="display:flex;justify-content:space-between;margin-bottom:3px;color:#ccc;"><span>Crecimiento predios 2016–2026</span><strong style="color:#ff69b4;font-weight:600;">+19,5 %</strong></span>
                 <span style="display:flex;justify-content:space-between;color:#ccc;"><span>Fuente</span><strong style="color:#fff;font-weight:600;">Catastro Distrital de Bogotá</strong></span>
             </p>
@@ -3492,6 +3492,13 @@
             return '$' + Number(v).toLocaleString('es-CO');
         }
 
+        function fmtArea(hectareas) {
+            const m2 = hectareas * 10000;
+            if (m2 >= 1000000) return (m2 / 1000000).toLocaleString('es-CO', { minimumFractionDigits: 1, maximumFractionDigits: 1 }) + 'M m²';
+            if (m2 >= 1000) return (m2 / 1000).toLocaleString('es-CO', { minimumFractionDigits: 1, maximumFractionDigits: 1 }) + 'K m²';
+            return Math.round(m2).toLocaleString('es-CO') + ' m²';
+        }
+
         function showUsoDelSueloInfo() {
             const isLight = document.body.classList.contains('light-mode');
             const modal = document.createElement('div');
@@ -3597,7 +3604,7 @@
                     <div class="popup-row"><span class="popup-label">Predios rurales</span><span class="popup-value">${loc.prediosRural != null ? Number(loc.prediosRural).toLocaleString('es-CO') : '–'}</span></div>
                     <div class="popup-row"><span class="popup-label">Total predios</span><span class="popup-value cyan">${Number(loc.predios).toLocaleString('es-CO')}</span></div>
                     <hr class="popup-divider">
-                    <div class="popup-row"><span class="popup-label">Área construida</span><span class="popup-value magenta">${Number(Math.round(loc.areaCons * 10000)).toLocaleString('es-CO')} m²</span></div>
+                    <div class="popup-row"><span class="popup-label">Área construida</span><span class="popup-value magenta">${fmtArea(loc.areaCons)}</span></div>
                     <hr class="popup-divider">
 
                     <div style="margin-top:7px;">
@@ -3732,7 +3739,7 @@
                 <div class="stat-row"><span class="stat-pct up">${ruralKnown ? Number(totalPredios - totalRural).toLocaleString('es-CO') : Number(totalPredios).toLocaleString('es-CO')}</span><span class="stat-label">predios urbanos</span></div>
                 <div class="stat-row"><span class="stat-pct up">${ruralKnown ? Number(totalRural).toLocaleString('es-CO') : '–'}</span><span class="stat-label">predios rurales</span></div>
                 <div class="stat-row"><span class="stat-pct up">${Number(totalPredios).toLocaleString('es-CO')}</span><span class="stat-label">total predios</span></div>
-                <div class="stat-row"><span class="stat-pct up">${Number(Math.round(totalArea * 10000)).toLocaleString('es-CO')} m²</span><span class="stat-label">área construida total</span></div>
+                <div class="stat-row"><span class="stat-pct up">${fmtArea(totalArea)}</span><span class="stat-label">área construida total</span></div>
                 <div style="width:100%;margin:4px 0 2px;font-family:var(--mono);font-size:.56rem;font-weight:700;color:${dimColor};letter-spacing:.07em;text-transform:uppercase;">Uso del suelo</div>
                 <div class="stat-row"><span class="stat-pct" style="color:var(--color-red);">${avgResid}%</span><span class="stat-label">residencial</span></div>
                 <div class="stat-row"><span class="stat-pct down">${avgCom}%</span><span class="stat-label">comercial</span></div>
